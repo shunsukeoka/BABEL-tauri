@@ -1,0 +1,10 @@
+@import '~the-new-css-reset/css/reset.css';
+@import './variables.scss';
+
+:root {
+    font-family: $root-font-family;
+    font-size: $root-font-size;
+    font-weight: $root-font-weight;
+    line-height: $root-line-height;
+    letter-spacing: $root-letter-spacing;
+}
