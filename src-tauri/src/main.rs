@@ -3,14 +3,13 @@
     windows_subsystem = "windows"
 )]
 
-#[tauri::command]
-fn my_custom_command() {
-    println!("I was invoked from JS!");
-}
+mod handler;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![my_custom_command])
+        .invoke_handler(tauri::generate_handler![
+            handler::files_event_handler::get_directories_recursive
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
