@@ -4,7 +4,7 @@
 
     const onClickButton = async () => {
         const path = await dialog.open({ directory: true });
-        await tauri.invoke('get_directories_recursive', { path });
+        await tauri.invoke('get_directory_info', { path });
     };
 </script>
 

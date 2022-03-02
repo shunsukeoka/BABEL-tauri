@@ -8,7 +8,7 @@ mod handler;
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            handler::files_event_handler::get_directories_recursive
+            handler::files_event_handler::get_directory_info
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
