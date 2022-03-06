@@ -4,7 +4,12 @@
 
     const onClickButton = async () => {
         const path = await dialog.open({ directory: true });
-        await tauri.invoke('get_directory_info', { path });
+
+        if (!path) return;
+
+        const response = await tauri.invoke('get_directory_info', { path });
+
+        console.log(response);
     };
 </script>
 
