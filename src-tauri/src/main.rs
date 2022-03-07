@@ -6,6 +6,7 @@
 mod handler;
 mod model;
 mod command;
+mod helper;
 
 fn main() {
     tauri::Builder::default()

@@ -1,9 +1,8 @@
 use std::fs;
 use std::io::Error;
 use std::os::windows::prelude::MetadataExt;
-use chrono::DateTime;
-use chrono::offset::Utc;
 use crate::model::file_info::FileInfo;
+use crate::helper::convert::systemtime2string;
 
 pub fn read_directory(path: String, file_info_vec: &mut Vec<FileInfo>) -> Result<(), Error> {
     match fs::read_dir(path) {
@@ -13,11 +12,6 @@ pub fn read_directory(path: String, file_info_vec: &mut Vec<FileInfo>) -> Result
                 if let Ok(entry) = entry {
                     let metadata = entry.metadata().unwrap();
 
-                    // TODO : SystemTimeからStringへの変換を行う処理を関数にしてまとめる
-                    let created_t: DateTime<Utc> = metadata.created().unwrap().into();
-                    let modified_t: DateTime<Utc> = metadata.modified().unwrap().into();
-                    let accessed_t: DateTime<Utc> = metadata.accessed().unwrap().into();
-
                     let file_info = FileInfo {
                         file_path: entry.path(),
                         file_name: entry.file_name().into_string().unwrap(),
@@ -26,9 +20,9 @@ pub fn read_directory(path: String, file_info_vec: &mut Vec<FileInfo>) -> Result
                         is_file: metadata.is_file(),
                         is_symlink: metadata.is_symlink(),
                         readonly: metadata.permissions().readonly(),
-                        created_t: created_t.format("%d/%m/%Y %T").to_string(),
-                        modified_t: modified_t.format("%d/%m/%Y %T").to_string(),
-                        accessed_t: accessed_t.format("%d/%m/%Y %T").to_string()
+                        created_t: systemtime2string(metadata.created().unwrap()),
+                        modified_t: systemtime2string(metadata.modified().unwrap()),
+                        accessed_t: systemtime2string(metadata.accessed().unwrap())
                     };
 
                     file_info_vec.push(file_info);
