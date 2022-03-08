@@ -6,6 +6,7 @@ pub struct FileInfo {
     pub file_path: PathBuf,
     pub file_name: String,
     pub file_size: u64,
+    pub mime: String,
     pub is_dir: bool,
     pub is_file: bool,
     pub is_symlink: bool,
