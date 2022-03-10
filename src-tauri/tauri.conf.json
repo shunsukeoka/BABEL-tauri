@@ -1,6 +1,6 @@
 {
     "package": {
-        "productName": "svelte-tauri-app-boilerplate",
+        "productName": "BABEL",
         "version": "0.1.0"
     },
     "build": {
@@ -54,7 +54,7 @@
         },
         "windows": [
             {
-                "title": "svelte-tauri-app-boilerplate",
+                "title": "BABEL",
                 "width": 800,
                 "height": 600,
                 "resizable": true,

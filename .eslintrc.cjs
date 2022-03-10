@@ -6,6 +6,7 @@ module.exports = {
         browser: true,
         es2021: true,
         node: true,
+        'jest/globals': true,
     },
     extends: ['airbnb-base', 'plugin:storybook/recommended'],
     parser: '@typescript-eslint/parser',
@@ -13,7 +14,7 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['svelte3', '@typescript-eslint', 'prettier'],
+    plugins: ['svelte3', '@typescript-eslint', 'prettier', 'jest'],
     overrides: [
         {
             files: ['**/*.svelte'],

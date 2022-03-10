@@ -1,9 +1,15 @@
 <script lang="ts">
-    import { invoke } from '@tauri-apps/api/tauri';
+    import { dialog, tauri } from '@tauri-apps/api';
     import Button from './lib/base/Button.svelte';
 
     const onClickButton = async () => {
-        await invoke('my_custom_command');
+        const path = await dialog.open({ directory: true });
+
+        if (!path) return;
+
+        const response = await tauri.invoke('get_directory_info', { path });
+
+        console.log(response);
     };
 </script>
 
