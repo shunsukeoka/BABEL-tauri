@@ -1,6 +1,5 @@
 use std::fs;
 use std::io::Error;
-use std::os::windows::prelude::MetadataExt;
 use mime_guess;
 use crate::model::file_info::FileInfo;
 use crate::helper::convert::systemtime2string;
@@ -16,7 +15,7 @@ pub fn read_directory(path: String, file_info_vec: &mut Vec<FileInfo>) -> Result
                     let file_info = FileInfo {
                         file_path: entry.path(),
                         file_name: entry.file_name().into_string().unwrap(),
-                        file_size: metadata.file_size(),
+                        file_size: metadata.len(),
                         mime: mime_guess::from_path(entry.path()).first_raw().unwrap_or("").to_string(),
                         is_dir: metadata.is_dir(),
                         is_file: metadata.is_file(),
