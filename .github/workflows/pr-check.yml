@@ -18,7 +18,7 @@ jobs:
             - name: Checkout current branch
               uses: actions/checkout@v2
               with:
-                ref: ${{ github.event.pull_request.head.sha }}
+                  ref: ${{ github.event.pull_request.head.sha }}
             - name: setup node
               uses: actions/setup-node@v1
               with:
@@ -41,9 +41,9 @@ jobs:
         platform: ubuntu-latest
         steps:
             - name: Checkout current branch
-                uses: actions/checkout@v2
-                with:
-                ref: ${{ github.event.pull_request.head.sha }}
+              uses: actions/checkout@v2
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
             - name: setup node
               uses: actions/setup-node@v1
               with:
@@ -54,9 +54,9 @@ jobs:
         platform: ubuntu-latest
         steps:
             - name: Checkout current branch
-                uses: actions/checkout@v2
-                with:
-                ref: ${{ github.event.pull_request.head.sha }}
+              uses: actions/checkout@v2
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
             - name: setup node
               uses: actions/setup-node@v1
               with:
