@@ -16,8 +16,8 @@ jobs:
         runs-on: ${{ matrix.platform }}
         steps:
             - name: Checkout current branch
-                uses: actions/checkout@v2
-                with:
+              uses: actions/checkout@v2
+              with:
                 ref: ${{ github.event.pull_request.head.sha }}
             - name: setup node
               uses: actions/setup-node@v1
