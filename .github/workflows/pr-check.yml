@@ -50,7 +50,7 @@ jobs:
                   node-version: 16
             - name: install node package dependencies and build it
               run: npm install && npm run build-storybook
-    test:
+    test-front:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout current branch
@@ -63,3 +63,16 @@ jobs:
                   node-version: 16
             - name: install node package dependencies and test it
               run: npm install && npm run test
+    test-backend:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout current branch
+              uses: actions/checkout@v2
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+            - name: install Rust stable
+              uses: actions-rs/toolchain@v1
+              with:
+                  toolchain: stable
+            - name: move to backend directory and test it
+              run: cd src-tauri && cargo test
