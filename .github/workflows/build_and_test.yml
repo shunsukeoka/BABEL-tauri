@@ -1,8 +1,12 @@
-name: Pull Request check
+name: Build and test
 
 on:
+    push:
+        branches:
+            - main
     pull_request_target:
-        types: [opened]
+        types:
+            - opened
 
     workflow_dispatch:
 
@@ -15,10 +19,17 @@ jobs:
 
         runs-on: ${{ matrix.platform }}
         steps:
-            - name: Checkout current branch
+            - name: checkout dependabot branch
               uses: actions/checkout@v2
+              if: (github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]')
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
+                  fetch-depth: 0
+            - name: checkout current branch
+              uses: actions/checkout@v2
+              if: (github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]')
+              with:
+                  fetch-depth: 0
             - name: setup node
               uses: actions/setup-node@v1
               with:
@@ -40,10 +51,17 @@ jobs:
     build-storybook:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout current branch
+            - name: checkout dependabot branch
               uses: actions/checkout@v2
+              if: (github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]')
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
+                  fetch-depth: 0
+            - name: checkout current branch
+              uses: actions/checkout@v2
+              if: (github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]')
+              with:
+                  fetch-depth: 0
             - name: setup node
               uses: actions/setup-node@v1
               with:
@@ -53,10 +71,17 @@ jobs:
     test-front:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout current branch
+            - name: checkout dependabot branch
               uses: actions/checkout@v2
+              if: (github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]')
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
+                  fetch-depth: 0
+            - name: checkout current branch
+              uses: actions/checkout@v2
+              if: (github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]')
+              with:
+                  fetch-depth: 0
             - name: setup node
               uses: actions/setup-node@v1
               with:
@@ -66,10 +91,17 @@ jobs:
     test-backend:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout current branch
+            - name: checkout dependabot branch
               uses: actions/checkout@v2
+              if: (github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]')
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
+                  fetch-depth: 0
+            - name: checkout current branch
+              uses: actions/checkout@v2
+              if: (github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]')
+              with:
+                  fetch-depth: 0
             - name: install Rust stable
               uses: actions-rs/toolchain@v1
               with:
