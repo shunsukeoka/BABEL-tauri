@@ -21,6 +21,7 @@
         "test": "jest src",
         "test:coverage": "npm run test -- --coverage",
         "test:watch": "npm run test -- --watch",
+        "test:rust": "cd src-tauri && cargo test",
         "prepare": "husky install",
         "lint-staged": "lint-staged",
         "commitlint": "commitlint"
