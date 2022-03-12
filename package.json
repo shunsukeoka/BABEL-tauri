@@ -97,6 +97,7 @@
         "vite": "^2.8.6"
     },
     "dependencies": {
+        "@sveltejs/svelte-virtual-list": "^3.0.1",
         "@tauri-apps/api": "^1.0.0-rc.2",
         "the-new-css-reset": "^1.5.1"
     }
