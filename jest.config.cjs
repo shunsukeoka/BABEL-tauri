@@ -10,7 +10,8 @@ module.exports = {
         ],
         '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
     },
-    moduleFileExtensions: ['svelte', 'ts', 'js'],
+    moduleFileExtensions: ['js', 'ts', 'svelte'],
     testEnvironment: 'jsdom',
     setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+    transformIgnorePatterns: ['<rootDir>/node_modules/!(@sveltejs/svelte-virtual-list)'],
 };
