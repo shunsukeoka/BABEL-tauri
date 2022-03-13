@@ -1,7 +1,6 @@
 name: Build and test
 
 on:
-    pull_request:
     pull_request_target:
         types:
             - opened
@@ -14,7 +13,6 @@ jobs:
                 platform: [macos-latest, ubuntu-latest, windows-latest]
 
         runs-on: ${{ matrix.platform }}
-        if: (github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]') || (github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]')
         steps:
             - name: checkout PR branch
               uses: actions/checkout@v2
