@@ -14,3 +14,9 @@ $root-font-weight: normal;
 $root-line-height: 1.8;
 
 $root-letter-spacing: 0.05em;
+
+@mixin text-omit {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -68,6 +68,10 @@
         }
 
         &__element {
+            & > p {
+                @include text-omit;
+            }
+
             &:not(:first-child) {
                 margin-left: 8px;
             }
@@ -80,6 +84,16 @@
 
         &__icon {
             width: 1em;
+            height: 1em;
+
+            p {
+                width: 100%;
+                height: 100%;
+            }
+
+            svg {
+                vertical-align: middle;
+            }
         }
 
         &__name {
