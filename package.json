@@ -45,7 +45,7 @@
         "@commitlint/config-conventional": "^16.2.1",
         "@storybook/addon-actions": "^6.5.0-alpha.48",
         "@storybook/addon-essentials": "^6.5.0-alpha.48",
-        "@storybook/addon-links": "^6.5.0-alpha.47",
+        "@storybook/addon-links": "^6.5.0-alpha.48",
         "@storybook/addon-svelte-csf": "^1.1.0",
         "@storybook/svelte": "^6.5.0-alpha.47",
         "@sveltejs/vite-plugin-svelte": "^1.0.0-next.39",
