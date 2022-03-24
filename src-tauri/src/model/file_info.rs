@@ -1,5 +1,5 @@
-use std::path::PathBuf;
 use serde::Serialize;
+use std::path::PathBuf;
 
 #[derive(Serialize)]
 pub struct FileInfo {
@@ -13,5 +13,5 @@ pub struct FileInfo {
     pub readonly: bool,
     pub created_t: String,
     pub modified_t: String,
-    pub accessed_t: String
+    pub accessed_t: String,
 }
