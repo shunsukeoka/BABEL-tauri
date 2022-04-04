@@ -47,7 +47,7 @@
         "@storybook/addon-essentials": "6.4.19",
         "@storybook/addon-links": "6.4.19",
         "@storybook/addon-svelte-csf": "^1.1.0",
-        "@storybook/svelte": "6.4.19",
+        "@storybook/svelte": "6.4.20",
         "@sveltejs/vite-plugin-svelte": "^1.0.0-next.40",
         "@tauri-apps/cli": "^1.0.0-rc.8",
         "@testing-library/jest-dom": "^5.16.3",
