@@ -1,18 +1,10 @@
-import * as path from 'path';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { defineConfig } from 'vite';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { svelte } from '@sveltejs/vite-plugin-svelte';
+import * as path from 'path'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [
-        svelte({
-            compilerOptions: {
-                customElement: false,
-            },
-        }),
-    ],
+    plugins: [react()],
     resolve: {
         alias: [
             {
@@ -21,4 +13,4 @@ export default defineConfig({
             },
         ],
     },
-});
+})
