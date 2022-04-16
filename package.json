@@ -41,8 +41,7 @@
         "@storybook/react": "^6.4.21",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "styled-components": "^5.3.5",
-        "the-new-css-reset": "^1.5.1"
+        "styled-components": "^5.3.5"
     },
     "devDependencies": {
         "@babel/core": "^7.17.9",
