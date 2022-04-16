@@ -1,1 +1,5 @@
-@import '~the-new-css-reset/css/reset.css';
+@import './font';
+
+.logo {
+    font-family: Melete-UltraLight, sans-serif;
+}

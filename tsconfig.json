@@ -16,7 +16,7 @@
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
-        "types": ["jest"]
+        "types": ["vite-plugin-svgr/client", "jest"]
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]
