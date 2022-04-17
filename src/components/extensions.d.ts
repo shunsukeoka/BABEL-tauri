@@ -5,5 +5,6 @@ declare namespace JSX {
         'sp-sidenav': any
         'sp-sidenav-item': any
         'sp-sidenav-heading': any
+        'sp-icon': any
     }
 }
