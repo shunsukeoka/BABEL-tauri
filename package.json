@@ -52,7 +52,7 @@
         "@storybook/addon-interactions": "^6.4.22",
         "@storybook/addon-links": "^6.4.22",
         "@storybook/builder-vite": "^0.1.29",
-        "@storybook/testing-library": "^0.0.9",
+        "@storybook/testing-library": "^0.0.10",
         "@tauri-apps/cli": "^1.0.0-rc.8",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^12.1.5",
