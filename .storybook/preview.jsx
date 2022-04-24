@@ -1,3 +1,4 @@
+import '../src/assets/styles/main.scss'
 import '@spectrum-web-components/bundle/elements'
 
 export const decorators = [
