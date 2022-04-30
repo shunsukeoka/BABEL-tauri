@@ -6,7 +6,7 @@ import { ReactComponent as CircleIcon } from '../../assets/img/icon/circle.svg'
 import { ReactComponent as StarIcon } from '../../assets/img/icon/star.svg'
 import { TooltipContainer } from '../common/tooltip/TooltipContainer'
 
-interface ISidenavActions {
+export interface ISidenavActions {
     id: string
     icon: React.ReactNode
     tooltip?: string
@@ -101,7 +101,8 @@ SideNavView.defaultProps = {
  * Styled Component
  */
 const StyledSideNav = styled(SideNavView)`
-    max-width: 240px;
+    width: 240px;
+    background-color: rgba(0 255 0 / 10%);
 `
 
 /**
