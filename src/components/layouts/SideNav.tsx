@@ -6,7 +6,7 @@ import { ReactComponent as CircleIcon } from '../../assets/img/icon/circle.svg'
 import { ReactComponent as StarIcon } from '../../assets/img/icon/star.svg'
 import { TooltipContainer } from '../common/tooltip/TooltipContainer'
 
-export interface ISidenavActions {
+export interface ISideNavActions {
     id: string
     icon: React.ReactNode
     tooltip?: string
@@ -20,7 +20,7 @@ interface SideNavProps {
     tags?: ITag[]
     projects?: IProjectInfo[]
     directories?: IDirectoryInfo[]
-    actions?: ISidenavActions[]
+    actions?: ISideNavActions[]
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
@@ -102,7 +102,7 @@ SideNavView.defaultProps = {
  */
 const StyledSideNav = styled(SideNavView)`
     width: 240px;
-    background-color: rgba(0 255 0 / 10%);
+    margin-right: 16px;
 `
 
 /**

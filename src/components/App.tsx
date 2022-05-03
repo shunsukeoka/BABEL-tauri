@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import { dialog } from '@tauri-apps/api'
 import { useState } from 'react'
 import { BrowserPage } from './pages/Browser'
-import { SideNav, ISidenavActions } from './layouts/SideNav'
+import { SideNav, ISideNavActions } from './layouts/SideNav'
+import { FileList } from './layouts/FileList'
+import { FileItemProps } from './layouts/FileItem'
 import { ReactComponent as AddProjectIcon } from '../assets/img/icon/add-project.svg'
 import { ReactComponent as AddFolderIcon } from '../assets/img/icon/add-folder.svg'
 import { FileBrowserService } from '../services/FileBrowserService'
@@ -18,7 +20,8 @@ interface AppProps {
     tags?: ITag[]
     projects?: IProjectInfo[]
     directories?: IDirectoryInfo[]
-    actions?: ISidenavActions[]
+    files?: FileItemProps[]
+    actions?: ISideNavActions[]
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
@@ -30,14 +33,13 @@ const StyledApp = styled.main`
         display: flex;
         align-items: flex-start;
         justify-content: flex-start;
-        background-color: rgba(255 0 0 / 10%);
     }
 `
 
 /**
  * View Component
  */
-const AppView: React.VFC<AppProps> = ({ tags, projects, directories, actions, onClick }: AppProps) => (
+const AppView: React.VFC<AppProps> = ({ tags, projects, directories, files, actions, onClick }: AppProps) => (
     <sp-theme scale="medium" color="light">
         <StyledApp>
             <header>
@@ -52,6 +54,8 @@ const AppView: React.VFC<AppProps> = ({ tags, projects, directories, actions, on
                     actions={actions}
                     onClick={onClick}
                 />
+
+                <FileList items={files} />
 
                 <Routes>
                     <Route path="/" element={<BrowserPage />} />
@@ -68,6 +72,7 @@ AppView.defaultProps = {
     tags: [],
     projects: [],
     directories: [],
+    files: [],
     actions: [],
     onClick: (event) => {
         event.preventDefault()
@@ -96,6 +101,7 @@ const App: React.VFC = () => {
     const [tags] = useState(initial.tags)
     const [projects] = useState(initial.projects)
     const [directories, setDirectories] = useState(initial.directories)
+    const [files, setFiles] = useState<FileItemProps[]>([])
 
     const onClickSideNavItem = async (event: React.MouseEvent<HTMLInputElement>) => {
         event.preventDefault()
@@ -104,7 +110,14 @@ const App: React.VFC = () => {
 
         const result = await fileBrowserService.fetch(path)
 
-        console.log(result)
+        setFiles(
+            result.map((item) => ({
+                path: item.file_path,
+                name: item.file_name,
+                fileType: item.mime,
+                audioLength: '00:00',
+            })),
+        )
     }
 
     const onClickAddProjectButton = (event: React.MouseEvent<HTMLInputElement>) => {
@@ -142,6 +155,7 @@ const App: React.VFC = () => {
             tags={tags}
             projects={projects}
             directories={directories}
+            files={files}
             actions={actions}
             onClick={onClickSideNavItem}
         />
