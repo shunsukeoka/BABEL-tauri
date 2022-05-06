@@ -5,11 +5,14 @@ import { IFileBrowserRepository } from '../repositories/FileBrowserRepository'
 interface IResponse {
     success: boolean
     data: IFileInfo[]
+    err_msg: string
 }
 
 class FileBrowserTauriCommand implements IFileBrowserRepository {
     public async fetch(path: string): Promise<IFileInfo[]> {
-        const { data }: IResponse = await invoke('get_directory_info', { path })
+        const { success, data, err_msg }: IResponse = await invoke('get_directory_info', { path })
+
+        if (!success) throw new Error(err_msg)
 
         return data
     }

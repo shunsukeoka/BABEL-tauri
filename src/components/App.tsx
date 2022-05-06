@@ -108,16 +108,20 @@ const App: React.VFC = () => {
 
         const path = event.currentTarget.value
 
-        const result = await fileBrowserService.fetch(path)
+        try {
+            const result = await fileBrowserService.fetch(path)
 
-        setFiles(
-            result.map((item) => ({
-                path: item.file_path,
-                name: item.file_name,
-                fileType: item.mime,
-                audioLength: '00:00',
-            })),
-        )
+            setFiles(
+                result.map((item) => ({
+                    path: item.file_path,
+                    name: item.file_name,
+                    fileType: item.mime,
+                    audioLength: '00:00',
+                })),
+            )
+        } catch (error) {
+            if (error instanceof Error) console.log(error.message)
+        }
     }
 
     const onClickAddProjectButton = (event: React.MouseEvent<HTMLInputElement>) => {
@@ -127,7 +131,7 @@ const App: React.VFC = () => {
     const onClickAddLocalDirectory = async (event: React.MouseEvent<HTMLInputElement>) => {
         event.preventDefault()
 
-        const path = (await dialog.open({ directory: true })) as string
+        const path = (await dialog.open({ directory: false })) as string
 
         if (path) {
             const updated = [...directories, { name: path.replace(/\\/g, '/').split('/').pop() || path, path }]
