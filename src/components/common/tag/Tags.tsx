@@ -17,7 +17,7 @@ const StyledTags = styled.div<TagsProps>`
     align-items: center;
     justify-content: flex-start;
     overflow-x: scroll;
-    ${mixin.scrollbarHideen}
+    ${mixin.scrollbarHidden}
 `
 
 /**

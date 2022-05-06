@@ -19,7 +19,7 @@ const StyledFileList = styled.section`
     height: calc(100vh - 78px);
     margin-right: 16px;
     overflow-y: scroll;
-    ${mixin.scrollbarHideen}
+    ${mixin.scrollbarHidden}
 `
 
 /**
