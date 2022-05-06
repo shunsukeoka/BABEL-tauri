@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { mixin } from '../../../assets/styles/mixin'
 import { Tag, TagProps } from './Tag'
 
 /**
@@ -16,6 +17,7 @@ const StyledTags = styled.div<TagsProps>`
     align-items: center;
     justify-content: flex-start;
     overflow-x: scroll;
+    ${mixin.scrollbarHideen}
 `
 
 /**

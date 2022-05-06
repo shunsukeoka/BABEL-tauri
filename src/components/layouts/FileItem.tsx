@@ -32,7 +32,7 @@ const StyledFileItem = styled.div`
     .name {
         margin: 0;
         overflow: hidden;
-        font-size: 14px;
+        font-size: 12px;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
