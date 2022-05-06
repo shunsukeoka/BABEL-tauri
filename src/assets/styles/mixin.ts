@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-const scrollbarHideen = css`
+const scrollbarHidden = css`
     -ms-overflow-style: none; // microsoft edge
     scrollbar-width: none; // firefox
 
@@ -10,5 +10,5 @@ const scrollbarHideen = css`
 `
 
 export const mixin = {
-    scrollbarHideen,
+    scrollbarHidden,
 }
