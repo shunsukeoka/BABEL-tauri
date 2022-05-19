@@ -58,7 +58,7 @@
         "@storybook/builder-vite": "^0.1.33",
         "@storybook/testing-library": "^0.0.11",
         "@stylelint/postcss-css-in-js": "^0.38.0",
-        "@tauri-apps/cli": "^1.0.0-rc.10",
+        "@tauri-apps/cli": "^1.0.0-rc.11",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^12.1.5",
         "@testing-library/react-hooks": "^7.0.2",
