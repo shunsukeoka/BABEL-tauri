@@ -1,5 +1,7 @@
 const path = require('path')
+
 const { loadConfigFromFile, mergeConfig } = require('vite')
+
 const svgrPlugin = require('vite-plugin-svgr')
 
 module.exports = {
@@ -7,12 +9,11 @@ module.exports = {
     addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions'],
     framework: '@storybook/react',
     core: {
-        builder: 'storybook-builder-vite',
-        // builder: '@storybook/builder-vite',
+        builder: '@storybook/builder-vite', // builder: '@storybook/builder-vite',
     },
+
     async viteFinal(config, { configType }) {
         const { config: userConfig } = await loadConfigFromFile(path.resolve(__dirname, '../vite.config.ts'))
-
         console.log(path.resolve(__dirname, '../vite.config.ts'))
 
         if (process.env.NODE_ENV === 'production') {
@@ -28,13 +29,7 @@ module.exports = {
                     },
                 }),
             ],
-            define:
-                process.env.NODE_ENV === 'development'
-                    ? {
-                          ...config.define,
-                          global: 'window',
-                      }
-                    : undefined,
+            define: process.env.NODE_ENV === 'development' ? { ...config.define, global: 'window' } : undefined,
         })
     },
 }
