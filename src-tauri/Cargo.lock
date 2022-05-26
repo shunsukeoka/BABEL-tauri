@@ -2800,12 +2800,13 @@ dependencies = [
 
 [[package]]
 name = "tauri-build"
-version = "1.0.0-rc.9"
+version = "1.0.0-rc.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ae2a4dfb8e5d8a5a4325fda01e9ddf327db23115dce0f54a4a3f9e8f74341f28"
+checksum = "ab213cbd01c1d4bd31620f23b00f42690bd988864953069eae2bd91b7d3fdfd5"
 dependencies = [
  "anyhow",
  "cargo_toml",
+ "heck 0.4.0",
  "semver 1.0.9",
  "serde_json",
  "tauri-utils",
