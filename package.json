@@ -38,7 +38,7 @@
         ]
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^0.25.0",
+        "@spectrum-web-components/bundle": "^0.25.1",
         "@storybook/react": "^6.5.8",
         "@tauri-apps/api": "^1.0.0-rc.6",
         "react": "^17.0.2",
