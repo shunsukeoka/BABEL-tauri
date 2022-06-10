@@ -103,6 +103,6 @@
         "ts-jest": "^27.1.5",
         "typescript": "^4.7.3",
         "vite": "^2.9.10",
-        "vite-plugin-svgr": "^1.1.0"
+        "vite-plugin-svgr": "^2.1.0"
     }
 }
