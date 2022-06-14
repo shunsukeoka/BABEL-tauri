@@ -32,10 +32,12 @@ jobs:
               run: |
                   sudo apt-get update
                   sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
-            - name: install app dependencies and build it
-              run: npm install && npm run tauri build
+            - name: install app dependencies
+              run: npm ci --production --ignore-scripts --prefer-offline --no-audit --no-progress
+            - name: build it
+              run: npm run tauri build
             - name: frontend test
-              run: npm install && npm run test
+              run: npm run test
             - name: backend test
               run: cd src-tauri && cargo test
             - uses: tauri-apps/tauri-action@v0
@@ -53,5 +55,7 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: 16
-            - name: install node package dependencies and build it
-              run: npm install && npm run build-storybook
+            - name: install node package dependencies
+              run: npm ci --production --ignore-scripts --prefer-offline --no-audit --no-progress
+            - name: build it
+              run: npm run build-storybook
