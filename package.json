@@ -57,7 +57,7 @@
         "@storybook/addon-interactions": "^6.5.8",
         "@storybook/addon-links": "^6.5.8",
         "@storybook/builder-vite": "^0.1.36",
-        "@storybook/testing-library": "^0.0.11",
+        "@storybook/testing-library": "^0.0.13",
         "@stylelint/postcss-css-in-js": "^0.38.0",
         "@tauri-apps/cli": "^1.0.0-rc.13",
         "@testing-library/jest-dom": "^5.16.4",
