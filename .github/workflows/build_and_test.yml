@@ -34,8 +34,8 @@ jobs:
                   sudo apt-get update
                   sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
             - name: install app dependencies
-              run: npm ci --production --ignore-scripts --prefer-offline --no-audit --no-progress
-            - name: build it
+              run: npm ci --ignore-scripts --prefer-offline --no-audit --no-progress
+            - name: build app
               run: npm run tauri build
             - name: frontend test
               run: npm run test
@@ -57,6 +57,6 @@ jobs:
               with:
                   node-version: 16
             - name: install node package dependencies
-              run: npm ci --production --ignore-scripts --prefer-offline --no-audit --no-progress
-            - name: build it
+              run: npm ci --ignore-scripts --prefer-offline --no-audit --no-progress
+            - name: build storybook
               run: npm run build-storybook
