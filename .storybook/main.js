@@ -1,12 +1,13 @@
 const path = require('path')
 const { loadConfigFromFile, mergeConfig } = require('vite')
+const svgr = require('vite-plugin-svgr').default
 
 module.exports = {
     stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
     addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions'],
     framework: '@storybook/react',
     core: {
-        builder: '@storybook/builder-vite', // builder: '@storybook/builder-vite',
+        builder: '@storybook/builder-vite',
     },
 
     async viteFinal(config, { configType }) {
@@ -18,7 +19,13 @@ module.exports = {
 
         return mergeConfig(config, {
             ...userConfig,
-            define: process.env.NODE_ENV === 'development' ? { ...config.define, global: 'window' } : undefined,
+            plugins: [
+                svgr({
+                    svgrOptions: {
+                        icon: true,
+                    },
+                }),
+            ],
         })
     },
 }
