@@ -18,10 +18,12 @@ tauri-build = { version = "1.0.0", features = [] }
 serde_json = "1.0.81"
 serde = { version = "1.0.137", features = ["derive"] }
 tauri = { version = "1.0.0", features = ["api-all"] }
-anyhow = "1.0.57"
+anyhow = "1.0.58"
 thiserror = "1.0.31"
 chrono = "0.4.19"
 mime_guess = "2.0.4"
+rodio = "0.15.0"
+crossbeam-channel = "0.5.5"
 
 [features]
 # by default Tauri runs in production mode
