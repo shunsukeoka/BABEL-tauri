@@ -131,7 +131,7 @@ const App: React.VFC = () => {
     const onClickAddLocalDirectory = async (event: React.MouseEvent<HTMLInputElement>) => {
         event.preventDefault()
 
-        const path = (await dialog.open({ directory: false })) as string
+        const path = (await dialog.open({ directory: true })) as string
 
         if (path) {
             const updated = [...directories, { name: path.replace(/\\/g, '/').split('/').pop() || path, path }]

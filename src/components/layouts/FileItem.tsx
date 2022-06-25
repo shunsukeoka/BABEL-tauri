@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { invoke } from '@tauri-apps/api/tauri'
 import { Tags } from '../common/tag/Tags'
 import { TagProps } from '../common/tag/Tag'
 
@@ -11,6 +12,7 @@ export interface FileItemProps {
     fileType?: string
     audioLength?: string
     tags?: TagProps[]
+    handleDoubleClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
 /**
@@ -48,8 +50,16 @@ const StyledFileItem = styled.div`
 /**
  * View Component
  */
-const FileItemView: React.VFC<FileItemProps> = ({ name, fileType, audioLength, tags, ...props }: FileItemProps) => (
-    <StyledFileItem {...props}>
+const FileItemView: React.VFC<FileItemProps> = ({
+    path,
+    name,
+    fileType,
+    audioLength,
+    tags,
+    handleDoubleClick,
+    ...props
+}: FileItemProps) => (
+    <StyledFileItem {...props} onDoubleClick={handleDoubleClick} data-path={path}>
         <h3 className="name">{name}</h3>
         <div className="detail">
             <p className="type">{fileType}</p>
@@ -67,6 +77,11 @@ FileItemView.defaultProps = {
     fileType: '',
     audioLength: '00:00',
     tags: [],
+    handleDoubleClick: async (event) => {
+        event.preventDefault()
+        const path = event.currentTarget.getAttribute('data-path')
+        await invoke('audio_play', { path })
+    },
 }
 
 /**
