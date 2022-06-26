@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run test:all
+npm run test
+cd src-tauri
+cargo test
