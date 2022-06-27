@@ -5,9 +5,10 @@
 
 use rodio::cpal::traits::HostTrait;
 use std::{
+	clone,
 	fs::File,
 	io::BufReader,
-	sync::{Arc, Mutex}, clone,
+	sync::{Arc, Mutex},
 };
 
 mod command;
@@ -85,7 +86,9 @@ fn main() -> anyhow::Result<()> {
 		current_file: None,
 	}));
 
-	let app_state = AppState { audio_state: audio_state };
+	let app_state = AppState {
+		audio_state: audio_state,
+	};
 
 	// tauri
 	tauri::Builder::default()
