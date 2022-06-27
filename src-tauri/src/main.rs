@@ -7,7 +7,7 @@ use rodio::cpal::traits::HostTrait;
 use std::{
 	fs::File,
 	io::BufReader,
-	sync::{Arc, Mutex},
+	sync::{Arc, Mutex}, clone,
 };
 
 mod command;
@@ -15,7 +15,7 @@ mod handler;
 mod helper;
 mod model;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AppState {
 	pub audio_state: Arc<Mutex<AudioState>>,
 }
@@ -85,24 +85,22 @@ fn main() -> anyhow::Result<()> {
 		current_file: None,
 	}));
 
-	let audio_state_cloned = audio_state.clone();
-
-	let app_state = AppState { audio_state };
+	let app_state = AppState { audio_state: audio_state };
 
 	// tauri
 	tauri::Builder::default()
-		.manage(app_state)
+		.manage(app_state.clone())
 		.invoke_handler(tauri::generate_handler![
 			handler::files_event_handler::get_directory_info,
 			handler::audio_playback_handler::audio_play
 		])
-		.setup(|app| {
+		.setup(move |app| {
 			// let app_handle = app.handle();
 
 			// let main_window = app.get_window("main").unwrap();
 
 			// audio thread
-			setup_audio_thread(app, audio_state_cloned, audio_command_receiver);
+			setup_audio_thread(app, app_state.audio_state, audio_command_receiver);
 
 			Ok(())
 		})
