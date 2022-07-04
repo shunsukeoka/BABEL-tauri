@@ -3,96 +3,34 @@
 	windows_subsystem = "windows"
 )]
 
-use rodio::cpal::traits::HostTrait;
-use std::{
-	clone,
-	fs::File,
-	io::BufReader,
-	sync::{Arc, Mutex},
+use command::audio::{setup_audio_thread, AudioEngine};
+use model::{
+	app::AppState,
+	audio::{AudioState, AudioStateCommands},
 };
+use std::sync::{Arc, Mutex};
 
 mod command;
 mod handler;
 mod helper;
 mod model;
 
-#[derive(Debug, Clone)]
-pub struct AppState {
-	pub audio_state: Arc<Mutex<AudioState>>,
-}
-
-#[derive(Debug)]
-pub struct AudioState {
-	pub command_sender: crossbeam_channel::Sender<AudioCommands>,
-	pub playback_state: AudioPlaybackState,
-	pub current_file: Option<File>,
-}
-
-#[derive(Debug)]
-pub enum AudioCommands {
-	PlayAudioFile,
-}
-
-#[derive(Debug, Clone)]
-pub enum AudioPlaybackState {
-	LOADING,
-	PLAYING,
-	PAUSING,
-	STOPPING,
-}
-
-fn setup_audio_thread(
-	app: &mut tauri::App,
-	state: Arc<Mutex<AudioState>>,
-	audio_event_receiver: crossbeam_channel::Receiver<AudioCommands>,
-) {
-	std::thread::spawn(move || {
-		let host = rodio::cpal::default_host();
-
-		let device = host.default_output_device().unwrap();
-
-		let (_stream, stream_handle) = rodio::OutputStream::try_from_device(&device).unwrap();
-
-		let sink = rodio::Sink::try_new(&stream_handle).unwrap();
-
-		loop {
-			while let Ok(command) = audio_event_receiver.try_recv() {
-				println!("{:?}", command);
-
-				let audio_state = state.lock().unwrap();
-
-				match command {
-					AudioCommands::PlayAudioFile => {
-						let file = audio_state.current_file.as_ref().unwrap();
-
-						sink.append(
-							rodio::Decoder::new(BufReader::new(file.try_clone().unwrap())).unwrap(),
-						);
-					}
-				}
-			}
-		}
-	});
-}
-
 fn main() -> anyhow::Result<()> {
 	// audio event protocol
-	let (audio_command_sender, audio_command_receiver) =
-		crossbeam_channel::bounded::<AudioCommands>(32);
+	let (audio_commands_sender, audio_commands_receiver) =
+		crossbeam_channel::bounded::<AudioStateCommands>(32);
 
-	let audio_state = Arc::new(Mutex::new(AudioState {
-		command_sender: audio_command_sender,
-		playback_state: AudioPlaybackState::STOPPING,
-		current_file: None,
-	}));
+	let audio_engine = Arc::new(Mutex::new(
+		AudioEngine::new(audio_commands_receiver).unwrap(),
+	));
 
-	let app_state = AppState {
-		audio_state: audio_state,
-	};
+	let audio_state = Arc::new(Mutex::new(AudioState::new(audio_commands_sender)));
+
+	let app_state = AppState { audio_state };
 
 	// tauri
 	tauri::Builder::default()
-		.manage(app_state.clone())
+		.manage(app_state)
 		.invoke_handler(tauri::generate_handler![
 			handler::files_event_handler::get_directory_info,
 			handler::audio_playback_handler::audio_play
@@ -103,7 +41,7 @@ fn main() -> anyhow::Result<()> {
 			// let main_window = app.get_window("main").unwrap();
 
 			// audio thread
-			setup_audio_thread(app, app_state.audio_state, audio_command_receiver);
+			setup_audio_thread(app, audio_engine);
 
 			Ok(())
 		})
