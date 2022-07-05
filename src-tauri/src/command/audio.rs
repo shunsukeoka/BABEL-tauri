@@ -1,13 +1,24 @@
-use std::sync::{Arc, Mutex};
+use std::{
+	rc::Rc,
+	sync::{Arc, Mutex},
+	time::Duration,
+};
 
-use kira::manager::{backend::cpal::CpalBackend, AudioManager};
+use kira::{
+	manager::{backend::cpal::CpalBackend, AudioManager, MainPlaybackState},
+	sound::{
+		streaming::{StreamingSoundData, StreamingSoundHandle, StreamingSoundSettings},
+		FromFileError,
+	},
+	tween::Tween,
+};
 use thiserror::Error;
 
-use crate::model::audio::{AudioPlaybackCommands, AudioPlaybackState, AudioStateCommands};
+use crate::model::audio::{AudioPlaybackCommands, AudioStateCommands};
 
 pub struct AudioEngine {
 	manager: AudioManager,
-	state: AudioPlaybackState,
+	sound_handler: Option<StreamingSoundHandle<FromFileError>>,
 	command_receiver: crossbeam_channel::Receiver<AudioStateCommands>,
 }
 
@@ -24,7 +35,7 @@ impl AudioEngine {
 		match AudioManager::<CpalBackend>::new(kira::manager::AudioManagerSettings::default()) {
 			Ok(manager) => Ok(Self {
 				manager,
-				state: AudioPlaybackState::STOPPING,
+				sound_handler: None,
 				command_receiver: rx,
 			}),
 			Err(_) => Err(AudioEngineError::InitializeError),
@@ -34,36 +45,62 @@ impl AudioEngine {
 	pub fn play_audio_file(&mut self, path: String) {
 		println!("{}", path);
 
-		match self.state {
-			AudioPlaybackState::LOADING => todo!(),
-			AudioPlaybackState::PLAYING => todo!(),
-			AudioPlaybackState::PAUSING => todo!(),
-			AudioPlaybackState::STOPPING => {
-				let sound_data =
-					kira_loaders::stream(path, kira_loaders::StreamingSoundSettings::default())
+		if self.sound_handler.is_some() {
+			println!("before: {:?}", self.sound_handler.as_ref().unwrap().state());
+		}
+
+		if self.sound_handler.is_none() {
+			self.sound_handler = self.play_and_create_streaming_sound_handler(path);
+		} else if let Some(sound_handler) = self.sound_handler.as_mut() {
+			match sound_handler.state() {
+				kira::sound::static_sound::PlaybackState::Playing => {
+					sound_handler
+						.stop(Tween {
+							duration: Duration::from_secs_f32(0.1),
+							..Default::default()
+						})
 						.unwrap();
 
-				self.manager.play(sound_data).unwrap();
+					self.sound_handler = self.play_and_create_streaming_sound_handler(path);
+				}
+				kira::sound::static_sound::PlaybackState::Pausing => todo!(),
+				kira::sound::static_sound::PlaybackState::Paused => todo!(),
+				kira::sound::static_sound::PlaybackState::Stopping => todo!(),
+				kira::sound::static_sound::PlaybackState::Stopped => todo!(),
 			}
 		}
+
+		println!("after: {:?}", self.sound_handler.as_ref().unwrap().state());
 	}
 
-	pub fn pause_audio_file(&self) {
-		match self.state {
-			AudioPlaybackState::LOADING => todo!(),
-			AudioPlaybackState::PLAYING => todo!(),
-			AudioPlaybackState::PAUSING => todo!(),
-			AudioPlaybackState::STOPPING => todo!(),
+	pub fn pause_audio_file(&mut self) {
+		match self.manager.state() {
+			MainPlaybackState::Paused => todo!(),
+
+			MainPlaybackState::Pausing => todo!(),
+
+			MainPlaybackState::Playing => todo!(),
 		}
 	}
 
-	pub fn stop_audio_file(&self) {
-		match self.state {
-			AudioPlaybackState::LOADING => todo!(),
-			AudioPlaybackState::PLAYING => todo!(),
-			AudioPlaybackState::PAUSING => todo!(),
-			AudioPlaybackState::STOPPING => todo!(),
+	pub fn stop_audio_file(&mut self) {
+		match self.manager.state() {
+			MainPlaybackState::Paused => todo!(),
+
+			MainPlaybackState::Pausing => todo!(),
+
+			MainPlaybackState::Playing => todo!(),
 		}
+	}
+
+	fn play_and_create_streaming_sound_handler(
+		&mut self,
+		path: String,
+	) -> Option<StreamingSoundHandle<FromFileError>> {
+		let sound_data =
+			StreamingSoundData::from_file(path, StreamingSoundSettings::default()).unwrap();
+
+		self.manager.play(sound_data).ok()
 	}
 }
 

@@ -26,11 +26,3 @@ pub enum AudioPlaybackCommands {
 pub struct GuiMessagePack {
 	pub audio_file_path: Option<String>,
 }
-
-#[derive(Debug, Clone)]
-pub enum AudioPlaybackState {
-	LOADING,
-	PLAYING,
-	PAUSING,
-	STOPPING,
-}
