@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { AudioPlaybackState } from '../../../interfaces/audio'
 
 /**
  * Props
@@ -7,7 +6,7 @@ import { AudioPlaybackState } from '../../../interfaces/audio'
 export interface PlayButtonProps {
     color?: string
     size?: string
-    playbackState: AudioPlaybackState
+    isPlaying: boolean
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
@@ -34,13 +33,8 @@ const StyledPlayButton = styled.div<PlayButtonProps>`
 /**
  * View Component
  */
-const PlayButtonView: React.VFC<PlayButtonProps> = ({ playbackState, onClick, ...props }: PlayButtonProps) => (
-    <StyledPlayButton
-        className={playbackState === AudioPlaybackState.PLAYING ? `is-playing` : ''}
-        playbackState={playbackState}
-        {...props}
-        onClick={onClick}
-    />
+const PlayButtonView: React.VFC<PlayButtonProps> = ({ isPlaying, onClick, ...props }: PlayButtonProps) => (
+    <StyledPlayButton className={isPlaying ? `is-playing` : ''} isPlaying={isPlaying} {...props} onClick={onClick} />
 )
 
 /**
