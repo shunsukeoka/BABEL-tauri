@@ -1,11 +1,12 @@
 import styled from 'styled-components'
+import { IoMdPlay, IoMdPause } from 'react-icons/io'
 
 /**
  * Props
  */
 export interface PlayButtonProps {
     color?: string
-    size?: string
+    size?: number
     isPlaying: boolean
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
@@ -14,19 +15,11 @@ export interface PlayButtonProps {
  * Styled Component
  */
 const StyledPlayButton = styled.div<PlayButtonProps>`
-    box-sizing: border-box;
-    display: inline-block;
-    height: 24px;
+    font-size: ${(props) => `${props.size}px`};
     cursor: pointer;
-    border-color: transparent transparent transparent ${(props) => props.color};
-    border-style: solid;
-    border-width: 12px 0 12px 20px;
-    transition: 100ms all ease;
-    will-change: border-width;
 
-    &.is-playing {
-        border-style: double;
-        border-width: 0 0 0 20px;
+    & > svg {
+        color: ${(props) => props.color};
     }
 `
 
@@ -34,7 +27,9 @@ const StyledPlayButton = styled.div<PlayButtonProps>`
  * View Component
  */
 const PlayButtonView: React.VFC<PlayButtonProps> = ({ isPlaying, onClick, ...props }: PlayButtonProps) => (
-    <StyledPlayButton className={isPlaying ? `is-playing` : ''} isPlaying={isPlaying} {...props} onClick={onClick} />
+    <StyledPlayButton isPlaying={isPlaying} {...props} onClick={onClick}>
+        {isPlaying ? <IoMdPause /> : <IoMdPlay />}
+    </StyledPlayButton>
 )
 
 /**
@@ -42,7 +37,7 @@ const PlayButtonView: React.VFC<PlayButtonProps> = ({ isPlaying, onClick, ...pro
  */
 PlayButtonView.defaultProps = {
     color: '#000',
-    size: '40px',
+    size: 14,
     onClick: (event) => {
         event.preventDefault()
         console.log(event)

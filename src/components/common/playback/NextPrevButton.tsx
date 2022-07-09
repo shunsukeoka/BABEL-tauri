@@ -1,11 +1,12 @@
 import styled from 'styled-components'
+import { IoMdSkipForward, IoMdSkipBackward } from 'react-icons/io'
 
 /**
  * Props
  */
 export interface NextPrevButtonProps {
     color?: string
-    size?: string
+    size?: number
     reverse?: boolean
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
@@ -14,30 +15,11 @@ export interface NextPrevButtonProps {
  * Styled Component
  */
 const StyledNextPrevButton = styled.div<NextPrevButtonProps>`
-    position: relative;
-    box-sizing: border-box;
-    display: inline-block;
-    height: 18px;
+    font-size: ${(props) => `${props.size}px`};
     cursor: pointer;
-    border-color: transparent transparent transparent ${(props) => props.color};
-    border-style: solid;
-    border-width: 10px 0 10px 14px;
 
-    &::before {
-        position: absolute;
-        top: -10px;
-        height: 20px;
-        content: '';
-        border-left: 3px solid ${(props) => props.color};
-    }
-
-    &.is-prev {
-        left: 0;
-    }
-
-    &.is-next {
-        left: 3px;
-        transform: rotate(180deg);
+    & > svg {
+        color: ${(props) => props.color};
     }
 `
 
@@ -45,7 +27,9 @@ const StyledNextPrevButton = styled.div<NextPrevButtonProps>`
  * View Component
  */
 const NextPrevButtonView: React.VFC<NextPrevButtonProps> = ({ reverse, onClick, ...props }: NextPrevButtonProps) => (
-    <StyledNextPrevButton className={reverse ? `is-next` : 'is-prev'} reverse={reverse} {...props} onClick={onClick} />
+    <StyledNextPrevButton reverse={reverse} {...props} onClick={onClick}>
+        {reverse ? <IoMdSkipBackward /> : <IoMdSkipForward />}
+    </StyledNextPrevButton>
 )
 
 /**
@@ -53,7 +37,7 @@ const NextPrevButtonView: React.VFC<NextPrevButtonProps> = ({ reverse, onClick, 
  */
 NextPrevButtonView.defaultProps = {
     color: '#000',
-    size: '40px',
+    size: 14,
     reverse: false,
     onClick: (event) => {
         event.preventDefault()
