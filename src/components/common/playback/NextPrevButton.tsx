@@ -5,6 +5,7 @@ import { IoMdSkipForward, IoMdSkipBackward } from 'react-icons/io'
  * Props
  */
 export interface NextPrevButtonProps {
+    className?: string
     color?: string
     size?: number
     reverse?: boolean
