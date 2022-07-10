@@ -5,6 +5,7 @@ import { IoMdPlay, IoMdPause } from 'react-icons/io'
  * Props
  */
 export interface PlayButtonProps {
+    className?: string
     color?: string
     size?: number
     isPlaying: boolean
@@ -26,9 +27,9 @@ const StyledPlayButton = styled.div<PlayButtonProps>`
 /**
  * View Component
  */
-const PlayButtonView: React.VFC<PlayButtonProps> = ({ isPlaying, onClick, ...props }: PlayButtonProps) => (
-    <StyledPlayButton isPlaying={isPlaying} {...props} onClick={onClick}>
-        {isPlaying ? <IoMdPause /> : <IoMdPlay />}
+const PlayButtonView: React.VFC<PlayButtonProps> = ({ ...props }: PlayButtonProps) => (
+    <StyledPlayButton {...props} onClick={props.onClick}>
+        {props.isPlaying ? <IoMdPause /> : <IoMdPlay />}
     </StyledPlayButton>
 )
 

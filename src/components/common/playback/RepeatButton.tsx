@@ -5,6 +5,7 @@ import { IoMdRepeat } from 'react-icons/io'
  * Props
  */
 export interface RepeatButtonProps {
+    className?: string
     color?: string
     activeColor?: string
     size?: number
@@ -34,7 +35,12 @@ const StyledRepeatButton = styled.div<RepeatButtonProps>`
  * View Component
  */
 const RepeatButtonView: React.VFC<RepeatButtonProps> = ({ isRepeat, onClick, ...props }: RepeatButtonProps) => (
-    <StyledRepeatButton className={isRepeat ? `is-repeat` : ''} isRepeat={isRepeat} {...props} onClick={onClick}>
+    <StyledRepeatButton
+        className={`${props.className}${isRepeat ? ' is-repeat' : ''}`}
+        isRepeat={isRepeat}
+        {...props}
+        onClick={onClick}
+    >
         <IoMdRepeat />
     </StyledRepeatButton>
 )
