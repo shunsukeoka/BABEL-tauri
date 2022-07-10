@@ -13,6 +13,8 @@ export interface SeekBarProps {
     min?: number
     max?: number
     step?: number
+    elapsedTime?: string
+    totalTime?: string
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -20,10 +22,20 @@ export interface SeekBarProps {
  * Styled Component
  */
 const StyledSeekBar = styled.div<SeekBarProps>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+        font-size: 10px;
+        letter-spacing: 0.025em;
+    }
+
     input[type='range'] {
         appearance: none;
         width: 100%;
         height: ${(props) => `${props.lineSize}px`};
+        margin: 0 8px;
         background-color: ${(props) => props.lineColor};
         border-radius: 8px;
 
@@ -49,6 +61,7 @@ const StyledSeekBar = styled.div<SeekBarProps>`
  */
 const SeekBarView: React.VFC<SeekBarProps> = ({ ...props }: SeekBarProps) => (
     <StyledSeekBar {...props}>
+        <span>{props.elapsedTime}</span>
         <input
             type="range"
             min={props.min}
@@ -57,6 +70,7 @@ const SeekBarView: React.VFC<SeekBarProps> = ({ ...props }: SeekBarProps) => (
             value={props.value}
             onChange={props.onChange}
         />
+        <span>{props.totalTime}</span>
     </StyledSeekBar>
 )
 
@@ -71,6 +85,8 @@ SeekBarView.defaultProps = {
     min: 0.0,
     max: 1.0,
     step: 0.0001,
+    elapsedTime: '00:00',
+    totalTime: '00:00',
     onChange: (event) => {
         event.preventDefault()
         const currentValue = event.target.value
