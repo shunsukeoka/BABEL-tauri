@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react'
-import { PlaybackControl } from './PlayBackControl'
+import { PlaybackControl } from './PlaybackControl'
 
 export default {
     title: 'Layouts/PlaybackControl',
