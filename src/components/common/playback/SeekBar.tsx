@@ -39,11 +39,6 @@ const StyledSeekBar = styled.div<SeekBarProps>`
         background-color: ${(props) => props.lineColor};
         border-radius: 8px;
 
-        &:focus,
-        &:active {
-            outline: none;
-        }
-
         &::-webkit-slider-thumb {
             appearance: none;
             width: ${(props) => `${props.knobSize}px`};
@@ -52,6 +47,11 @@ const StyledSeekBar = styled.div<SeekBarProps>`
             background-color: ${(props) => props.knobColor};
             border: none;
             border-radius: 50%;
+        }
+
+        &:focus,
+        &:active {
+            outline: none;
         }
     }
 `
@@ -78,10 +78,10 @@ const SeekBarView: React.VFC<SeekBarProps> = ({ ...props }: SeekBarProps) => (
  * Default Props
  */
 SeekBarView.defaultProps = {
-    lineColor: '#c7c7c7',
-    lineSize: 2,
-    knobColor: '#262626',
-    knobSize: 12,
+    lineColor: '#d0d5de',
+    lineSize: 1,
+    knobColor: '#d0d5de',
+    knobSize: 8,
     min: 0.0,
     max: 1.0,
     step: 0.0001,

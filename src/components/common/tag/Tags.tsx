@@ -13,9 +13,6 @@ interface TagsProps {
  * Styled Component
  */
 const StyledTags = styled.div<TagsProps>`
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     overflow-x: scroll;
     ${mixin.scrollbarHidden}
 `

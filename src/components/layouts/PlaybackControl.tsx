@@ -23,13 +23,13 @@ const PlaybackControlView: React.VFC<PlaybackControlProps> = ({ ...props }: Play
     <div className={props.className}>
         <div className="pbc-surface">
             <div className="pbc-buttons">
-                <NextPrevButton reverse size={16} />
-                <PlayButton className="pbc-button-play" isPlaying={props.isPlaying} size={24} />
-                <NextPrevButton size={16} />
-                <RepeatButton className="pbc-button-repeat" isRepeat={props.isRepeat} />
+                <NextPrevButton reverse size={16} color="#d0d5de" />
+                <PlayButton className="pbc-button-play" isPlaying={props.isPlaying} size={24} color="#d0d5de" />
+                <NextPrevButton size={16} color="#d0d5de" />
+                <RepeatButton className="pbc-button-repeat" isRepeat={props.isRepeat} color="#d0d5de" />
             </div>
             <div className="pbc-seek-bar">
-                <SeekBar value={props.seekValue} />
+                <SeekBar value={props.seekValue} knobColor="#d0d5de" />
             </div>
         </div>
     </div>
@@ -44,24 +44,26 @@ PlaybackControlView.defaultProps = {}
  * Styled Component
  */
 const StyledPlaybackControl = styled(PlaybackControlView)`
+    width: 100%;
+
     .pbc-surface {
-        width: 60%;
         max-width: 480px;
+        margin: 0 auto;
 
         .pbc-buttons {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
 
             .pbc-button-play {
-                margin: 0 20px;
+                margin: 0 16px;
             }
 
             .pbc-button-repeat {
                 position: absolute;
-                right: 0;
+                right: 3px;
             }
         }
     }

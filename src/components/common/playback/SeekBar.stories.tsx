@@ -9,9 +9,9 @@ export default {
 export const Default: ComponentStoryObj<typeof SeekBar> = {
     args: {
         lineColor: '#c7c7c7',
-        lineSize: 2,
-        knobColor: '#262626',
-        knobSize: 12,
+        lineSize: 1,
+        knobColor: '#c7c7c7',
+        knobSize: 8,
         min: 0.0,
         max: 1.0,
         step: 0.0001,

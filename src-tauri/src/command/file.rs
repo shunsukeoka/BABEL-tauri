@@ -1,8 +1,9 @@
 use crate::helper::convert::systemtime2string;
-use crate::model::file_info::FileInfo;
+use crate::model::file_info::{FileInfo};
 use anyhow::{Context, Result};
 use mime_guess;
 use std::fs;
+use std::path::Path;
 use std::rc::Rc;
 use thiserror::Error;
 
@@ -66,4 +67,43 @@ pub fn read_directory(path: &String, file_info_vec: &mut Vec<FileInfo>) -> Resul
 	}
 
 	Ok(())
+}
+
+pub fn read_file(path: &String) -> Result<FileInfo> {
+	let entry = Path::new(path);
+
+	let metadata = entry
+	.metadata()
+	.context(FileInfoError::ReadMetadataError())?;
+
+	let file_info = FileInfo {
+		file_path: entry.to_path_buf(),
+		file_name: entry.file_name().unwrap().to_os_string().into_string().unwrap_or("".to_string()),
+		file_size: metadata.len(),
+		mime: mime_guess::from_path(entry)
+			.first_raw()
+			.unwrap_or("")
+			.to_string(),
+		is_dir: metadata.is_dir(),
+		is_file: metadata.is_file(),
+		is_symlink: metadata.is_symlink(),
+		readonly: metadata.permissions().readonly(),
+		created_t: systemtime2string(
+			metadata
+				.created()
+				.context(FileInfoError::ReadMetadataError())?,
+		),
+		modified_t: systemtime2string(
+			metadata
+				.modified()
+				.context(FileInfoError::ReadMetadataError())?,
+		),
+		accessed_t: systemtime2string(
+			metadata
+				.accessed()
+				.context(FileInfoError::ReadMetadataError())?,
+		),
+	};
+
+	Ok(file_info)
 }

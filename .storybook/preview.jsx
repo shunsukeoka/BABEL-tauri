@@ -1,11 +1,13 @@
-import '../src/assets/styles/main.scss'
-import '@spectrum-web-components/bundle/elements'
+import { Reset } from 'styled-reset'
+import { GlobalStyle } from '../src/assets/styles/global-style'
 
 export const decorators = [
     (Story) => (
-        <sp-theme scale="medium" color="light">
+        <>
+            <Reset />
+            <GlobalStyle />
             <Story />
-        </sp-theme>
+        </>
     ),
 ]
 

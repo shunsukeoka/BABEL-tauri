@@ -12,6 +12,7 @@ use kira::{
 	},
 	tween::Tween,
 };
+use tauri::App;
 use thiserror::Error;
 
 use crate::model::audio::{AudioPlaybackCommands, AudioStateCommands};
@@ -105,11 +106,14 @@ impl AudioEngine {
 }
 
 /// オーディオスレッドの初期化
-pub fn setup_audio_thread(app: &mut tauri::App, engine: Arc<Mutex<AudioEngine>>) {
+pub fn setup_audio_thread(app: &mut App, engine: Arc<Mutex<AudioEngine>>) {
+	// TODO: CPU utilization goes up to around 100% when I start a thread and loop it.
+
 	std::thread::spawn(move || loop {
 		let mut audio_engine = engine.lock().unwrap();
 
 		while let Ok(command) = audio_engine.command_receiver.try_recv() {
+
 			println!("{:?}", command);
 
 			let msg_pack = command.gui_msg_pack.unwrap();
@@ -122,5 +126,7 @@ pub fn setup_audio_thread(app: &mut tauri::App, engine: Arc<Mutex<AudioEngine>>)
 				AudioPlaybackCommands::PauseAudioFile => audio_engine.pause_audio_file(),
 			}
 		}
+
+		std::thread::park();
 	});
 }

@@ -17,7 +17,6 @@ const StyledTag = styled.div<TagProps>`
     padding: 0.2rem 0.5rem;
     text-align: center;
     background-color: ${(props) => props.backgroundColor};
-    border: 1px solid transparent;
     border-radius: 1rem;
 
     &:not(:first-child) {

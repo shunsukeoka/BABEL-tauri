@@ -11,8 +11,3 @@ export interface IFileInfo {
     modified_t: string
     accessed_t: string
 }
-
-export interface IDirectoryInfo {
-    path: string
-    name: string
-}

@@ -33,6 +33,7 @@ fn main() -> anyhow::Result<()> {
 		.manage(app_state)
 		.invoke_handler(tauri::generate_handler![
 			handler::files_event_handler::get_directory_info,
+			handler::directories_event_handler::add_directory,
 			handler::audio_playback_handler::audio_play
 		])
 		.setup(move |app| {
