@@ -1,6 +1,5 @@
 const path = require('path')
 const { loadConfigFromFile, mergeConfig } = require('vite')
-const svgr = require('vite-plugin-svgr').default
 
 module.exports = {
     stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -19,13 +18,7 @@ module.exports = {
 
         return mergeConfig(config, {
             ...userConfig,
-            plugins: [
-                svgr({
-                    svgrOptions: {
-                        icon: true,
-                    },
-                }),
-            ],
+            plugins: [],
         })
     },
 }
