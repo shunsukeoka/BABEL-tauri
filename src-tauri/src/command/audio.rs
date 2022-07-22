@@ -113,7 +113,6 @@ pub fn setup_audio_thread(app: &mut App, engine: Arc<Mutex<AudioEngine>>) {
 		let mut audio_engine = engine.lock().unwrap();
 
 		while let Ok(command) = audio_engine.command_receiver.try_recv() {
-
 			println!("{:?}", command);
 
 			let msg_pack = command.gui_msg_pack.unwrap();

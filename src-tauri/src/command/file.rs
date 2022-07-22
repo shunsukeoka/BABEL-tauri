@@ -1,5 +1,5 @@
 use crate::helper::convert::systemtime2string;
-use crate::model::file_info::{FileInfo};
+use crate::model::file_info::FileInfo;
 use anyhow::{Context, Result};
 use mime_guess;
 use std::fs;
@@ -73,12 +73,17 @@ pub fn read_file(path: &String) -> Result<FileInfo> {
 	let entry = Path::new(path);
 
 	let metadata = entry
-	.metadata()
-	.context(FileInfoError::ReadMetadataError())?;
+		.metadata()
+		.context(FileInfoError::ReadMetadataError())?;
 
 	let file_info = FileInfo {
 		file_path: entry.to_path_buf(),
-		file_name: entry.file_name().unwrap().to_os_string().into_string().unwrap_or("".to_string()),
+		file_name: entry
+			.file_name()
+			.unwrap()
+			.to_os_string()
+			.into_string()
+			.unwrap_or("".to_string()),
 		file_size: metadata.len(),
 		mime: mime_guess::from_path(entry)
 			.first_raw()

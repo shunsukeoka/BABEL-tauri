@@ -1,4 +1,4 @@
-use crate::command::file::{read_file};
+use crate::command::file::read_file;
 use crate::model::file_info::FileInfo;
 use serde_json::json;
 
