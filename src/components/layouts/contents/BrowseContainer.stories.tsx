@@ -8,12 +8,48 @@ export default {
 
 export const Default: ComponentStoryObj<typeof BrowseContainer> = {
     args: {
-        favorites: [{ name: 'Sample Magic - SM08 NU RAVE' }, { name: 'Vengeance Dance Explosion Vol.1' }],
+        favorites: [
+            {
+                file_path: 'xxx/yyy/zzz',
+                file_name: 'Sample Magic - SM08 NU RAVE',
+                file_size: '123',
+                mime: '',
+                is_dir: true,
+                is_file: false,
+                is_symlink: false,
+                readonly: false,
+                created_t: '',
+                modified_t: '',
+                accessed_t: '',
+            },
+        ],
         directories: [
-            { name: 'Sample Magic - SM08 NU RAVE' },
-            { name: 'Vengeance Dance Explosion Vol.1' },
-            { name: 'APASHE SAMPLE PACK 1.0' },
-            { name: 'Electro Glitch Essentials' },
+            {
+                file_path: 'xxx/yyy/zzz',
+                file_name: 'Sample Magic - SM08 NU RAVE',
+                file_size: '123',
+                mime: '',
+                is_dir: true,
+                is_file: false,
+                is_symlink: false,
+                readonly: false,
+                created_t: '',
+                modified_t: '',
+                accessed_t: '',
+            },
+            {
+                file_path: 'xxx/yyy/zzz',
+                file_name: 'Vengeance Dance Explosion Vol.1',
+                file_size: '123',
+                mime: '',
+                is_dir: true,
+                is_file: false,
+                is_symlink: false,
+                readonly: false,
+                created_t: '',
+                modified_t: '',
+                accessed_t: '',
+            },
         ],
     },
 }
