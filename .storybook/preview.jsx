@@ -1,3 +1,4 @@
+import '../src/assets/styles/index.scss'
 import { Reset } from 'styled-reset'
 import { GlobalStyle } from '../src/assets/styles/global-style'
 

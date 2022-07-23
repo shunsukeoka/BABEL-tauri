@@ -24,6 +24,8 @@ plugins:
     - testing-library
 ignorePatterns:
     - vite.config.*
+    - tailwind.config.*
+    - postcss.config.*
 overrides:
     - files:
           - '**/__tests__/**/*.[jt]s?(x)'
