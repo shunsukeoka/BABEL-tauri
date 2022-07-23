@@ -24,7 +24,7 @@ const PlaybackControlView: React.VFC<PlaybackControlProps> = ({ ...props }: Play
         <div className="pbc-surface">
             <div className="pbc-buttons">
                 <NextPrevButton reverse size={16} color="#d0d5de" />
-                <PlayButton className="pbc-button-play" isPlaying={props.isPlaying} size={24} color="#d0d5de" />
+                <PlayButton isPlaying={props.isPlaying} size="default" variant="default" />
                 <NextPrevButton size={16} color="#d0d5de" />
                 <RepeatButton className="pbc-button-repeat" isRepeat={props.isRepeat} color="#d0d5de" />
             </div>

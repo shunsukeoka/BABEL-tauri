@@ -1,1 +1,10 @@
 @import 'tailwind';
+@import 'font';
+@import 'theme';
+
+html,
+body {
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background-color: var(--color-background);
+}

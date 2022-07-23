@@ -7,5 +7,17 @@ export default {
 } as ComponentMeta<typeof PlayButton>
 
 export const Default: ComponentStoryObj<typeof PlayButton> = {
-    args: { isPlaying: true, size: 18, color: '#000' },
+    args: { isPlaying: false, variant: 'default', size: 'default' },
+}
+
+export const Primary: ComponentStoryObj<typeof PlayButton> = {
+    args: { isPlaying: false, variant: 'primary', size: 'default' },
+}
+
+export const Small: ComponentStoryObj<typeof PlayButton> = {
+    args: { isPlaying: false, variant: 'default', size: 'small' },
+}
+
+export const Large: ComponentStoryObj<typeof PlayButton> = {
+    args: { isPlaying: false, variant: 'default', size: 'large' },
 }

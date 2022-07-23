@@ -1,16 +1,6 @@
 import '../src/assets/styles/index.scss'
-import { Reset } from 'styled-reset'
-import { GlobalStyle } from '../src/assets/styles/global-style'
 
-export const decorators = [
-    (Story) => (
-        <>
-            <Reset />
-            <GlobalStyle />
-            <Story />
-        </>
-    ),
-]
+export const decorators = [(Story) => <Story />]
 
 export const parameters = {
     actions: { argTypesRegex: '^on[A-Z].*' },
