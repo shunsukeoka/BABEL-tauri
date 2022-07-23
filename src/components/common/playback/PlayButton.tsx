@@ -1,56 +1,45 @@
-import styled from 'styled-components'
+// import styled from 'styled-components'
+import clsx from 'clsx'
 import { IoMdPlay, IoMdPause } from 'react-icons/io'
 
-/**
- * Props
- */
+const sizes = {
+    default: 'text-base',
+    small: 'text-sm',
+    large: 'text-lg',
+}
+
+const variants = {
+    default: `
+        text-white
+    `,
+    primary: `
+        text-primary
+    `,
+}
+
+export type PlayButtonVariant = keyof typeof variants
+export type PlayButtonSize = keyof typeof sizes
+
 export interface PlayButtonProps {
-    className?: string
-    color?: string
-    size?: number
+    variant?: PlayButtonVariant
+    size?: PlayButtonSize
     isPlaying: boolean
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-/**
- * Styled Component
- */
-const StyledPlayButton = styled.div<PlayButtonProps>`
-    font-size: ${(props) => `${props.size}px`};
-    cursor: pointer;
-
-    & > svg {
-        color: ${(props) => props.color};
-    }
-`
-
-/**
- * View Component
- */
-const PlayButtonView: React.VFC<PlayButtonProps> = ({ ...props }: PlayButtonProps) => (
-    <StyledPlayButton {...props} onClick={props.onClick}>
-        {props.isPlaying ? <IoMdPause /> : <IoMdPlay />}
-    </StyledPlayButton>
+export const PlayButton: React.FC<PlayButtonProps> = ({
+    onClick,
+    size,
+    variant,
+    isPlaying,
+    ...props
+}: PlayButtonProps) => (
+    <div
+        className={clsx('cursor-pointer', sizes[size || 'default'], variants[variant || 'default'])}
+        onClick={onClick}
+        {...props}
+        role="presentation"
+    >
+        {isPlaying ? <IoMdPause /> : <IoMdPlay />}
+    </div>
 )
-
-/**
- * Default Props
- */
-PlayButtonView.defaultProps = {
-    color: '#000',
-    size: 14,
-    onClick: (event) => {
-        event.preventDefault()
-        console.log(event)
-    },
-}
-
-/**
- * Component
- */
-const PlayButton: React.VFC<PlayButtonProps> = ({ ...props }: PlayButtonProps) => <PlayButtonView {...props} />
-
-/**
- * Export
- */
-export { PlayButton }
