@@ -1,4 +1,4 @@
-import { IFileInfo } from '../interfaces/file'
+import { IFileInfo } from '@/interfaces/file'
 
 export interface IDirectoryRepository {
     fetchAll: () => Promise<IFileInfo[]>

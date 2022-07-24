@@ -1,6 +1,6 @@
 import { MdOutlineFolder, MdStarOutline } from 'react-icons/md'
 import styled from 'styled-components'
-import { IFileInfo } from '../../../interfaces/file'
+import { IFileInfo } from '@/interfaces/file'
 import { BrowseList } from './BrowseList'
 
 /**

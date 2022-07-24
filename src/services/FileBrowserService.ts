@@ -1,6 +1,6 @@
-import { FileBrowserTauriCommand } from '../backend/FileBrowserTauriCommand'
-import { IFileInfo } from '../interfaces/file'
-import { IFileBrowserRepository } from '../repositories/FileBrowserRepository'
+import { FileBrowserTauriCommand } from '@/backend/FileBrowserTauriCommand'
+import { IFileInfo } from '@/interfaces/file'
+import { IFileBrowserRepository } from '@/repositories/FileBrowserRepository'
 
 class FileBrowserService {
     constructor() {

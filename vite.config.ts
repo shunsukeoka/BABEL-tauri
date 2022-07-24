@@ -16,6 +16,7 @@ export default defineConfig({
                 find: /~(.+)/,
                 replacement: path.join(process.cwd(), 'node_modules/$1'),
             },
+            { find: '@/', replacement: `${__dirname}/src/` },
         ],
     },
 })
