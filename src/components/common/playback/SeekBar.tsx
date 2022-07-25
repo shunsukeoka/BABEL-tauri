@@ -1,105 +1,89 @@
+import clsx from 'clsx'
 import React from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
-/**
- * Props
- */
+const variants = {
+    default: `
+        bg-white
+    `,
+    primary: `
+        bg-primary
+    `,
+}
+
+export type SeekBarVariant = keyof typeof variants
+
 export interface SeekBarProps {
-    value: number
-    lineColor?: string
-    lineSize?: number
-    knobColor?: string
-    knobSize?: number
+    value?: number
     min?: number
     max?: number
     step?: number
     elapsedTime?: string
     totalTime?: string
+    size?: number
+    variant?: SeekBarVariant
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-/**
- * Styled Component
- */
 const StyledSeekBar = styled.div<SeekBarProps>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    span {
-        font-size: 10px;
-        letter-spacing: 0.025em;
-    }
-
     input[type='range'] {
-        appearance: none;
-        width: 100%;
-        height: ${(props) => `${props.lineSize}px`};
-        margin: 0 8px;
-        background-color: ${(props) => props.lineColor};
-        border-radius: 8px;
-
         &::-webkit-slider-thumb {
             appearance: none;
-            width: ${(props) => `${props.knobSize}px`};
-            height: ${(props) => `${props.knobSize}px`};
+            width: ${(props) => `${props.size}px`};
+            height: ${(props) => `${props.size}px`};
             cursor: pointer;
-            background-color: ${(props) => props.knobColor};
+            background-color: ${(props) => {
+                switch (props.variant) {
+                    case 'default':
+                        return 'var(--color-text)'
+                    case 'primary':
+                        return 'var(--color-primary)'
+                    default:
+                        return 'var(--color-text)'
+                }
+            }};
             border: none;
             border-radius: 50%;
-        }
-
-        &:focus,
-        &:active {
-            outline: none;
         }
     }
 `
 
-/**
- * View Component
- */
-const SeekBarView: React.VFC<SeekBarProps> = ({ ...props }: SeekBarProps) => (
-    <StyledSeekBar {...props}>
-        <span>{props.elapsedTime}</span>
+export const SeekBar: React.FC<SeekBarProps> = ({
+    size,
+    variant,
+    elapsedTime,
+    totalTime,
+    min,
+    max,
+    step,
+    value,
+    onChange,
+    ...props
+}: SeekBarProps) => (
+    <StyledSeekBar className="flex items-center justify-center" size={size} variant={variant} {...props}>
+        <span className="text-xs">{elapsedTime}</span>
         <input
+            className={clsx(
+                'mx-2 h-[1px] w-full appearance-none rounded focus:outline-none active:outline-none',
+                variants[variant || 'default'],
+            )}
             type="range"
-            min={props.min}
-            max={props.max}
-            step={props.step}
-            value={props.value}
-            onChange={props.onChange}
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={onChange}
         />
-        <span>{props.totalTime}</span>
+        <span className="text-xs">{totalTime}</span>
     </StyledSeekBar>
 )
 
-/**
- * Default Props
- */
-SeekBarView.defaultProps = {
-    lineColor: '#d0d5de',
-    lineSize: 1,
-    knobColor: '#d0d5de',
-    knobSize: 8,
+SeekBar.defaultProps = {
+    value: 0.0,
     min: 0.0,
     max: 1.0,
     step: 0.0001,
     elapsedTime: '00:00',
     totalTime: '00:00',
-    onChange: (event) => {
-        event.preventDefault()
-        const currentValue = event.target.value
-        console.log(currentValue)
-    },
+    size: 9,
 }
-
-/**
- * Component
- */
-const SeekBar: React.VFC<SeekBarProps> = ({ ...props }: SeekBarProps) => <SeekBarView {...props} />
-
-/**
- * Export
- */
-export { SeekBar }

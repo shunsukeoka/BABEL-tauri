@@ -1,6 +1,6 @@
-import { DirectoryTauriCommand } from '../backend/DirectoryTauriCommand'
-import { IFileInfo } from '../interfaces/file'
-import { IDirectoryRepository } from '../repositories/DirectoryRepository'
+import { DirectoryTauriCommand } from '@/backend/DirectoryTauriCommand'
+import { IFileInfo } from '@/interfaces/file'
+import { IDirectoryRepository } from '@/repositories/DirectoryRepository'
 
 class DirectoryService {
     constructor() {

@@ -1,6 +1,6 @@
 import { MdAdd } from 'react-icons/md'
 import styled from 'styled-components'
-import { IFileInfo } from '../../../interfaces/file'
+import { IFileInfo } from '@/interfaces/file'
 import { BrowseListItem } from './BrowseListItem'
 
 /**

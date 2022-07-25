@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { dialog } from '@tauri-apps/api'
 import styled from 'styled-components'
-import { IFileInfo } from '../../interfaces/file'
+import { IFileInfo } from '@/interfaces/file'
+import { DirectoryService } from '@/services/DirectoryService'
 import { BrowseContainer } from '../layouts/contents/BrowseContainer'
-import { DirectoryService } from '../../services/DirectoryService'
 
 /**
  * Props

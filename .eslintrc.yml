@@ -51,4 +51,15 @@ rules:
         react-hooks/rules-of-hooks: error,
         react-hooks/exhaustive-deps: warn,
         '@typescript-eslint/naming-convention': off,
+        import/no-absolute-path: off,
+        import/extensions: ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
+    }
+settings:
+    {
+        'import/resolver':
+            {
+                node: { extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'] },
+                typescript: {},
+                alias: { map: [['/@', './src']], extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'] },
+            },
     }

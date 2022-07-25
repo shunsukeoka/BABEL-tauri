@@ -7,5 +7,21 @@ export default {
 } as ComponentMeta<typeof RepeatButton>
 
 export const Default: ComponentStoryObj<typeof RepeatButton> = {
-    args: { color: '#000', activeColor: '#ff0000', size: 18, isRepeat: false },
+    args: { variant: 'default', size: 'default', isRepeat: false },
+}
+
+export const Active: ComponentStoryObj<typeof RepeatButton> = {
+    args: { variant: 'default', size: 'default', isRepeat: true },
+}
+
+export const Primary: ComponentStoryObj<typeof RepeatButton> = {
+    args: { variant: 'primary', size: 'default', isRepeat: true },
+}
+
+export const Small: ComponentStoryObj<typeof RepeatButton> = {
+    args: { variant: 'default', size: 'small', isRepeat: false },
+}
+
+export const Large: ComponentStoryObj<typeof RepeatButton> = {
+    args: { variant: 'default', size: 'large', isRepeat: false },
 }

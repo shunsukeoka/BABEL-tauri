@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { mixin } from '../../assets/styles/mixin'
+import { mixin } from '@/assets/styles/mixin'
 import { FileItem, FileItemProps } from './FileItem'
 
 export interface IFileListActions {}
