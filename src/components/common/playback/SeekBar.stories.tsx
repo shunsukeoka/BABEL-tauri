@@ -12,7 +12,7 @@ export const Default: ComponentStoryObj<typeof SeekBar> = {
         max: 1.0,
         step: 0.0001,
         value: 0.5,
-        size: 9,
         variant: 'default',
+        size: 'default',
     },
 }

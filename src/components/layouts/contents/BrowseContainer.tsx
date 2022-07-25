@@ -14,19 +14,15 @@ export const BrowseContainer: React.FC<BrowseContainerProps> = ({
     handleAddDirectory,
     ...props
 }: BrowseContainerProps) => (
-    <section className="min-w-[200px]" {...props}>
-        <div className="py-4">
-            <BrowseList title="Favorites" icon={<MdStarOutline />} browseList={favorites} />
-        </div>
+    <section className="min-w-[200px] [&>div]:py-4" {...props}>
+        <BrowseList title="Favorites" icon={<MdStarOutline />} browseList={favorites} />
 
-        <div className="py-4">
-            <BrowseList
-                title="Local"
-                icon={<MdOutlineFolder />}
-                browseList={directories}
-                handleAddClick={handleAddDirectory}
-            />
-        </div>
+        <BrowseList
+            title="Local"
+            icon={<MdOutlineFolder />}
+            browseList={directories}
+            handleAddClick={handleAddDirectory}
+        />
     </section>
 )
 

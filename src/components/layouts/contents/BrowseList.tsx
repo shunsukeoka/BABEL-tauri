@@ -9,7 +9,7 @@ interface BrowseListProps {
     handleAddClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-export const BrowseList: React.VFC<BrowseListProps> = ({
+export const BrowseList: React.FC<BrowseListProps> = ({
     icon,
     title,
     browseList,
@@ -18,13 +18,13 @@ export const BrowseList: React.VFC<BrowseListProps> = ({
 }: BrowseListProps) => (
     <div {...props}>
         <header className="mb-2 flex w-full items-center justify-between">
-            <section className="flex items-center justify-start">
+            <section className="flex items-center justify-start text-lg">
                 <span className="mr-2 h-4">{icon}</span>
                 <h3 className="font-roboto font-light tracking-wider">{title}</h3>
             </section>
 
             {handleAddClick && (
-                <p className="cursor-pointer" onClick={handleAddClick} role="presentation">
+                <p className="cursor-pointer text-lg" onClick={handleAddClick} role="presentation">
                     <MdAdd />
                 </p>
             )}

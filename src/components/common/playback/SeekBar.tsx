@@ -1,17 +1,32 @@
 import clsx from 'clsx'
 import React from 'react'
-import styled from '@emotion/styled'
 
 const variants = {
     default: `
         bg-white
+        slider-knob:bg-white
     `,
     primary: `
         bg-primary
+        slider-knob:bg-primary
+    `,
+}
+
+const sizes = {
+    default: `
+        h-[1px]
+        slider-knob:w-2
+        slider-knob:h-2
+    `,
+    large: `
+        h-[3px]
+        slider-knob:w-4
+        slider-knob:h-4
     `,
 }
 
 export type SeekBarVariant = keyof typeof variants
+export type SeekBarSize = keyof typeof sizes
 
 export interface SeekBarProps {
     value?: number
@@ -20,33 +35,10 @@ export interface SeekBarProps {
     step?: number
     elapsedTime?: string
     totalTime?: string
-    size?: number
+    size?: SeekBarSize
     variant?: SeekBarVariant
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
-
-const StyledSeekBar = styled.div<SeekBarProps>`
-    input[type='range'] {
-        &::-webkit-slider-thumb {
-            appearance: none;
-            width: ${(props) => `${props.size}px`};
-            height: ${(props) => `${props.size}px`};
-            cursor: pointer;
-            background-color: ${(props) => {
-                switch (props.variant) {
-                    case 'default':
-                        return 'var(--color-text)'
-                    case 'primary':
-                        return 'var(--color-primary)'
-                    default:
-                        return 'var(--color-text)'
-                }
-            }};
-            border: none;
-            border-radius: 50%;
-        }
-    }
-`
 
 export const SeekBar: React.FC<SeekBarProps> = ({
     size,
@@ -60,12 +52,13 @@ export const SeekBar: React.FC<SeekBarProps> = ({
     onChange,
     ...props
 }: SeekBarProps) => (
-    <StyledSeekBar className="flex items-center justify-center" size={size} variant={variant} {...props}>
+    <div className="flex items-center justify-center" {...props}>
         <span className="text-xs">{elapsedTime}</span>
         <input
             className={clsx(
-                'mx-2 h-[1px] w-full appearance-none rounded focus:outline-none active:outline-none',
+                'mx-2 h-[1px] w-full appearance-none rounded focus:outline-none active:outline-none slider-knob:cursor-pointer slider-knob:appearance-none slider-knob:rounded-full slider-knob:border-none',
                 variants[variant || 'default'],
+                sizes[size || 'default'],
             )}
             type="range"
             min={min}
@@ -75,7 +68,7 @@ export const SeekBar: React.FC<SeekBarProps> = ({
             onChange={onChange}
         />
         <span className="text-xs">{totalTime}</span>
-    </StyledSeekBar>
+    </div>
 )
 
 SeekBar.defaultProps = {
@@ -85,5 +78,4 @@ SeekBar.defaultProps = {
     step: 0.0001,
     elapsedTime: '00:00',
     totalTime: '00:00',
-    size: 9,
 }

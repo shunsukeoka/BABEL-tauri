@@ -1,11 +1,8 @@
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import { invoke } from '@tauri-apps/api/tauri'
 import { Tags } from '../common/tag/Tags'
 import { TagProps } from '../common/tag/Tag'
 
-/**
- * Props
- */
 export interface FileItemProps {
     path: string
     name?: string
@@ -15,42 +12,7 @@ export interface FileItemProps {
     handleDoubleClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-/**
- * Styled Component
- */
-const StyledFileItem = styled.div`
-    padding: 1rem;
-    overflow: hidden;
-    cursor: pointer;
-
-    &:not(:first-child) {
-        border-top: 1px solid #efefef;
-    }
-
-    &:hover {
-        opacity: 0.6;
-    }
-
-    .name {
-        margin: 0;
-        overflow: hidden;
-        font-size: 12px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .detail {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 10px;
-    }
-`
-
-/**
- * View Component
- */
-const FileItemView: React.VFC<FileItemProps> = ({
+export const FileItem: React.FC<FileItemProps> = ({
     path,
     name,
     fileType,
@@ -59,20 +21,22 @@ const FileItemView: React.VFC<FileItemProps> = ({
     handleDoubleClick,
     ...props
 }: FileItemProps) => (
-    <StyledFileItem {...props} onDoubleClick={handleDoubleClick} data-path={path}>
-        <h3 className="name">{name}</h3>
-        <div className="detail">
-            <p className="type">{fileType}</p>
-            <p className="length">{audioLength}</p>
+    <div
+        className="cursor-pointer overflow-hidden p-4 hover:opacity-60 not-first-child:border-t-2 not-first-child:border-solid not-first-child:border-t-[#efefef]"
+        {...props}
+        onDoubleClick={handleDoubleClick}
+        data-path={path}
+    >
+        <h3 className="overflow-hidden text-ellipsis whitespace-nowrap text-xs">{name}</h3>
+        <div className="my-2 flex items-center justify-between text-xs">
+            <p>{fileType}</p>
+            <p>{audioLength}</p>
         </div>
         <Tags tags={tags} />
-    </StyledFileItem>
+    </div>
 )
 
-/**
- * Default Props
- */
-FileItemView.defaultProps = {
+FileItem.defaultProps = {
     name: '',
     fileType: '',
     audioLength: '00:00',
@@ -83,13 +47,3 @@ FileItemView.defaultProps = {
         await invoke('audio_play', { path })
     },
 }
-
-/**
- * Component
- */
-const FileItem: React.VFC<FileItemProps> = (props) => <FileItemView {...props} />
-
-/**
- * Export
- */
-export { FileItem }

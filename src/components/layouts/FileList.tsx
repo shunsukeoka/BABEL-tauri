@@ -1,32 +1,13 @@
-import styled from 'styled-components'
-import { mixin } from '@/assets/styles/mixin'
 import { FileItem, FileItemProps } from './FileItem'
 
 export interface IFileListActions {}
 
-/**
- * Props
- */
 export interface FileListProps {
     items?: FileItemProps[]
 }
 
-/**
- * Styled Component
- */
-const StyledFileList = styled.section`
-    min-width: 320px;
-    height: calc(100vh - 78px);
-    margin-right: 16px;
-    overflow-y: scroll;
-    ${mixin.scrollbarHidden}
-`
-
-/**
- * View Component
- */
-const FileListView: React.VFC<FileListProps> = ({ items, ...props }: FileListProps) => (
-    <StyledFileList {...props}>
+export const FileList: React.FC<FileListProps> = ({ items, ...props }: FileListProps) => (
+    <section className="mr-4 h-[calc(100vh-78px)] min-w-[320px] overflow-y-scroll scrollbar-hidden" {...props}>
         {items &&
             items.map((item) => (
                 <FileItem
@@ -38,22 +19,9 @@ const FileListView: React.VFC<FileListProps> = ({ items, ...props }: FileListPro
                     tags={item.tags}
                 />
             ))}
-    </StyledFileList>
+    </section>
 )
 
-/**
- * Default Props
- */
-FileListView.defaultProps = {
+FileList.defaultProps = {
     items: [],
 }
-
-/**
- * Component
- */
-const FileList: React.VFC<FileListProps> = (props) => <FileListView {...props} />
-
-/**
- * Export
- */
-export { FileList }

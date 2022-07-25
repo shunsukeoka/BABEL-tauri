@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import { NextPrevButton } from '../common/playback/NextPrevButton'
 import { PlayButton } from '../common/playback/PlayButton'
 import { RepeatButton } from '../common/playback/RepeatButton'
@@ -6,75 +5,34 @@ import { SeekBar } from '../common/playback/SeekBar'
 
 export interface IPlaybackControlActions {}
 
-/**
- * Props
- */
 interface PlaybackControlProps {
-    className?: string
     isPlaying: boolean
     isRepeat: boolean
     seekValue: number
 }
 
-/**
- * View Component
- */
-const PlaybackControlView: React.VFC<PlaybackControlProps> = ({ ...props }: PlaybackControlProps) => (
-    <div className={props.className}>
-        <div className="pbc-surface">
-            <div className="pbc-buttons">
-                <NextPrevButton reverse size={16} color="#d0d5de" />
-                <PlayButton isPlaying={props.isPlaying} size="default" variant="default" />
-                <NextPrevButton size={16} color="#d0d5de" />
-                <RepeatButton className="pbc-button-repeat" isRepeat={props.isRepeat} color="#d0d5de" />
+export const PlaybackControl: React.FC<PlaybackControlProps> = ({ ...props }: PlaybackControlProps) => (
+    <div className="w-full">
+        <div className="mx-auto my-[0] max-w-[480px]">
+            <div className="relative mb-4 flex items-center justify-center">
+                <div>
+                    <NextPrevButton reverse size="large" variant="default" />
+                </div>
+                <div className="mx-4">
+                    <PlayButton isPlaying={props.isPlaying} size="large" variant="default" />
+                </div>
+                <div>
+                    <NextPrevButton size="large" variant="default" />
+                </div>
+                <div className="absolute right-1">
+                    <RepeatButton isRepeat={props.isRepeat} size="large" variant="default" />
+                </div>
             </div>
-            <div className="pbc-seek-bar">
-                <SeekBar value={props.seekValue} knobColor="#d0d5de" />
+            <div>
+                <SeekBar value={props.seekValue} variant="default" />
             </div>
         </div>
     </div>
 )
 
-/**
- * Default Props
- */
-PlaybackControlView.defaultProps = {}
-
-/**
- * Styled Component
- */
-const StyledPlaybackControl = styled(PlaybackControlView)`
-    width: 100%;
-
-    .pbc-surface {
-        max-width: 480px;
-        margin: 0 auto;
-
-        .pbc-buttons {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-
-            .pbc-button-play {
-                margin: 0 16px;
-            }
-
-            .pbc-button-repeat {
-                position: absolute;
-                right: 3px;
-            }
-        }
-    }
-`
-
-/**
- * Component
- */
-const PlaybackControl: React.VFC<PlaybackControlProps> = ({ ...props }) => <StyledPlaybackControl {...props} />
-
-/**
- * Export
- */
-export { PlaybackControl }
+PlaybackControl.defaultProps = {}
