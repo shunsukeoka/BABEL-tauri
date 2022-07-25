@@ -1,50 +1,12 @@
 import { useState } from 'react'
 import { dialog } from '@tauri-apps/api'
-import styled from 'styled-components'
 import { IFileInfo } from '@/interfaces/file'
 import { DirectoryService } from '@/services/DirectoryService'
 import { BrowseContainer } from '../layouts/contents/BrowseContainer'
 
-/**
- * Props
- */
-interface BrowsePageProps {
-    directories: IFileInfo[]
-    favorites: IFileInfo[]
-    handleAddDirectory?: (event: React.MouseEvent<HTMLInputElement>) => void
-}
+interface BrowsePageProps {}
 
-/**
- * Styled Component
- */
-const StyledBrowsePage = styled.section`
-    width: auto;
-    height: 100%;
-
-    & > section {
-        height: 100%;
-        padding: 0 24px;
-    }
-`
-
-/**
- * View Component
- */
-const BrowsePageView: React.VFC<BrowsePageProps> = ({
-    directories,
-    favorites,
-    handleAddDirectory,
-    ...props
-}: BrowsePageProps) => (
-    <StyledBrowsePage {...props}>
-        <BrowseContainer directories={directories} favorites={favorites} handleAddDirectory={handleAddDirectory} />
-    </StyledBrowsePage>
-)
-
-/**
- * Component
- */
-const BrowsePage: React.VFC = () => {
+export const BrowsePage: React.FC<BrowsePageProps> = ({ ...props }: BrowsePageProps) => {
     const [directories, setDirectories] = useState<IFileInfo[]>([])
     const [favorites] = useState<IFileInfo[]>([])
 
@@ -58,10 +20,9 @@ const BrowsePage: React.VFC = () => {
         setDirectories([...directories, directoryInfo])
     }
 
-    return <BrowsePageView directories={directories} favorites={favorites} handleAddDirectory={addDirectory} />
+    return (
+        <section className="h-full w-auto [&>section]:h-full [&>section]:px-6" {...props}>
+            <BrowseContainer directories={directories} favorites={favorites} handleAddDirectory={addDirectory} />
+        </section>
+    )
 }
-
-/**
- * Export
- */
-export { BrowsePage }

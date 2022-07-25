@@ -16,6 +16,7 @@ module.exports = {
         },
         extend: {
             fontFamily: {
+                'melete-light': ['Melete-Light', 'sans-serif'],
                 roboto: ['Roboto', 'sans-serif'],
                 noto: ['Noto Sans JP', 'sans-serif'],
             },

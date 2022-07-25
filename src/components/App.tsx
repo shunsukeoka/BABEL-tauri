@@ -1,64 +1,24 @@
 import { Routes, Route } from 'react-router-dom'
-import styled from 'styled-components'
 import { BrowsePage } from './pages/Browse'
 import { GlobalHeader } from './layouts/GlobalHeader'
 import { PlaybackControl } from './layouts/PlaybackControl'
 
-/**
- * Props
- */
 interface AppProps {}
 
-/**
- * Styled Component
- */
-const StyledApp = styled.main`
-    .container {
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        height: calc(100vh - 168px);
-    }
-
-    footer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 104px;
-    }
-`
-
-/**
- * View Component
- */
-const AppView: React.VFC<AppProps> = ({ ...props }: AppProps) => (
-    <StyledApp {...props}>
+export const App: React.FC<AppProps> = ({ ...props }: AppProps) => (
+    <main {...props}>
         <GlobalHeader />
 
-        <section className="container">
+        <section className="flex h-[calc(100vh-168px)] items-start justify-start">
             <Routes>
                 <Route path="/" element={<BrowsePage />} />
             </Routes>
         </section>
 
-        <footer>
+        <footer className="flex h-[104px] w-full items-center justify-center">
             <PlaybackControl isPlaying={false} isRepeat={false} seekValue={0.5} />
         </footer>
-    </StyledApp>
+    </main>
 )
 
-/**
- * Default Props
- */
-AppView.defaultProps = {}
-
-/**
- * Component
- */
-const App: React.VFC = () => <AppView />
-
-/**
- * Export
- */
-export { App }
+App.defaultProps = {}

@@ -1,38 +1,20 @@
 import { MdOutlineFolder, MdStarOutline } from 'react-icons/md'
-import styled from 'styled-components'
 import { IFileInfo } from '@/interfaces/file'
 import { BrowseList } from './BrowseList'
 
-/**
- * Props
- */
 interface BrowseContainerProps {
     favorites?: IFileInfo[]
     directories?: IFileInfo[]
     handleAddDirectory?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-/**
- * Styled Component
- */
-const StyledBrowseContainer = styled.section`
-    min-width: 200px;
-
-    & > div {
-        padding: 24px 0;
-    }
-`
-
-/**
- * View Component
- */
-const BrowseContainerView: React.VFC<BrowseContainerProps> = ({
+export const BrowseContainer: React.FC<BrowseContainerProps> = ({
     favorites,
     directories,
     handleAddDirectory,
     ...props
 }: BrowseContainerProps) => (
-    <StyledBrowseContainer {...props}>
+    <section className="min-w-[200px] [&>div]:py-4" {...props}>
         <BrowseList title="Favorites" icon={<MdStarOutline />} browseList={favorites} />
 
         <BrowseList
@@ -41,26 +23,13 @@ const BrowseContainerView: React.VFC<BrowseContainerProps> = ({
             browseList={directories}
             handleAddClick={handleAddDirectory}
         />
-    </StyledBrowseContainer>
+    </section>
 )
 
-/**
- * Default Props
- */
-BrowseContainerView.defaultProps = {
+BrowseContainer.defaultProps = {
     favorites: [],
     directories: [],
     handleAddDirectory: (event) => {
         event.preventDefault()
     },
 }
-
-/**
- * Component
- */
-const BrowseContainer: React.VFC<BrowseContainerProps> = (props) => <BrowseContainerView {...props} />
-
-/**
- * Export
- */
-export { BrowseContainer }
