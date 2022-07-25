@@ -8,6 +8,10 @@ export default defineConfig({
         react({
             exclude: /\.stories\.(t|j)sx?$/,
             include: '**/*.tsx',
+            jsxImportSource: '@emotion/react',
+            babel: {
+                plugins: ['@emotion/babel-plugin'],
+            },
         }),
     ],
     resolve: {
@@ -18,5 +22,8 @@ export default defineConfig({
             },
             { find: '@/', replacement: `${__dirname}/src/` },
         ],
+    },
+    esbuild: {
+        logOverride: { 'this-is-undefined-in-esm': 'silent' },
     },
 })

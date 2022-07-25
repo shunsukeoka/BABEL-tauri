@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const variants = {
     default: `
@@ -27,8 +27,6 @@ export interface SeekBarProps {
 
 const StyledSeekBar = styled.div<SeekBarProps>`
     input[type='range'] {
-        height: 1px;
-
         &::-webkit-slider-thumb {
             appearance: none;
             width: ${(props) => `${props.size}px`};
@@ -66,7 +64,7 @@ export const SeekBar: React.FC<SeekBarProps> = ({
         <span className="text-xs">{elapsedTime}</span>
         <input
             className={clsx(
-                'mx-2 w-full appearance-none rounded focus:outline-none active:outline-none',
+                'mx-2 h-[1px] w-full appearance-none rounded focus:outline-none active:outline-none',
                 variants[variant || 'default'],
             )}
             type="range"
