@@ -1,70 +1,44 @@
-import styled from 'styled-components'
 import { IoMdRepeat } from 'react-icons/io'
+import clsx from 'clsx'
 
-/**
- * Props
- */
+const sizes = {
+    default: 'text-base',
+    small: 'text-sm',
+    large: 'text-lg',
+}
+
+const variants = {
+    default: `
+        text-white
+    `,
+    primary: `
+        text-primary
+    `,
+}
+
+export type RepeatButtonVariant = keyof typeof variants
+export type RepeatButtonSize = keyof typeof sizes
+
 export interface RepeatButtonProps {
-    className?: string
-    color?: string
-    activeColor?: string
-    size?: number
+    variant?: RepeatButtonVariant
+    size?: RepeatButtonSize
     isRepeat?: boolean
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-/**
- * Styled Component
- */
-const StyledRepeatButton = styled.div<RepeatButtonProps>`
-    font-size: ${(props) => `${props.size}px`};
-    cursor: pointer;
-
-    & > svg {
-        color: ${(props) => props.color};
-    }
-
-    &.is-repeat {
-        & > svg {
-            color: ${(props) => props.activeColor};
-        }
-    }
-`
-
-/**
- * View Component
- */
-const RepeatButtonView: React.VFC<RepeatButtonProps> = ({ isRepeat, onClick, ...props }: RepeatButtonProps) => (
-    <StyledRepeatButton
-        className={`${props.className}${isRepeat ? ' is-repeat' : ''}`}
-        isRepeat={isRepeat}
+export const RepeatButton: React.FC<RepeatButtonProps> = ({
+    isRepeat,
+    size,
+    variant,
+    onClick,
+    ...props
+}: RepeatButtonProps) => (
+    <div
+        className={clsx('cursor-pointer', sizes[size || 'default'], isRepeat && variants[variant || 'default'])}
         {...props}
         onClick={onClick}
+        role="presentation"
     >
         <IoMdRepeat />
-    </StyledRepeatButton>
+    </div>
 )
-
-/**
- * Default Props
- */
-RepeatButtonView.defaultProps = {
-    color: '#000',
-    activeColor: '#ff0000',
-    size: 20,
-    isRepeat: false,
-    onClick: (event) => {
-        event.preventDefault()
-        console.log(event)
-    },
-}
-
-/**
- * Component
- */
-const RepeatButton: React.VFC<RepeatButtonProps> = ({ ...props }: RepeatButtonProps) => <RepeatButtonView {...props} />
-
-/**
- * Export
- */
-export { RepeatButton }

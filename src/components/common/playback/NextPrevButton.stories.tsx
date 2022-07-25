@@ -7,5 +7,21 @@ export default {
 } as ComponentMeta<typeof NextPrevButton>
 
 export const Default: ComponentStoryObj<typeof NextPrevButton> = {
-    args: { color: '#000', size: 18, reverse: false },
+    args: { variant: 'default', size: 'default', reverse: false },
+}
+
+export const Reverse: ComponentStoryObj<typeof NextPrevButton> = {
+    args: { variant: 'default', size: 'default', reverse: true },
+}
+
+export const Primary: ComponentStoryObj<typeof NextPrevButton> = {
+    args: { variant: 'primary', size: 'default', reverse: false },
+}
+
+export const Small: ComponentStoryObj<typeof NextPrevButton> = {
+    args: { variant: 'default', size: 'small', reverse: false },
+}
+
+export const Large: ComponentStoryObj<typeof NextPrevButton> = {
+    args: { variant: 'default', size: 'large', reverse: false },
 }

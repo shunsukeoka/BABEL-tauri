@@ -1,59 +1,45 @@
-import styled from 'styled-components'
+// import styled from 'styled-components'
+import clsx from 'clsx'
 import { IoMdSkipForward, IoMdSkipBackward } from 'react-icons/io'
 
-/**
- * Props
- */
+const sizes = {
+    default: 'text-base',
+    small: 'text-sm',
+    large: 'text-lg',
+}
+
+const variants = {
+    default: `
+        text-white
+    `,
+    primary: `
+        text-primary
+    `,
+}
+
+export type NextPrevButtonVariant = keyof typeof variants
+export type NextPrevButtonSize = keyof typeof sizes
+
 export interface NextPrevButtonProps {
-    className?: string
-    color?: string
-    size?: number
+    variant?: NextPrevButtonVariant
+    size?: NextPrevButtonSize
     reverse?: boolean
     onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-/**
- * Styled Component
- */
-const StyledNextPrevButton = styled.div<NextPrevButtonProps>`
-    font-size: ${(props) => `${props.size}px`};
-    cursor: pointer;
-
-    & > svg {
-        color: ${(props) => props.color};
-    }
-`
-
-/**
- * View Component
- */
-const NextPrevButtonView: React.VFC<NextPrevButtonProps> = ({ reverse, onClick, ...props }: NextPrevButtonProps) => (
-    <StyledNextPrevButton reverse={reverse} {...props} onClick={onClick}>
+export const NextPrevButton: React.FC<NextPrevButtonProps> = ({
+    size,
+    variant,
+    reverse,
+    onClick,
+    ...props
+}: NextPrevButtonProps) => (
+    <div
+        className={clsx('cursor-pointer', sizes[size || 'default'], variants[variant || 'default'])}
+        onClick={onClick}
+        {...props}
+        role="presentation"
+    >
         {reverse ? <IoMdSkipBackward /> : <IoMdSkipForward />}
-    </StyledNextPrevButton>
+    </div>
 )
-
-/**
- * Default Props
- */
-NextPrevButtonView.defaultProps = {
-    color: '#000',
-    size: 14,
-    reverse: false,
-    onClick: (event) => {
-        event.preventDefault()
-        console.log(event)
-    },
-}
-
-/**
- * Component
- */
-const NextPrevButton: React.VFC<NextPrevButtonProps> = ({ ...props }: NextPrevButtonProps) => (
-    <NextPrevButtonView {...props} />
-)
-
-/**
- * Export
- */
-export { NextPrevButton }
