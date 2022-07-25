@@ -1,66 +1,39 @@
 import { MdOutlineFolder, MdStarOutline } from 'react-icons/md'
-import styled from 'styled-components'
 import { IFileInfo } from '@/interfaces/file'
 import { BrowseList } from './BrowseList'
 
-/**
- * Props
- */
 interface BrowseContainerProps {
     favorites?: IFileInfo[]
     directories?: IFileInfo[]
     handleAddDirectory?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-/**
- * Styled Component
- */
-const StyledBrowseContainer = styled.section`
-    min-width: 200px;
-
-    & > div {
-        padding: 24px 0;
-    }
-`
-
-/**
- * View Component
- */
-const BrowseContainerView: React.VFC<BrowseContainerProps> = ({
+export const BrowseContainer: React.FC<BrowseContainerProps> = ({
     favorites,
     directories,
     handleAddDirectory,
     ...props
 }: BrowseContainerProps) => (
-    <StyledBrowseContainer {...props}>
-        <BrowseList title="Favorites" icon={<MdStarOutline />} browseList={favorites} />
+    <section className="min-w-[200px]" {...props}>
+        <div className="py-4">
+            <BrowseList title="Favorites" icon={<MdStarOutline />} browseList={favorites} />
+        </div>
 
-        <BrowseList
-            title="Local"
-            icon={<MdOutlineFolder />}
-            browseList={directories}
-            handleAddClick={handleAddDirectory}
-        />
-    </StyledBrowseContainer>
+        <div className="py-4">
+            <BrowseList
+                title="Local"
+                icon={<MdOutlineFolder />}
+                browseList={directories}
+                handleAddClick={handleAddDirectory}
+            />
+        </div>
+    </section>
 )
 
-/**
- * Default Props
- */
-BrowseContainerView.defaultProps = {
+BrowseContainer.defaultProps = {
     favorites: [],
     directories: [],
     handleAddDirectory: (event) => {
         event.preventDefault()
     },
 }
-
-/**
- * Component
- */
-const BrowseContainer: React.VFC<BrowseContainerProps> = (props) => <BrowseContainerView {...props} />
-
-/**
- * Export
- */
-export { BrowseContainer }
