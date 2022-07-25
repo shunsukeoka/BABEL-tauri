@@ -1,60 +1,35 @@
-import styled from 'styled-components'
+// import styled from 'styled-components'
 
-/**
- * Props
- */
+import styled from '@emotion/styled'
+import clsx from 'clsx'
+
 export interface TagProps {
     label?: string
     textColor?: string
     backgroundColor?: string
 }
 
-/**
- * Styled Component
- */
 const StyledTag = styled.div<TagProps>`
-    display: inline-block;
-    padding: 0.2rem 0.5rem;
-    text-align: center;
     background-color: ${(props) => props.backgroundColor};
-    border-radius: 1rem;
-
-    &:not(:first-child) {
-        margin-left: 8px;
-    }
 
     & > p {
-        margin: 0;
-        font-size: 10px;
         color: ${(props) => props.textColor};
-        white-space: nowrap;
     }
 `
 
-/**
- * View Component
- */
-const TagView: React.VFC<TagProps> = ({ label, ...props }: TagProps) => (
-    <StyledTag {...props}>
-        <p>{label}</p>
+export const Tag: React.FC<TagProps> = ({ label, textColor, backgroundColor, ...props }: TagProps) => (
+    <StyledTag
+        className={clsx('inline-block rounded-2xl px-3 py-1 text-center not-first-child:ml-2')}
+        textColor={textColor}
+        backgroundColor={backgroundColor}
+        {...props}
+    >
+        <p className={clsx('whitespace-nowrap text-xs')}>{label}</p>
     </StyledTag>
 )
 
-/**
- * Default Props
- */
-TagView.defaultProps = {
+Tag.defaultProps = {
     label: 'Label',
     textColor: '#fff',
     backgroundColor: '#000',
 }
-
-/**
- * Component
- */
-const Tag: React.VFC<TagProps> = (props) => <TagView {...props} />
-
-/**
- * Export
- */
-export { Tag }
