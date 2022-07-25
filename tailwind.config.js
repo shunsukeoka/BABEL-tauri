@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
     content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
     theme: {
@@ -34,5 +37,24 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        plugin(function ({ addUtilities, addVariant }) {
+            addVariant('not-first-child', '&:not(:first-child)')
+            addVariant('slider-knob', ['&::-webkit-slider-thumb'])
+            addUtilities({
+                '.scrollbar-hidden': {
+                    /* IE and Edge */
+                    '-ms-overflow-style': 'none',
+
+                    /* Firefox */
+                    'scrollbar-width': 'none',
+
+                    /* Safari and Chrome */
+                    '&::-webkit-scrollbar': {
+                        display: 'none',
+                    },
+                },
+            })
+        }),
+    ],
 }

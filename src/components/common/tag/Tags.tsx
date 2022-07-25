@@ -1,27 +1,11 @@
-import styled from 'styled-components'
-import { mixin } from '../../../assets/styles/mixin'
 import { Tag, TagProps } from './Tag'
 
-/**
- * Props
- */
 interface TagsProps {
     tags?: TagProps[]
 }
 
-/**
- * Styled Component
- */
-const StyledTags = styled.div<TagsProps>`
-    overflow-x: scroll;
-    ${mixin.scrollbarHidden}
-`
-
-/**
- * View Component
- */
-const TagsView: React.VFC<TagsProps> = ({ tags, ...props }: TagsProps) => (
-    <StyledTags {...props}>
+export const Tags: React.FC<TagsProps> = ({ tags, ...props }: TagsProps) => (
+    <div className="overflow-x-scroll scrollbar-hidden" {...props}>
         {tags &&
             tags.map((tag) => (
                 <Tag
@@ -31,22 +15,9 @@ const TagsView: React.VFC<TagsProps> = ({ tags, ...props }: TagsProps) => (
                     backgroundColor={tag.backgroundColor}
                 />
             ))}
-    </StyledTags>
+    </div>
 )
 
-/**
- * Default Props
- */
-TagsView.defaultProps = {
+Tags.defaultProps = {
     tags: [],
 }
-
-/**
- * Component
- */
-const Tags: React.VFC<TagsProps> = (props) => <TagsView {...props} />
-
-/**
- * Export
- */
-export { Tags }

@@ -7,5 +7,5 @@ export default {
 } as ComponentMeta<typeof Tag>
 
 export const Default: ComponentStoryObj<typeof Tag> = {
-    args: {},
+    args: { textColor: '#000', backgroundColor: '#fff', label: 'Tag' },
 }
