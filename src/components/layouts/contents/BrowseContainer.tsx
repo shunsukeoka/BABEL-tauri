@@ -15,9 +15,10 @@ export const BrowseContainer: React.FC<BrowseContainerProps> = ({
     ...props
 }: BrowseContainerProps) => (
     <section className="min-w-[200px] [&>div]:py-4" {...props}>
-        <BrowseList title="Favorites" icon={<MdStarOutline />} browseList={favorites} />
+        <BrowseList key="Favorite" title="Favorites" icon={<MdStarOutline />} browseList={favorites} />
 
         <BrowseList
+            key="Local"
             title="Local"
             icon={<MdOutlineFolder />}
             browseList={directories}
