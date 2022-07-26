@@ -4,39 +4,39 @@ import { IDirectoryRepository } from '@/repositories/DirectoryRepository'
 
 interface IFetchAllResponse {
     success: boolean
-    data: IFileInfo[]
+    payload: IFileInfo[]
     err_msg: string
 }
 
 interface IFetchResponse {
     success: boolean
-    data: IFileInfo
+    payload: IFileInfo
     err_msg: string
 }
 
 class DirectoryTauriCommand implements IDirectoryRepository {
     public async fetchAll(): Promise<IFileInfo[]> {
-        const { success, data, err_msg }: IFetchAllResponse = await invoke('get_directories')
+        const { success, payload, err_msg }: IFetchAllResponse = await invoke('get_directories')
 
         if (!success) throw new Error(err_msg)
 
-        return data
+        return payload
     }
 
     public async add(path: string): Promise<IFileInfo> {
-        const { success, data, err_msg }: IFetchResponse = await invoke('add_directory', { path })
+        const { success, payload, err_msg }: IFetchResponse = await invoke('add_directory', { path })
 
         if (!success) throw new Error(err_msg)
 
-        return data
+        return payload
     }
 
     public async delete(path: string): Promise<IFileInfo> {
-        const { success, data, err_msg }: IFetchResponse = await invoke('delete_directory', { path })
+        const { success, payload, err_msg }: IFetchResponse = await invoke('delete_directory', { path })
 
         if (!success) throw new Error(err_msg)
 
-        return data
+        return payload
     }
 }
 
