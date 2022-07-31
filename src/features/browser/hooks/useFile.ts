@@ -4,6 +4,8 @@ import { IFileInfo, IFileBrowserRepository } from '../types'
 export const useFile = (repository: IFileBrowserRepository) => {
     const [files, setFiles] = React.useState<IFileInfo[]>([])
 
+    const fileElementRef = React.useRef<HTMLDivElement>(null)
+
     const getFiles = React.useCallback(
         async (selected: React.RefObject<HTMLDivElement>) => {
             const path = selected.current?.getAttribute('data-path') || ''
@@ -13,5 +15,5 @@ export const useFile = (repository: IFileBrowserRepository) => {
         [repository],
     )
 
-    return { files, getFiles }
+    return { files, fileElementRef, getFiles }
 }

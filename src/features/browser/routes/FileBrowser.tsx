@@ -1,4 +1,5 @@
 import { MdOutlineFolder, MdStarOutline } from 'react-icons/md'
+import { useAudioPlayback } from '@/hooks/useAudioPlayback'
 import { useDirectory } from '../hooks/useDirectory'
 import { DirectoryTauriCommand, FileTauriCommand } from '../api'
 import { RootDirectoryList, FileList } from '../components'
@@ -6,7 +7,8 @@ import { useFile } from '../hooks/useFile'
 
 export const FileBrowser = () => {
     const { directories, directoryElementRef, addDirectory } = useDirectory(new DirectoryTauriCommand())
-    const { files, getFiles } = useFile(new FileTauriCommand())
+    const { files, fileElementRef, getFiles } = useFile(new FileTauriCommand())
+    const { play } = useAudioPlayback()
 
     return (
         <div className="flex h-full w-auto justify-between [&>section]:h-full [&>section]:px-6">
@@ -25,7 +27,11 @@ export const FileBrowser = () => {
             </section>
 
             <section className="mr-4 h-[calc(100vh-78px)] min-w-[320px] overflow-y-scroll scrollbar-hidden">
-                <FileList list={files} />
+                <FileList
+                    ref={fileElementRef}
+                    list={files}
+                    handleDoubleClickItem={() => play(fileElementRef.current?.getAttribute('data-path') || '')}
+                />
             </section>
         </div>
     )
