@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStoryObj } from '@storybook/react'
 import { PlaybackControl } from './PlaybackControl'
 
 export default {
-    title: 'Layouts/PlaybackControl',
+    title: 'Audio/Playback/PlaybackControl',
     component: PlaybackControl,
 } as ComponentMeta<typeof PlaybackControl>
 

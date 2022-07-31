@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStoryObj } from '@storybook/react'
 import { NextPrevButton } from './NextPrevButton'
 
 export default {
-    title: 'Common/PlayBack/NextPrevButton',
+    title: 'Audio/Playback/NextPrevButton',
     component: NextPrevButton,
 } as ComponentMeta<typeof NextPrevButton>
 

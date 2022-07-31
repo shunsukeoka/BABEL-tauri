@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStoryObj } from '@storybook/react'
 import { RepeatButton } from './RepeatButton'
 
 export default {
-    title: 'Common/PlayBack/RepeatButton',
+    title: 'Audio/Playback/RepeatButton',
     component: RepeatButton,
 } as ComponentMeta<typeof RepeatButton>
 

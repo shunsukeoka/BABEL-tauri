@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStoryObj } from '@storybook/react'
 import { FileItem } from './FileItem'
 
 export default {
-    title: 'Layouts/FileItem',
+    title: 'Browser/File/FileItem',
     component: FileItem,
 } as ComponentMeta<typeof FileItem>
 
