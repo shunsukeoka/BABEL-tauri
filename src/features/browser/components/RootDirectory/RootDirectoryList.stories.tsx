@@ -1,17 +1,17 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react'
 import { MdOutlineFolder } from 'react-icons/md'
-import { BrowseList } from './BrowseList'
+import { RootDirectoryList } from './RootDirectoryList'
 
 export default {
-    title: 'Layouts/Contents/BrowseList',
-    component: BrowseList,
-} as ComponentMeta<typeof BrowseList>
+    title: 'Browser/RootDirectory/RootDirectoryList',
+    component: RootDirectoryList,
+} as ComponentMeta<typeof RootDirectoryList>
 
-export const Default: ComponentStoryObj<typeof BrowseList> = {
+export const Default: ComponentStoryObj<typeof RootDirectoryList> = {
     args: {
         icon: <MdOutlineFolder />,
         title: 'LOCAL DIRECTORIES',
-        browseList: [
+        list: [
             {
                 file_path: 'xxx/yyy/zzz',
                 file_name: 'Sample Magic - SM08 NU RAVE',

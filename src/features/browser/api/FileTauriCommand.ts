@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { IFileInfo, IFileBrowserRepository } from '@/features/browser'
+import { IFileInfo, IFileBrowserRepository } from '../types'
 
 interface IResponse {
     success: boolean
