@@ -1,11 +1,13 @@
+import { IFileInfo } from '@/types'
 import * as React from 'react'
 
 export const useAudioPlayback = () => {
-    const [currentFile, setCurrentFile] = React.useState<string>('')
+    const [currentFile, setCurrentFile] = React.useState<IFileInfo>()
 
-    const play = React.useCallback((path: string) => {
-        console.log(path)
-        setCurrentFile(path)
+    const play = React.useCallback((info: IFileInfo | undefined) => {
+        if (!info) return
+        console.log(info)
+        setCurrentFile(info)
         // TODO: play sound file.
     }, [])
 

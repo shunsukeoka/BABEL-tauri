@@ -1,5 +1,6 @@
+import { IFileInfo } from '@/types'
 import { invoke } from '@tauri-apps/api/tauri'
-import { IFileInfo, IDirectoryRepository } from '../types'
+import { IDirectoryRepository } from '../types'
 
 interface IFetchAllResponse {
     success: boolean

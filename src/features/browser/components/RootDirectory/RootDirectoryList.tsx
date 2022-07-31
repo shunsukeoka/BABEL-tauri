@@ -1,6 +1,6 @@
 import React from 'react'
 import { MdAdd } from 'react-icons/md'
-import { IFileInfo } from '../../types'
+import { IFileInfo } from '@/types'
 import { RootDirectoryListItem } from './RootDirectoryListItem'
 
 interface RootDirectoryListProps {

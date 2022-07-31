@@ -1,27 +1,23 @@
-import React from 'react'
+import { IFileInfo } from '@/types'
+import { useCallback } from 'react'
 
 export interface FileItemProps {
-    path: string
-    name?: string
-    audioLength?: string
-    handleDoubleClick?: (event: React.MouseEvent<HTMLInputElement>) => void
+    info?: IFileInfo
+    handleDoubleClick: (info: IFileInfo | undefined) => void
 }
 
-export const FileItem = React.forwardRef<HTMLDivElement, FileItemProps>(
-    ({ path, name, audioLength, handleDoubleClick }: FileItemProps, ref) => (
+export const FileItem = ({ info, handleDoubleClick }: FileItemProps) => {
+    const onDoubleClick = useCallback(() => {
+        handleDoubleClick(info)
+    }, [handleDoubleClick, info])
+
+    return (
         <div
             className="flex cursor-pointer items-center justify-between overflow-hidden px-2 py-4 text-sm hover:opacity-60 not-first-child:border-t-[1px] not-first-child:border-solid not-first-child:border-t-[#efefef]"
-            ref={ref}
-            onDoubleClick={handleDoubleClick}
-            data-path={path}
+            onDoubleClick={onDoubleClick}
         >
-            <p className="overflow-hidden text-ellipsis whitespace-nowrap">{name}</p>
-            <p className="text-sm">{audioLength}</p>
+            <p className="overflow-hidden text-ellipsis whitespace-nowrap">{info?.file_name}</p>
+            <p className="text-sm">00:00</p>
         </div>
-    ),
-)
-
-FileItem.defaultProps = {
-    name: '',
-    audioLength: '00:00',
+    )
 }

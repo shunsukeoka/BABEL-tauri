@@ -8,16 +8,18 @@ export default {
 
 export const Default: ComponentStoryObj<typeof FileItem> = {
     args: {
-        path: '/path/オーディオファイル名',
-        name: 'オーディオファイル名',
-        fileType: 'audio/wave',
-        audioLength: '12:34',
-        tags: [
-            { label: 'sound fx', textColor: '#fff', backgroundColor: '#FF5F00' },
-            { label: 'human action', textColor: '#fff', backgroundColor: '#F8CB2E' },
-            { label: 'footstep', textColor: '#fff', backgroundColor: '#1C6DD0' },
-            { label: 'texture', textColor: '#fff', backgroundColor: '#3E8E7E' },
-            { label: 'recording', textColor: '#fff', backgroundColor: '#8F4068' },
-        ],
+        info: {
+            file_path: '/a/オーディオファイル名-01.wav',
+            file_name: 'オーディオファイル名-01',
+            mime: 'audio/wave',
+            file_size: '1000',
+            is_dir: true,
+            is_file: false,
+            is_symlink: false,
+            readonly: false,
+            created_t: 'yyyy/mm/dd hh:mm:ss',
+            modified_t: 'yyyy/mm/dd hh:mm:ss',
+            accessed_t: 'yyyy/mm/dd hh:mm:ss',
+        },
     },
 }

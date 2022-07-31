@@ -1,5 +1,6 @@
+import { IFileInfo } from '@/types'
 import * as React from 'react'
-import { IFileInfo, IFileBrowserRepository } from '../types'
+import { IFileBrowserRepository } from '../types'
 
 export const useFile = (repository: IFileBrowserRepository) => {
     const [files, setFiles] = React.useState<IFileInfo[]>([])

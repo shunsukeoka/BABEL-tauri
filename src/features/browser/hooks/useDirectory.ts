@@ -1,6 +1,7 @@
+import { IFileInfo } from '@/types'
 import { dialog } from '@tauri-apps/api'
 import * as React from 'react'
-import { IFileInfo, IDirectoryRepository } from '../types'
+import { IDirectoryRepository } from '../types'
 
 export const useDirectory = (repository: IDirectoryRepository) => {
     const [directories, setDirectories] = React.useState<IFileInfo[]>([])
