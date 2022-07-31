@@ -28,6 +28,8 @@ ignorePatterns:
     - vite.config.*
     - tailwind.config.*
     - postcss.config.*
+    - plopfile.js
+    - generators/*/*.js
 overrides:
     - files:
           - '**/__tests__/**/*.[jt]s?(x)'
