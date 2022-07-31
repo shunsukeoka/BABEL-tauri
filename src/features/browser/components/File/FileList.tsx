@@ -8,8 +8,8 @@ export interface FileListProps {
     handleDoubleClickItem?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-export const FileList: React.FC<FileListProps> = ({ list, handleDoubleClickItem, ...props }: FileListProps) => (
-    <section className="mr-4 h-[calc(100vh-78px)] min-w-[320px] overflow-y-scroll scrollbar-hidden" {...props}>
+export const FileList: React.FC<FileListProps> = ({ list, handleDoubleClickItem }: FileListProps) => (
+    <>
         {list &&
             list.map((item) => (
                 <FileItem
@@ -22,7 +22,7 @@ export const FileList: React.FC<FileListProps> = ({ list, handleDoubleClickItem,
                     handleDoubleClick={handleDoubleClickItem}
                 />
             ))}
-    </section>
+    </>
 )
 
 FileList.defaultProps = {

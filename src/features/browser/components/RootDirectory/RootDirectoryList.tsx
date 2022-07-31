@@ -36,6 +36,7 @@ export const RootDirectoryList = React.forwardRef<HTMLDivElement, RootDirectoryL
                                 ref={ref}
                                 key={item.file_path}
                                 name={item.file_name}
+                                path={item.file_path}
                                 handleItemClick={handleItemClick}
                                 handleSubMenu={handleSubMenu}
                             />

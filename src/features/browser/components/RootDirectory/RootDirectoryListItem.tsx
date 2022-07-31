@@ -3,13 +3,18 @@ import { MdDragIndicator, MdMoreVert } from 'react-icons/md'
 
 interface RootDirectoryListItemProps {
     name?: string
+    path?: string
     handleItemClick?: (event: React.MouseEvent<HTMLInputElement>) => void
     handleSubMenu?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
 export const RootDirectoryListItem = React.forwardRef<HTMLDivElement, RootDirectoryListItemProps>(
-    ({ name, handleItemClick, handleSubMenu }: RootDirectoryListItemProps, ref) => (
-        <div className="group relative box-border flex w-full cursor-pointer items-center justify-start pr-4" ref={ref}>
+    ({ name, path, handleItemClick, handleSubMenu }: RootDirectoryListItemProps, ref) => (
+        <div
+            className="group relative box-border flex w-full cursor-pointer items-center justify-start pr-4"
+            ref={ref}
+            data-path={path}
+        >
             {/* TODO: plan - use this library  react-smooth-dnd */}
             <span className="invisible h-4 cursor-grab text-lg group-hover:visible">
                 <MdDragIndicator />
@@ -36,4 +41,5 @@ export const RootDirectoryListItem = React.forwardRef<HTMLDivElement, RootDirect
 
 RootDirectoryListItem.defaultProps = {
     name: 'Name',
+    path: '',
 }

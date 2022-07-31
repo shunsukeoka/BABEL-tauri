@@ -5,13 +5,11 @@ import { RootDirectoryList, FileList } from '../components'
 import { useFile } from '../hooks/useFile'
 
 export const FileBrowser = () => {
-    const { directories, directoryElementRef, addDirectory, selectDirectory } = useDirectory(
-        new DirectoryTauriCommand(),
-    )
-    const { files } = useFile(new FileTauriCommand())
+    const { directories, directoryElementRef, addDirectory } = useDirectory(new DirectoryTauriCommand())
+    const { files, getFiles } = useFile(new FileTauriCommand())
 
     return (
-        <div className="h-full w-auto [&>section]:h-full [&>section]:px-6">
+        <div className="flex h-full w-auto justify-between [&>section]:h-full [&>section]:px-6">
             <section className="min-w-[200px] [&>div]:py-4">
                 <RootDirectoryList key="Favorite" title="Favorites" icon={<MdStarOutline />} />
 
@@ -22,11 +20,11 @@ export const FileBrowser = () => {
                     icon={<MdOutlineFolder />}
                     list={directories}
                     handleAddClick={addDirectory}
-                    handleItemClick={selectDirectory}
+                    handleItemClick={() => getFiles(directoryElementRef)}
                 />
             </section>
 
-            <section>
+            <section className="mr-4 h-[calc(100vh-78px)] min-w-[320px] overflow-y-scroll scrollbar-hidden">
                 <FileList list={files} />
             </section>
         </div>
