@@ -50,9 +50,11 @@ rules:
         react/require-default-props: off,
         react-hooks/rules-of-hooks: error,
         react-hooks/exhaustive-deps: warn,
+        react/jsx-no-useless-fragment: off,
         '@typescript-eslint/naming-convention': off,
         import/no-absolute-path: off,
         import/extensions: ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
+        'no-restricted-imports': ['error', { patterns: ['@/features/*/*'] }],
     }
 settings:
     {
