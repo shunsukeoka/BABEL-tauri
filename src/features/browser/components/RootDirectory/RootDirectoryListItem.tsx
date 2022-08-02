@@ -1,18 +1,27 @@
-import React from 'react'
+import { useCallback } from 'react'
 import { MdDragIndicator, MdMoreVert } from 'react-icons/md'
+import { FileTauriCommand } from '../../api'
+import { useFile } from '../../hooks/useFile'
 
 interface RootDirectoryListItemProps {
     name?: string
     path?: string
-    handleItemClick?: (event: React.MouseEvent<HTMLInputElement>) => void
-    handleSubMenu?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-export const RootDirectoryListItem = React.forwardRef<HTMLDivElement, RootDirectoryListItemProps>(
-    ({ name, path, handleItemClick, handleSubMenu }: RootDirectoryListItemProps, ref) => (
+export const RootDirectoryListItem = ({ name, path }: RootDirectoryListItemProps) => {
+    const { getFiles } = useFile(new FileTauriCommand())
+
+    const handleItemClick = useCallback(() => {
+        if (path) getFiles(path)
+    }, [getFiles, path])
+
+    const handleSubMenu = useCallback(() => {
+        console.log('click sub menu.')
+    }, [])
+
+    return (
         <div
             className="group relative box-border flex w-full cursor-pointer items-center justify-start pr-4"
-            ref={ref}
             data-path={path}
         >
             {/* TODO: plan - use this library  react-smooth-dnd */}
@@ -36,8 +45,8 @@ export const RootDirectoryListItem = React.forwardRef<HTMLDivElement, RootDirect
                 <MdMoreVert />
             </span>
         </div>
-    ),
-)
+    )
+}
 
 RootDirectoryListItem.defaultProps = {
     name: 'Name',

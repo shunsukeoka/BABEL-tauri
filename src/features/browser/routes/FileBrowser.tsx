@@ -1,14 +1,12 @@
 import { MdOutlineFolder, MdStarOutline } from 'react-icons/md'
-import { useAudioPlayback } from '../../../hooks/useAudioPlayback'
+import { useSelector } from '@/stores'
 import { useDirectory } from '../hooks/useDirectory'
-import { DirectoryTauriCommand, FileTauriCommand } from '../api'
+import { DirectoryTauriCommand } from '../api'
 import { RootDirectoryList, FileList } from '../components'
-import { useFile } from '../hooks/useFile'
 
 export const FileBrowser = () => {
-    const { directories, directoryElementRef, addDirectory } = useDirectory(new DirectoryTauriCommand())
-    const { files, getFiles } = useFile(new FileTauriCommand())
-    const { play } = useAudioPlayback()
+    const { directories, addDirectory } = useDirectory(new DirectoryTauriCommand())
+    const files = useSelector((state) => state.files.list)
 
     return (
         <div className="flex h-full w-auto justify-between [&>section]:h-full [&>section]:px-6">
@@ -16,18 +14,16 @@ export const FileBrowser = () => {
                 <RootDirectoryList key="Favorite" title="Favorites" icon={<MdStarOutline />} />
 
                 <RootDirectoryList
-                    ref={directoryElementRef}
                     key="Local"
                     title="Local"
                     icon={<MdOutlineFolder />}
                     list={directories}
                     handleAddClick={addDirectory}
-                    handleItemClick={() => getFiles(directoryElementRef)}
                 />
             </section>
 
             <section className="mr-4 h-[calc(100vh-78px)] min-w-[320px] overflow-y-scroll scrollbar-hidden">
-                <FileList list={files} handleDoubleClickItem={play} />
+                <FileList list={files} />
             </section>
         </div>
     )

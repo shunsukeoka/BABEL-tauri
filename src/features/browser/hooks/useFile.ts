@@ -1,20 +1,19 @@
-import { IFileInfo } from '@/types'
 import * as React from 'react'
+import { useDispatch } from 'react-redux'
+import { updateFiles } from '@/slice/filesSlice'
 import { IFileBrowserRepository } from '../types'
 
 export const useFile = (repository: IFileBrowserRepository) => {
-    const [files, setFiles] = React.useState<IFileInfo[]>([])
-
-    const fileElementRef = React.useRef<HTMLDivElement>(null)
+    const dispatch = useDispatch()
 
     const getFiles = React.useCallback(
-        async (selected: React.RefObject<HTMLDivElement>) => {
-            const path = selected.current?.getAttribute('data-path') || ''
+        async (path: string) => {
             const fileList = await repository.fetch(path)
-            setFiles(fileList)
+
+            dispatch(updateFiles(fileList))
         },
-        [repository],
+        [dispatch, repository],
     )
 
-    return { files, fileElementRef, getFiles }
+    return { getFiles }
 }

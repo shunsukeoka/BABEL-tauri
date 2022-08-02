@@ -57,6 +57,7 @@ rules:
         import/no-absolute-path: off,
         import/extensions: ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
         'no-restricted-imports': ['error', { patterns: ['@/features/*/*'] }],
+        no-param-reassign: off,
     }
 settings:
     {

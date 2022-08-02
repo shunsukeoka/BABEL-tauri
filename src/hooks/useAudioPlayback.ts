@@ -1,27 +1,37 @@
+import { changeCurrentSound } from '@/slice/audioPlaybackSlice'
 import { IFileInfo } from '@/types'
 import { convertFileSrc } from '@tauri-apps/api/tauri'
 import { Howl } from 'howler'
-import * as React from 'react'
+import { useDispatch } from 'react-redux'
 
 export const useAudioPlayback = () => {
-    const [currentFile, setCurrentFile] = React.useState<IFileInfo>()
+    const dispatch = useDispatch()
 
-    const play = React.useCallback((info: IFileInfo | undefined) => {
+    const play = (info: IFileInfo | undefined) => {
         if (!info) return
+
+        console.log(convertFileSrc(info.file_path))
 
         const sound = new Howl({
             src: [convertFileSrc(info.file_path)],
             html5: true,
-            onplay: () => {
-                setCurrentFile(info)
+            preload: true,
+            onload: () => {
+                dispatch(changeCurrentSound(info))
+            },
+            onloaderror: (id, err) => {
+                // FIXME: MEDIA_ERR_SRC_NOT_SUPPORTED occurs when using audio tag on macOS
+                console.warn('failed to load sound file:', { id, err })
             },
             onend: () => {
-                setCurrentFile(undefined)
+                dispatch(changeCurrentSound(undefined))
             },
         })
 
-        sound.play()
-    }, [])
+        console.log(sound)
 
-    return { currentFile, setCurrentFile, play }
+        sound.play()
+    }
+
+    return { play }
 }
