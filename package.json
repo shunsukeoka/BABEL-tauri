@@ -7,13 +7,13 @@
         "dev": "vite",
         "build": "tsc && vite build",
         "preview": "vite preview",
-        "format:check": "prettier --check --ignore-path .gitignore --plugin-search-dir=. \"**/*.{json,yml,css,scss,js,jsx,ts,tsx,cjs}\"",
-        "format:fix": "prettier --write --ignore-path .gitignore --plugin-search-dir=. \"**/*.{json,yml,css,scss,js,jsx,ts,tsx,cjs}\"",
-        "lint": "eslint --ignore-path .gitignore \"**/*.{js,jsx,ts,tsx,cjs}\"",
-        "lint:fix": "eslint --fix --ignore-path .gitignore \"**/*.{js,jsx,ts,tsx,cjs}\"",
-        "stylelint": "stylelint --ignore-path .gitignore \"**/*.{css,scss,jsx,tsx}\"",
-        "stylelint:fix": "stylelint --fix --ignore-path .gitignore \"**/*.{css,scss,jsx,tsx}\"",
-        "fix": "npm-run-all -s format:fix lint:fix stylelint:fix",
+        "prettier": "prettier --write --ignore-path .gitignore --plugin-search-dir=. \"**/*.{json,yml,css,scss,js,jsx,ts,tsx,cjs}\"",
+        "check-format": "npm run prettier -- --list-different",
+        "lint": "eslint --ext \".js,.jsx,.ts,.tsx,.cjs\" --ignore-path .gitignore .",
+        "lint:fix": "npm run lint -- --fix",
+        "stylelint": "stylelint \"**/*.{css,scss,jsx,tsx}\" --ignore-path .gitignore",
+        "stylelint:fix": "npm run stylelint -- --fix",
+        "fix": "npm-run-all -s prettier lint:fix stylelint:fix",
         "test": "jest --config ./jest.config.json",
         "test:coverage": "npm run test -- --coverage",
         "test:watch": "npm run test -- --watch",
@@ -26,13 +26,13 @@
     },
     "lint-staged": {
         "*.{json,css,scss,js,jsx,ts,tsx,cjs}": [
-            "prettier --write"
+            "npm run prettier"
         ],
         "*.{js,jsx,ts,tsx,cjs}": [
-            "eslint --fix"
+            "npm run lint:fix"
         ],
         "*.{css,scss,jsx,tsx}": [
-            "stylelint --fix"
+            "npm run stylelint:fix"
         ]
     },
     "dependencies": {
