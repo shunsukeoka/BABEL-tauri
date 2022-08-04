@@ -8,10 +8,6 @@ module.exports = {
     framework: '@storybook/react',
     core: {
         builder: '@storybook/builder-vite',
-        disableTelemetry: true,
-    },
-    features: {
-        storyStoreV7: true,
     },
     async viteFinal(config, { configType }) {
         let { config: userConfig } = await loadConfigFromFile(path.resolve(__dirname, '../vite.config.ts'))
