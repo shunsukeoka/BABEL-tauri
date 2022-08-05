@@ -7,11 +7,7 @@ import { useDispatch } from 'react-redux'
 export const useAudioPlayback = () => {
     const dispatch = useDispatch()
 
-    const play = (info: IFileInfo | undefined) => {
-        if (!info) return
-
-        console.log(convertFileSrc(info.file_path))
-
+    const play = (info: IFileInfo) => {
         const sound = new Howl({
             src: [convertFileSrc(info.file_path)],
             html5: true,
@@ -28,7 +24,7 @@ export const useAudioPlayback = () => {
             },
         })
 
-        console.log(sound)
+        sound.volume(0.1)
 
         sound.play()
     }

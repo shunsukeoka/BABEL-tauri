@@ -1,11 +1,11 @@
 import { IFileInfo } from '@/types'
+import { Result } from 'neverthrow'
 
 export interface IDirectoryRepository {
-    fetchAll: () => Promise<IFileInfo[]>
-    add: (path: string) => Promise<IFileInfo>
-    delete: (path: string) => Promise<IFileInfo>
+    add: (path: string) => Promise<Result<IFileInfo, Error>>
+    delete: (path: string) => Promise<Result<IFileInfo, Error>>
 }
 
 export interface IFileBrowserRepository {
-    fetch: (path: string) => Promise<IFileInfo[]>
+    fetch: (path: string) => Promise<Result<IFileInfo[], Error>>
 }

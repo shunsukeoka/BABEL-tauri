@@ -1,42 +1,31 @@
-import { IFileInfo } from '@/types'
+import { IFileInfo, IResponse } from '@/types'
 import { invoke } from '@tauri-apps/api/tauri'
+import { err, ok, Result } from 'neverthrow'
 import { IDirectoryRepository } from '../types'
 
-interface IFetchAllResponse {
-    success: boolean
-    payload: IFileInfo[]
-    err_msg: string
-}
-
-interface IFetchResponse {
-    success: boolean
-    payload: IFileInfo
-    err_msg: string
-}
-
 class DirectoryTauriCommand implements IDirectoryRepository {
-    public async fetchAll(): Promise<IFileInfo[]> {
-        const { success, payload, err_msg }: IFetchAllResponse = await invoke('get_directories')
+    public async add(path: string): Promise<Result<IFileInfo, Error>> {
+        try {
+            const { success, payload, err_msg } = await invoke<IResponse<IFileInfo>>('add_directory', { path })
 
-        if (!success) throw new Error(err_msg)
+            if (!success) err(new Error(err_msg))
 
-        return payload
+            return ok(payload)
+        } catch (error) {
+            return err(new Error('ディレクトリの追加に失敗しました。'))
+        }
     }
 
-    public async add(path: string): Promise<IFileInfo> {
-        const { success, payload, err_msg }: IFetchResponse = await invoke('add_directory', { path })
+    public async delete(path: string): Promise<Result<IFileInfo, Error>> {
+        try {
+            const { success, payload, err_msg } = await invoke<IResponse<IFileInfo>>('delete_directory', { path })
 
-        if (!success) throw new Error(err_msg)
+            if (!success) err(new Error(err_msg))
 
-        return payload
-    }
-
-    public async delete(path: string): Promise<IFileInfo> {
-        const { success, payload, err_msg }: IFetchResponse = await invoke('delete_directory', { path })
-
-        if (!success) throw new Error(err_msg)
-
-        return payload
+            return ok(payload)
+        } catch (error) {
+            return err(new Error('ディレクトリの削除に失敗しました。'))
+        }
     }
 }
 

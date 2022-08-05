@@ -10,7 +10,7 @@ export const useFile = (repository: IFileBrowserRepository) => {
         async (path: string) => {
             const fileList = await repository.fetch(path)
 
-            dispatch(updateFiles(fileList))
+            if (fileList.isOk()) dispatch(updateFiles(fileList.value))
         },
         [dispatch, repository],
     )

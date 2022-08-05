@@ -10,9 +10,7 @@ export const FileItem = ({ info }: FileItemProps) => {
     const { play } = useAudioPlayback()
 
     const handleDoubleClick = useCallback(() => {
-        console.log(info)
-
-        play(info)
+        if (info) play(info)
     }, [info, play])
 
     return (

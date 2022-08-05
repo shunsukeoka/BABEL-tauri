@@ -11,3 +11,9 @@ export interface IFileInfo {
     modified_t: string
     accessed_t: string
 }
+
+export interface IResponse<T> {
+    success: boolean
+    payload: T
+    err_msg: string
+}

@@ -11,7 +11,7 @@ export const useDirectory = (repository: IDirectoryRepository) => {
 
         const directoryInfo = await repository.add(path)
 
-        setDirectories([...directories, directoryInfo])
+        if (directoryInfo.isOk()) setDirectories([...directories, directoryInfo.value])
     }, [directories, repository])
 
     return { directories, addDirectory }
