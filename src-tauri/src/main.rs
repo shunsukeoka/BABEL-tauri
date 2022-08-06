@@ -12,13 +12,6 @@ fn main() -> anyhow::Result<()> {
 			file::add_directory,
 			file::get_directory_info
 		])
-		.setup(move |app| {
-			// let app_handle = app.handle();
-
-			// let main_window = app.get_window("main").unwrap();
-
-			Ok(())
-		})
 		.run(tauri::generate_context!())
 		.expect("error while running tauri application");
 

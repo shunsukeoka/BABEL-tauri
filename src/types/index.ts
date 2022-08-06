@@ -1,3 +1,10 @@
+export interface AudioProperties {
+    channels: number
+    bit_depth: number
+    sample_rate: number
+    duration: number
+}
+
 export interface IFileInfo {
     file_path: string
     file_name: string
@@ -7,6 +14,7 @@ export interface IFileInfo {
     is_file: boolean
     is_symlink: boolean
     readonly: boolean
+    audio_properties: AudioProperties
     created_t: string
     modified_t: string
     accessed_t: string

@@ -1,5 +1,6 @@
 use crate::helper::convert::systemtime2string;
-use anyhow::{Context, Result};
+use anyhow::Context;
+use lofty::{AudioFile, Probe};
 use serde::Serialize;
 use std::fs;
 use std::path::Path;
@@ -17,6 +18,14 @@ pub enum FileInfoError {
 }
 
 #[derive(Debug, Serialize)]
+pub struct AudioProperties {
+	pub channels: Option<u8>,
+	pub bit_depth: Option<u8>,
+	pub sample_rate: Option<u32>,
+	pub duration: f64,
+}
+
+#[derive(Debug, Serialize)]
 pub struct FileInfo {
 	pub file_path: PathBuf,
 	pub file_name: String,
@@ -26,6 +35,7 @@ pub struct FileInfo {
 	pub is_file: bool,
 	pub is_symlink: bool,
 	pub readonly: bool,
+	pub audio_properties: Option<AudioProperties>,
 	pub created_t: String,
 	pub modified_t: String,
 	pub accessed_t: String,
@@ -51,7 +61,7 @@ pub fn read_directory(path: &String) -> anyhow::Result<Vec<FileInfo>, FileInfoEr
 					file_name: entry_ptr
 						.file_name()
 						.into_string()
-						.unwrap_or("".to_string()),
+						.unwrap_or_else(|_| "".to_string()),
 					file_size: metadata.len(),
 					mime: mime_guess::from_path(entry_ptr.path())
 						.first_raw()
@@ -61,6 +71,7 @@ pub fn read_directory(path: &String) -> anyhow::Result<Vec<FileInfo>, FileInfoEr
 					is_file: metadata.is_file(),
 					is_symlink: metadata.is_symlink(),
 					readonly: metadata.permissions().readonly(),
+					audio_properties: create_audio_properties(entry_ptr.path().as_path()),
 					created_t: systemtime2string(
 						metadata
 							.created()
@@ -118,6 +129,7 @@ pub fn read_file(path: &String) -> anyhow::Result<FileInfo, FileInfoError> {
 		is_file: metadata.is_file(),
 		is_symlink: metadata.is_symlink(),
 		readonly: metadata.permissions().readonly(),
+		audio_properties: create_audio_properties(entry),
 		created_t: systemtime2string(
 			metadata
 				.created()
@@ -139,6 +151,25 @@ pub fn read_file(path: &String) -> anyhow::Result<FileInfo, FileInfoError> {
 	};
 
 	Ok(file_info)
+}
+
+fn create_audio_properties(path: &Path) -> Option<AudioProperties> {
+	if let Ok(tagged_file) = Probe::open(path) {
+		if let Ok(tag) = tagged_file.read(true) {
+			let properties = tag.properties();
+
+			Some(AudioProperties {
+				channels: properties.channels(),
+				bit_depth: properties.bit_depth(),
+				sample_rate: properties.sample_rate(),
+				duration: properties.duration().as_secs_f64() * 1000.0,
+			})
+		} else {
+			None
+		}
+	} else {
+		None
+	}
 }
 
 #[derive(Debug, Serialize)]
