@@ -1,7 +1,7 @@
 export interface IFileInfo {
     file_path: string
     file_name: string
-    file_size: string
+    file_size: number
     mime: string
     is_dir: boolean
     is_file: boolean

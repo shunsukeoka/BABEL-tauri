@@ -1,4 +1,4 @@
-import { useAudioPlayback } from '@/hooks/useAudioPlayback'
+import { usePlayback } from '@/features/audio'
 import { IFileInfo } from '@/types'
 import { useCallback } from 'react'
 
@@ -7,11 +7,11 @@ export interface FileItemProps {
 }
 
 export const FileItem = ({ info }: FileItemProps) => {
-    const { play } = useAudioPlayback()
+    const { playSoundFile } = usePlayback()
 
     const handleDoubleClick = useCallback(() => {
-        if (info) play(info)
-    }, [info, play])
+        if (info) playSoundFile(info)
+    }, [info, playSoundFile])
 
     return (
         <div
