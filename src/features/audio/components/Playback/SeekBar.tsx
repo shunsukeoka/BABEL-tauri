@@ -38,6 +38,8 @@ export interface SeekBarProps {
     size?: SeekBarSize
     variant?: SeekBarVariant
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onMouseUp?: (event: React.MouseEvent<HTMLInputElement>) => void
+    onMouseDown?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
 export const SeekBar: React.FC<SeekBarProps> = ({
@@ -50,13 +52,15 @@ export const SeekBar: React.FC<SeekBarProps> = ({
     step,
     value,
     onChange,
+    onMouseDown,
+    onMouseUp,
     ...props
 }: SeekBarProps) => (
     <div className="flex items-center justify-center" {...props}>
         <span className="text-xs">{elapsedTime}</span>
         <input
             className={clsx(
-                'mx-2 h-[1px] w-full appearance-none rounded focus:outline-none active:outline-none slider-knob:cursor-pointer slider-knob:appearance-none slider-knob:rounded-full slider-knob:border-none',
+                'mx-2 h-[1px] w-[calc(100%-64px)] appearance-none rounded focus:outline-none active:outline-none slider-knob:cursor-pointer slider-knob:appearance-none slider-knob:rounded-full slider-knob:border-none',
                 variants[variant || 'default'],
                 sizes[size || 'default'],
             )}
@@ -66,6 +70,8 @@ export const SeekBar: React.FC<SeekBarProps> = ({
             step={step}
             value={value}
             onChange={onChange}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
         />
         <span className="text-xs">{totalTime}</span>
     </div>
@@ -76,6 +82,6 @@ SeekBar.defaultProps = {
     min: 0.0,
     max: 1.0,
     step: 0.0001,
-    elapsedTime: '00:00',
-    totalTime: '00:00',
+    elapsedTime: '--:--',
+    totalTime: '--:--',
 }

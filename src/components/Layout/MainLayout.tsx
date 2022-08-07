@@ -46,7 +46,7 @@ const GlobalHeader = () => (
 
 const GlobalFooter = () => (
     <footer className="flex h-[104px] w-full items-center justify-center">
-        <PlaybackControl isPlaying={false} isRepeat={false} seekValue={0.5} />
+        <PlaybackControl />
     </footer>
 )
 
