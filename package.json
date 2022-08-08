@@ -22,7 +22,8 @@
         "generate": "plop",
         "prepare": "husky install",
         "lint-staged": "lint-staged",
-        "commitlint": "commitlint"
+        "commitlint": "commitlint",
+        "devtools": "npx react-devtools"
     },
     "lint-staged": {
         "*.{json,css,scss,js,jsx,ts,tsx,cjs}": [
