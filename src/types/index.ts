@@ -14,7 +14,7 @@ export interface IFileInfo {
     is_file: boolean
     is_symlink: boolean
     readonly: boolean
-    audio_properties: AudioProperties
+    audio_properties: AudioProperties | null
     created_t: string
     modified_t: string
     accessed_t: string

@@ -2,7 +2,7 @@ import { useAnimationFrame } from '@/hooks/useAnimationFrame'
 import { toggleRepeat } from '@/slice/audioPlaybackSlice'
 import { useSelector } from '@/stores'
 import { millisToDisplayMS } from '@/utils/time'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { audioEngine } from '../../utils'
 import { NextPrevButton } from './NextPrevButton'
@@ -17,6 +17,25 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
     const dispatch = useDispatch()
 
     const [elapsedTime, setElapsedTime] = useState<number>(0)
+
+    const seekBarValue = useMemo(
+        () =>
+            currentSound && currentSound.audio_properties ? elapsedTime / currentSound.audio_properties.duration : 0,
+        [currentSound, elapsedTime],
+    )
+
+    const seekBarElapsedTime = useMemo(
+        () => (currentSound ? millisToDisplayMS(elapsedTime) : '--:--'),
+        [currentSound, elapsedTime],
+    )
+
+    const seekBarTotalTime = useMemo(
+        () =>
+            currentSound && currentSound.audio_properties
+                ? millisToDisplayMS(currentSound?.audio_properties.duration)
+                : '--:--',
+        [currentSound],
+    )
 
     const handlePlayButton = useCallback(() => {
         if (!audioEngine.playbackInstance) return
@@ -33,7 +52,7 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
     }, [dispatch])
 
     const handleChangeSeekBar = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!currentSound || !audioEngine.playbackInstance) return
+        if (!currentSound || !currentSound.audio_properties || !audioEngine.playbackInstance) return
 
         const amount = e.target.value
         const ms = currentSound.audio_properties.duration * Number(amount)
@@ -83,9 +102,9 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
                 </div>
                 <div>
                     <SeekBar
-                        value={currentSound ? elapsedTime / currentSound.audio_properties.duration : 0}
-                        elapsedTime={currentSound ? millisToDisplayMS(elapsedTime) : '--:--'}
-                        totalTime={currentSound ? millisToDisplayMS(currentSound?.audio_properties.duration) : '--:--'}
+                        value={seekBarValue}
+                        elapsedTime={seekBarElapsedTime}
+                        totalTime={seekBarTotalTime}
                         onChange={handleChangeSeekBar}
                         onMouseDown={handleMouseDownSeekBar}
                         onMouseUp={handleMouseUpSeekBar}
