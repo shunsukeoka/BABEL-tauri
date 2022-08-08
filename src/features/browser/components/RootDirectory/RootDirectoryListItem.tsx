@@ -16,7 +16,7 @@ export const RootDirectoryListItem = ({ name, path }: RootDirectoryListItemProps
     }, [getFiles, path])
 
     const handleSubMenu = useCallback(() => {
-        console.log('click sub menu.')
+        // TODO: implement sub menu feature
     }, [])
 
     return (

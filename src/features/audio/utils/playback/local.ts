@@ -13,7 +13,8 @@ export class PlaybackLocalFile extends BasePlayback {
         this.handler = new Howl({
             src: [convertFileSrc(file.file_path)],
             volume: 1.0,
-            html5: file.file_size > 10000,
+            html5: false,
+            // html5: file.file_size > 10000,
             loop: false,
             preload: true,
         })

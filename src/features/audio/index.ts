@@ -4,6 +4,4 @@ export * from './components/Playback/NextPrevButton'
 export * from './components/Playback/RepeatButton'
 export * from './components/Playback/SeekBar'
 
-export * from './hooks'
-
 export * from './utils'

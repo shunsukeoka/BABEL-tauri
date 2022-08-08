@@ -7,5 +7,5 @@ export default {
 } as ComponentMeta<typeof PlaybackControl>
 
 export const Default: ComponentStoryObj<typeof PlaybackControl> = {
-    args: { isPlaying: false, isRepeat: false, seekValue: 0.1 },
+    args: {},
 }

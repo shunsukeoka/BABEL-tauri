@@ -4,18 +4,16 @@ import { PlaybackLocalFile } from './playback/local'
 
 export class AudioEngine {
     constructor() {
-        this.instances = []
-        this.isMute = false
+        this.playback = undefined
+        this.isMasterMute = false
 
         Howler.usingWebAudio = true
     }
 
     public setupPlaybackLocalFile(file: IFileInfo): PlaybackLocalFile {
-        const instance = new PlaybackLocalFile(file)
+        this.playback = new PlaybackLocalFile(file)
 
-        this.instances.push(instance)
-
-        return instance
+        return this.playback
     }
 
     public checkSupportedCodec(ext: string): boolean {
@@ -26,28 +24,23 @@ export class AudioEngine {
         Howler.stop()
     }
 
-    public toggleMute() {
-        if (this.isMute) {
+    public toggleMaterMute() {
+        if (this.isMasterMute) {
             Howler.mute(false)
-            this.isMute = false
+            this.isMasterMute = false
         } else {
             Howler.mute(true)
-            this.isMute = true
+            this.isMasterMute = true
         }
     }
 
-    public destroyAll() {
+    public destroy() {
         Howler.stop()
         Howler.unload()
-        this.instances = []
     }
 
-    public getInstance(id: string): BasePlayback | undefined {
-        return this.instances.find((ins) => ins.instanceId === id)
-    }
-
-    public get playbackInstances(): BasePlayback[] {
-        return this.instances
+    public get playbackInstance(): BasePlayback | undefined {
+        return this.playback
     }
 
     public get context(): AudioContext {
@@ -62,7 +55,7 @@ export class AudioEngine {
         Howler.volume(vol)
     }
 
-    private instances: BasePlayback[]
+    private playback: BasePlayback | undefined
 
-    private isMute: boolean
+    private isMasterMute: boolean
 }
