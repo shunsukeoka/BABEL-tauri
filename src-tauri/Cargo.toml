@@ -1,13 +1,13 @@
 [package]
 name = "app"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "sound files management application"
+authors = ["shunsukeoka"]
 license = ""
 repository = ""
 default-run = "app"
 edition = "2021"
-rust-version = "1.57"
+rust-version = "1.62.1"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -18,13 +18,12 @@ tauri-build = { version = "1.0.4", features = [] }
 serde_json = "1.0.83"
 serde = { version = "1.0.143", features = ["derive"] }
 tauri = { version = "1.0.4", features = ["api-all"] }
-anyhow = "1.0.60"
+anyhow = "=1.0.59"
 thiserror = "1.0.32"
 chrono = "0.4.21"
 mime_guess = "2.0.4"
 crossbeam-channel = "0.5.6"
 kira = "0.6.0"
-kira-loaders = "0.1.0-beta.3"
 lofty = "0.7.3"
 
 [features]
