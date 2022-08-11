@@ -1,4 +1,2 @@
-import { format } from 'date-fns'
-
-export const millisToDisplayMS = (ms: number): string => format(ms, 'mm:ss')
-export const millisToDisplayHMS = (ms: number): string => format(ms, 'hh:mm:ss')
+export const timeToDisplayMS = (sec: number): string => new Date(sec * 1000).toISOString().substring(14, 19)
+export const timeToDisplayHMS = (sec: number): string => new Date(sec * 1000).toISOString().substring(11, 19)
