@@ -3,17 +3,35 @@
 	windows_subsystem = "windows"
 )]
 
+use audio::AudioEngine;
+use std::sync::{Arc, Mutex};
+use tauri::Manager;
+
+mod audio;
 mod file;
 mod helper;
 
 fn main() -> anyhow::Result<()> {
-	tauri::Builder::default()
+	let builder = tauri::Builder::default()
 		.invoke_handler(tauri::generate_handler![
+			audio::play,
+			audio::pause,
+			audio::resume,
+			audio::stop,
+			audio::seek,
+			audio::get_playback_state,
 			file::add_directory,
 			file::get_directory_info
 		])
-		.run(tauri::generate_context!())
+		.build(tauri::generate_context!())
 		.expect("error while running tauri application");
 
+	// audio state
+	let audio_engine = Arc::new(Mutex::new(
+		AudioEngine::new().expect("error initialize audio engine"),
+	));
+	builder.manage(audio_engine);
+
+	builder.run(|_, _| ());
 	Ok(())
 }

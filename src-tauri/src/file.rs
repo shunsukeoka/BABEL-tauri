@@ -1,6 +1,7 @@
 use crate::helper::convert::systemtime2string;
 use anyhow::Context;
 use lofty::{AudioFile, Probe};
+use serde::Deserialize;
 use serde::Serialize;
 use std::fs;
 use std::path::Path;
@@ -17,7 +18,7 @@ pub enum FileInfoError {
 	ReadMetadataError(),
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct AudioProperties {
 	pub channels: Option<u8>,
 	pub bit_depth: Option<u8>,
@@ -25,7 +26,7 @@ pub struct AudioProperties {
 	pub duration: f64,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct FileInfo {
 	pub file_path: PathBuf,
 	pub file_name: String,
@@ -162,7 +163,7 @@ fn create_audio_properties(path: &Path) -> Option<AudioProperties> {
 				channels: properties.channels(),
 				bit_depth: properties.bit_depth(),
 				sample_rate: properties.sample_rate(),
-				duration: properties.duration().as_secs_f64() * 1000.0,
+				duration: properties.duration().as_secs_f64(),
 			})
 		} else {
 			None

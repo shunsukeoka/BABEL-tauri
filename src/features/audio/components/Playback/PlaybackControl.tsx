@@ -1,10 +1,11 @@
 import { useAnimationFrame } from '@/hooks/useAnimationFrame'
-import { toggleRepeat } from '@/slice/audioPlaybackSlice'
+import { changeCurrentSound, changePlayingState, toggleRepeat } from '@/slice/audioPlaybackSlice'
 import { useSelector } from '@/stores'
-import { millisToDisplayMS } from '@/utils/time'
+import { timeToDisplayMS } from '@/utils/time'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { audioEngine } from '../../utils'
+import { AudioTauriCommand } from '../../api'
+import { PLAYBACK_STATE } from '../../types'
 import { NextPrevButton } from './NextPrevButton'
 import { PlayButton } from './PlayButton'
 import { RepeatButton } from './RepeatButton'
@@ -13,6 +14,8 @@ import { SeekBar } from './SeekBar'
 interface PlaybackControlProps {}
 
 export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
+    const command = new AudioTauriCommand()
+
     const { currentSound, isPlaying, isRepeat } = useSelector((state) => state.audio)
     const dispatch = useDispatch()
 
@@ -25,62 +28,70 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
     )
 
     const seekBarElapsedTime = useMemo(
-        () => (currentSound ? millisToDisplayMS(elapsedTime) : '--:--'),
+        () => (currentSound ? timeToDisplayMS(elapsedTime) : '--:--'),
         [currentSound, elapsedTime],
     )
 
     const seekBarTotalTime = useMemo(
         () =>
             currentSound && currentSound.audio_properties
-                ? millisToDisplayMS(currentSound?.audio_properties.duration)
+                ? timeToDisplayMS(currentSound?.audio_properties.duration)
                 : '--:--',
         [currentSound],
     )
 
     const handlePlayButton = useCallback(() => {
-        if (!audioEngine.playbackInstance) return
-
         if (isPlaying) {
-            audioEngine.playbackInstance.pause()
+            command.pauseSoundFile()
+            dispatch(changePlayingState(false))
         } else {
-            audioEngine.playbackInstance.play()
+            command.resumeSoundFile()
+            dispatch(changePlayingState(true))
         }
-    }, [isPlaying])
+    }, [command, dispatch, isPlaying])
 
     const handleRepeatButton = useCallback(() => {
         dispatch(toggleRepeat())
     }, [dispatch])
 
     const handleChangeSeekBar = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!currentSound || !currentSound.audio_properties || !audioEngine.playbackInstance) return
+        if (currentSound && currentSound.audio_properties) {
+            const amount = e.target.value
+            const sec = currentSound.audio_properties.duration * Number(amount)
 
-        const amount = e.target.value
-        const ms = currentSound.audio_properties.duration * Number(amount)
-        setElapsedTime(ms)
-        audioEngine.playbackInstance.seek(ms / 1000.0)
+            setElapsedTime(sec)
+
+            command.seekSoundFile(sec)
+        }
     }
 
     const handleMouseDownSeekBar = useCallback(() => {
-        if (!isPlaying) return
-
-        audioEngine.playbackInstance?.pause()
-    }, [isPlaying])
+        if (isPlaying) {
+            command.pauseSoundFile()
+            dispatch(changePlayingState(false))
+        }
+    }, [command, dispatch, isPlaying])
 
     const handleMouseUpSeekBar = useCallback(() => {
-        if (isPlaying) return
-
-        audioEngine.playbackInstance?.play()
-    }, [isPlaying])
+        if (!isPlaying) {
+            command.resumeSoundFile()
+            dispatch(changePlayingState(true))
+        }
+    }, [command, dispatch, isPlaying])
 
     useAnimationFrame(
         isPlaying,
-        useCallback(() => {
-            const playback = audioEngine.playbackInstance
+        useCallback(async () => {
+            const playbackState = await command.getPlaybackState()
+            playbackState.map(async ({ state, elapsed_time }) => {
+                setElapsedTime(elapsed_time)
 
-            if (!playback) return
-
-            setElapsedTime(playback.currentTimeMillis)
-        }, []),
+                if (state === PLAYBACK_STATE.STOPPED) {
+                    dispatch(changePlayingState(false))
+                    dispatch(changeCurrentSound(undefined))
+                }
+            })
+        }, [command, dispatch]),
     )
 
     return (

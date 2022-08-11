@@ -1,9 +1,9 @@
 import { IFileInfo } from '@/types'
-import { format } from 'date-fns'
 import { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
+import { AudioTauriCommand } from '@/features/audio'
 import { changeCurrentSound, changePlayingState } from '@/slice/audioPlaybackSlice'
-import { audioEngine } from '@/features/audio'
+import { useDispatch } from 'react-redux'
+import { timeToDisplayMS } from '@/utils/time'
 
 export interface FileItemProps {
     info?: IFileInfo
@@ -15,29 +15,11 @@ export const FileItem = ({ info }: FileItemProps) => {
     const handleDoubleClick = useCallback(() => {
         if (!info || !info.audio_properties) return
 
-        if (audioEngine.playbackInstance) {
-            dispatch(changePlayingState(false))
-            dispatch(changeCurrentSound(undefined))
-            audioEngine.playbackInstance.destroy()
-        }
+        const command = new AudioTauriCommand()
+        command.playSoundFile(info?.file_path)
 
-        const playback = audioEngine.setupPlaybackLocalFile(info)
-
-        playback.handler.on('play', () => {
-            dispatch(changePlayingState(true))
-            dispatch(changeCurrentSound(info))
-        })
-
-        playback.handler.on('pause', () => {
-            dispatch(changePlayingState(false))
-        })
-
-        playback.handler.on('end', () => {
-            dispatch(changePlayingState(false))
-            dispatch(changeCurrentSound(undefined))
-        })
-
-        playback.play()
+        dispatch(changePlayingState(true))
+        dispatch(changeCurrentSound(info))
     }, [dispatch, info])
 
     return (
@@ -46,7 +28,7 @@ export const FileItem = ({ info }: FileItemProps) => {
             onDoubleClick={handleDoubleClick}
         >
             <p className="overflow-hidden text-ellipsis whitespace-nowrap">{info?.file_name}</p>
-            <p className="text-sm">{info?.audio_properties ? format(info.audio_properties.duration, 'mm:ss') : ''}</p>
+            <p className="text-sm">{info?.audio_properties ? timeToDisplayMS(info.audio_properties.duration) : ''}</p>
         </div>
     )
 }
