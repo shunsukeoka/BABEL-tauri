@@ -39,6 +39,8 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
     )
 
     const handlePlayButton = useCallback(() => {
+        if (!currentSound) return
+
         if (isPlaying) {
             command.pauseSoundFile()
             updatePlayingState(false)
@@ -46,36 +48,50 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
             command.resumeSoundFile()
             updatePlayingState(true)
         }
-    }, [command, isPlaying, updatePlayingState])
+    }, [command, currentSound, isPlaying, updatePlayingState])
 
     const handleRepeatButton = useCallback(() => {
         toggleRepeatState()
     }, [toggleRepeatState])
 
-    const handleChangeSeekBar = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (currentSound && currentSound.audio_properties) {
-            const amount = e.target.value
-            const sec = currentSound.audio_properties.duration * Number(amount)
+    const handleChangeSeekBar = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            if (currentSound && currentSound.audio_properties) {
+                const amount = e.target.value
+                const sec = currentSound.audio_properties.duration * Number(amount)
 
-            setElapsedTime(sec)
+                setElapsedTime(sec)
 
-            command.seekSoundFile(sec)
-        }
-    }
+                command.seekSoundFile(sec)
+            }
+        },
+        [command, currentSound],
+    )
 
     const handleMouseDownSeekBar = useCallback(() => {
-        if (isPlaying) {
+        if (isPlaying && currentSound) {
             command.pauseSoundFile()
             updatePlayingState(false)
         }
-    }, [command, isPlaying, updatePlayingState])
+    }, [command, currentSound, isPlaying, updatePlayingState])
 
-    const handleMouseUpSeekBar = useCallback(() => {
-        if (!isPlaying) {
-            command.resumeSoundFile()
-            updatePlayingState(true)
-        }
-    }, [command, isPlaying, updatePlayingState])
+    const handleMouseUpSeekBar = useCallback(
+        (e: React.MouseEvent<HTMLInputElement>) => {
+            if (!isPlaying && currentSound) {
+                const amount = Number(e.currentTarget.value)
+
+                if (amount < 1.0) {
+                    command.resumeSoundFile()
+                    updatePlayingState(true)
+                } else {
+                    updatePlayingState(false)
+                    updateCurrentSound(undefined)
+                    command.stopSoundFile()
+                }
+            }
+        },
+        [command, currentSound, isPlaying, updateCurrentSound, updatePlayingState],
+    )
 
     useAnimationFrame(
         isPlaying,
