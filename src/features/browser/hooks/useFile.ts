@@ -1,18 +1,17 @@
 import * as React from 'react'
-import { useDispatch } from 'react-redux'
-import { updateFiles } from '@/slice/filesSlice'
 import { IFileBrowserRepository } from '../types'
+import { useFileStore } from '../stores'
 
 export const useFile = (repository: IFileBrowserRepository) => {
-    const dispatch = useDispatch()
+    const updateList = useFileStore((state) => state.updateList)
 
     const getFiles = React.useCallback(
         async (path: string) => {
             const fileList = await repository.fetch(path)
 
-            if (fileList.isOk()) dispatch(updateFiles(fileList.value))
+            if (fileList.isOk()) updateList(fileList.value)
         },
-        [dispatch, repository],
+        [repository, updateList],
     )
 
     return { getFiles }

@@ -1,10 +1,8 @@
 import { useAnimationFrame } from '@/hooks/useAnimationFrame'
-import { changeCurrentSound, changePlayingState, toggleRepeat } from '@/slice/audioPlaybackSlice'
-import { useSelector } from '@/stores'
 import { timeToDisplayMS } from '@/utils/time'
 import React, { useCallback, useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { AudioTauriCommand } from '../../api'
+import { usePlaybackStore } from '../../stores'
 import { PLAYBACK_STATE } from '../../types'
 import { NextPrevButton } from './NextPrevButton'
 import { PlayButton } from './PlayButton'
@@ -16,8 +14,8 @@ interface PlaybackControlProps {}
 export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
     const command = new AudioTauriCommand()
 
-    const { currentSound, isPlaying, isRepeat } = useSelector((state) => state.audio)
-    const dispatch = useDispatch()
+    const { currentSound, isPlaying, isRepeat, updateCurrentSound, updatePlayingState, toggleRepeatState } =
+        usePlaybackStore((state) => state)
 
     const [elapsedTime, setElapsedTime] = useState<number>(0)
 
@@ -43,16 +41,16 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
     const handlePlayButton = useCallback(() => {
         if (isPlaying) {
             command.pauseSoundFile()
-            dispatch(changePlayingState(false))
+            updatePlayingState(false)
         } else {
             command.resumeSoundFile()
-            dispatch(changePlayingState(true))
+            updatePlayingState(true)
         }
-    }, [command, dispatch, isPlaying])
+    }, [command, isPlaying, updatePlayingState])
 
     const handleRepeatButton = useCallback(() => {
-        dispatch(toggleRepeat())
-    }, [dispatch])
+        toggleRepeatState()
+    }, [toggleRepeatState])
 
     const handleChangeSeekBar = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (currentSound && currentSound.audio_properties) {
@@ -68,16 +66,16 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
     const handleMouseDownSeekBar = useCallback(() => {
         if (isPlaying) {
             command.pauseSoundFile()
-            dispatch(changePlayingState(false))
+            updatePlayingState(false)
         }
-    }, [command, dispatch, isPlaying])
+    }, [command, isPlaying, updatePlayingState])
 
     const handleMouseUpSeekBar = useCallback(() => {
         if (!isPlaying) {
             command.resumeSoundFile()
-            dispatch(changePlayingState(true))
+            updatePlayingState(true)
         }
-    }, [command, dispatch, isPlaying])
+    }, [command, isPlaying, updatePlayingState])
 
     useAnimationFrame(
         isPlaying,
@@ -87,11 +85,11 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
                 setElapsedTime(elapsed_time)
 
                 if (state === PLAYBACK_STATE.STOPPED) {
-                    dispatch(changePlayingState(false))
-                    dispatch(changeCurrentSound(undefined))
+                    updatePlayingState(false)
+                    updateCurrentSound(undefined)
                 }
             })
-        }, [command, dispatch]),
+        }, [command, updateCurrentSound, updatePlayingState]),
     )
 
     return (

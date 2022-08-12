@@ -1,12 +1,12 @@
 import { MdOutlineFolder, MdStarOutline } from 'react-icons/md'
-import { useSelector } from '@/stores'
 import { useDirectory } from '../hooks/useDirectory'
 import { DirectoryTauriCommand } from '../api'
 import { RootDirectoryList, FileList } from '../components'
+import { useFileStore } from '../stores'
 
 export const FileBrowser = () => {
     const { directories, addDirectory } = useDirectory(new DirectoryTauriCommand())
-    const files = useSelector((state) => state.files.list)
+    const files = useFileStore((state) => state.list)
 
     return (
         <div className="flex h-full w-auto justify-between [&>section]:h-full [&>section]:px-6">

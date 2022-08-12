@@ -1,8 +1,6 @@
 import { IFileInfo } from '@/types'
 import { useCallback } from 'react'
-import { AudioTauriCommand } from '@/features/audio'
-import { changeCurrentSound, changePlayingState } from '@/slice/audioPlaybackSlice'
-import { useDispatch } from 'react-redux'
+import { AudioTauriCommand, usePlaybackStore } from '@/features/audio'
 import { timeToDisplayMS } from '@/utils/time'
 
 export interface FileItemProps {
@@ -10,7 +8,7 @@ export interface FileItemProps {
 }
 
 export const FileItem = ({ info }: FileItemProps) => {
-    const dispatch = useDispatch()
+    const { updateCurrentSound, updatePlayingState } = usePlaybackStore((state) => state)
 
     const handleDoubleClick = useCallback(() => {
         if (!info || !info.audio_properties) return
@@ -18,9 +16,10 @@ export const FileItem = ({ info }: FileItemProps) => {
         const command = new AudioTauriCommand()
         command.playSoundFile(info?.file_path)
 
-        dispatch(changePlayingState(true))
-        dispatch(changeCurrentSound(info))
-    }, [dispatch, info])
+        updateCurrentSound(info)
+
+        updatePlayingState(true)
+    }, [info, updateCurrentSound, updatePlayingState])
 
     return (
         <div
