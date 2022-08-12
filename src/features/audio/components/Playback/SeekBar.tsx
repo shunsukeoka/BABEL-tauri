@@ -57,7 +57,7 @@ export const SeekBar: React.FC<SeekBarProps> = ({
     ...props
 }: SeekBarProps) => (
     <div className="flex items-center justify-center" {...props}>
-        <span className="text-xs">{elapsedTime}</span>
+        <span className="select-none text-xs">{elapsedTime}</span>
         <input
             className={clsx(
                 'mx-2 h-[1px] w-[calc(100%-64px)] cursor-pointer appearance-none rounded focus:outline-none active:outline-none slider-knob:cursor-pointer slider-knob:appearance-none slider-knob:rounded-full slider-knob:border-none',
@@ -73,7 +73,7 @@ export const SeekBar: React.FC<SeekBarProps> = ({
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
         />
-        <span className="text-xs">{totalTime}</span>
+        <span className="select-none text-xs">{totalTime}</span>
     </div>
 )
 
