@@ -143,6 +143,7 @@ impl Playback for AudioEngine {
 		Ok(())
 	}
 
+	// TODO: フロント側でsecondに変換するコストが削減できるので、seek_toをseek_by変更する
 	fn seek(&mut self, sec: f64) -> anyhow::Result<()> {
 		self.handler.as_ref().map(|mut handler| {
 			handler

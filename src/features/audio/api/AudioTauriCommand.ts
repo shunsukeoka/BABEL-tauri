@@ -3,9 +3,9 @@ import { err, ok, Result } from 'neverthrow'
 import { PlaybackState } from '../types'
 
 class AudioTauriCommand {
-    public playSoundFile(path: string): Result<boolean, Error> {
+    public async playSoundFile(path: string): Promise<Result<boolean, Error>> {
         try {
-            invoke('play', { path })
+            await invoke('play', { path })
 
             return ok(true)
         } catch (error) {
@@ -13,9 +13,9 @@ class AudioTauriCommand {
         }
     }
 
-    public pauseSoundFile(): Result<boolean, Error> {
+    public async pauseSoundFile(): Promise<Result<boolean, Error>> {
         try {
-            invoke('pause')
+            await invoke('pause')
 
             return ok(true)
         } catch (error) {
@@ -23,9 +23,9 @@ class AudioTauriCommand {
         }
     }
 
-    public resumeSoundFile(): Result<boolean, Error> {
+    public async resumeSoundFile(): Promise<Result<boolean, Error>> {
         try {
-            invoke('resume')
+            await invoke('resume')
 
             return ok(true)
         } catch (error) {
@@ -33,9 +33,9 @@ class AudioTauriCommand {
         }
     }
 
-    public stopSoundFile(): Result<boolean, Error> {
+    public async stopSoundFile(): Promise<Result<boolean, Error>> {
         try {
-            invoke('stop')
+            await invoke('stop')
 
             return ok(true)
         } catch (error) {
@@ -43,9 +43,9 @@ class AudioTauriCommand {
         }
     }
 
-    public seekSoundFile(sec: number): Result<boolean, Error> {
+    public async seekSoundFile(sec: number): Promise<Result<boolean, Error>> {
         try {
-            invoke('seek', { sec })
+            await invoke('seek', { sec })
 
             return ok(true)
         } catch (error) {

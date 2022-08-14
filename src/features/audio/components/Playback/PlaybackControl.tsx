@@ -1,41 +1,18 @@
-import { useAnimationFrame } from '@/hooks/useAnimationFrame'
-import { timeToDisplayMS } from '@/utils/time'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback } from 'react'
 import { AudioTauriCommand } from '../../api'
 import { usePlaybackStore } from '../../stores'
-import { PLAYBACK_STATE } from '../../types'
 import { NextPrevButton } from './NextPrevButton'
 import { PlayButton } from './PlayButton'
 import { RepeatButton } from './RepeatButton'
 import { SeekBar } from './SeekBar'
 
+const command = new AudioTauriCommand()
+
 interface PlaybackControlProps {}
 
 export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
-    const command = new AudioTauriCommand()
-
-    const { currentSound, isPlaying, isRepeat, updateCurrentSound, updatePlayingState, toggleRepeatState } =
-        usePlaybackStore((state) => state)
-
-    const [elapsedTime, setElapsedTime] = useState<number>(0)
-
-    const seekBarValue = useMemo(
-        () =>
-            currentSound && currentSound.audio_properties ? elapsedTime / currentSound.audio_properties.duration : 0,
-        [currentSound, elapsedTime],
-    )
-
-    const seekBarElapsedTime = useMemo(
-        () => (currentSound ? timeToDisplayMS(elapsedTime) : '--:--'),
-        [currentSound, elapsedTime],
-    )
-
-    const seekBarTotalTime = useMemo(
-        () =>
-            currentSound && currentSound.audio_properties
-                ? timeToDisplayMS(currentSound?.audio_properties.duration)
-                : '--:--',
-        [currentSound],
+    const { currentSound, isPlaying, isRepeat, updatePlayingState, toggleRepeatState } = usePlaybackStore(
+        (state) => state,
     )
 
     const handlePlayButton = useCallback(() => {
@@ -48,65 +25,11 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
             command.resumeSoundFile()
             updatePlayingState(true)
         }
-    }, [command, currentSound, isPlaying, updatePlayingState])
+    }, [currentSound, isPlaying, updatePlayingState])
 
     const handleRepeatButton = useCallback(() => {
         toggleRepeatState()
     }, [toggleRepeatState])
-
-    const handleChangeSeekBar = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            if (currentSound && currentSound.audio_properties) {
-                const amount = e.target.value
-                const sec = currentSound.audio_properties.duration * Number(amount)
-
-                setElapsedTime(sec)
-
-                command.seekSoundFile(sec)
-            }
-        },
-        [command, currentSound],
-    )
-
-    const handleMouseDownSeekBar = useCallback(() => {
-        if (isPlaying && currentSound) {
-            command.pauseSoundFile()
-            updatePlayingState(false)
-        }
-    }, [command, currentSound, isPlaying, updatePlayingState])
-
-    const handleMouseUpSeekBar = useCallback(
-        (e: React.MouseEvent<HTMLInputElement>) => {
-            if (!isPlaying && currentSound) {
-                const amount = Number(e.currentTarget.value)
-
-                if (amount < 1.0) {
-                    command.resumeSoundFile()
-                    updatePlayingState(true)
-                } else {
-                    updatePlayingState(false)
-                    updateCurrentSound(undefined)
-                    command.stopSoundFile()
-                }
-            }
-        },
-        [command, currentSound, isPlaying, updateCurrentSound, updatePlayingState],
-    )
-
-    useAnimationFrame(
-        isPlaying,
-        useCallback(async () => {
-            const playbackState = await command.getPlaybackState()
-            playbackState.map(async ({ state, elapsed_time }) => {
-                setElapsedTime(elapsed_time)
-
-                if (state === PLAYBACK_STATE.STOPPED) {
-                    updatePlayingState(false)
-                    updateCurrentSound(undefined)
-                }
-            })
-        }, [command, updateCurrentSound, updatePlayingState]),
-    )
 
     return (
         <div className="w-full">
@@ -126,15 +49,7 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
                     </div>
                 </div>
                 <div>
-                    <SeekBar
-                        value={seekBarValue}
-                        elapsedTime={seekBarElapsedTime}
-                        totalTime={seekBarTotalTime}
-                        onChange={handleChangeSeekBar}
-                        onMouseDown={handleMouseDownSeekBar}
-                        onMouseUp={handleMouseUpSeekBar}
-                        variant="default"
-                    />
+                    <SeekBar variant="primary" size="large" />
                 </div>
             </div>
         </div>
