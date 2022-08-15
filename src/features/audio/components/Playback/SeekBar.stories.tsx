@@ -8,10 +8,6 @@ export default {
 
 export const Default: ComponentStoryObj<typeof SeekBar> = {
     args: {
-        min: 0.0,
-        max: 1.0,
-        step: 0.0001,
-        value: 0.5,
         variant: 'default',
         size: 'default',
     },
