@@ -62,6 +62,16 @@ class AudioTauriCommand {
             return err(new Error('サウンドファイルの再生状態を取得できませんでした。'))
         }
     }
+
+    public async setMasterVolume(volume: number): Promise<Result<number, Error>> {
+        try {
+            const vol = await invoke<number>('set_master_volume', { volume })
+
+            return ok(vol)
+        } catch (error) {
+            return err(new Error('マスターの音量を変更できませんでした。'))
+        }
+    }
 }
 
 export { AudioTauriCommand }

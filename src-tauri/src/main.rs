@@ -19,6 +19,7 @@ fn main() -> anyhow::Result<()> {
 			audio::resume,
 			audio::stop,
 			audio::seek,
+			audio::set_master_volume,
 			audio::get_playback_state,
 			file::add_directory,
 			file::get_directory_info

@@ -12,6 +12,7 @@ use kira::{
 		streaming::{StreamingSoundData, StreamingSoundHandle, StreamingSoundSettings},
 		FromFileError,
 	},
+	track::TrackBuilder,
 	tween::Tween,
 };
 use serde::{Deserialize, Serialize};
@@ -36,18 +37,22 @@ pub enum AudioError {}
 
 pub struct AudioEngine {
 	pub manager: kira::manager::AudioManager,
+	pub preview_track: kira::track::TrackHandle,
 	pub handler: Option<Mutex<StreamingSoundHandle<FromFileError>>>,
 }
 
 impl AudioEngine {
 	pub fn new() -> anyhow::Result<Self> {
-		let manager = manager::AudioManager::<manager::backend::cpal::CpalBackend>::new(
+		let mut manager = manager::AudioManager::<manager::backend::cpal::CpalBackend>::new(
 			manager::AudioManagerSettings::default(),
 		)?;
+
+		let preview_track = manager.add_sub_track(TrackBuilder::default())?;
 
 		Ok(Self {
 			manager,
 			handler: None,
+			preview_track,
 		})
 	}
 
@@ -72,11 +77,27 @@ impl AudioEngine {
 		}
 	}
 
+	pub fn set_master_volume(&mut self, volume: f64) -> anyhow::Result<f64> {
+		let _ = self.manager.main_track().set_volume(
+			volume,
+			Tween {
+				start_time: kira::StartTime::Immediate,
+				duration: Duration::from_secs_f64(0.0),
+				easing: Default::default(),
+			},
+		);
+
+		Ok(volume)
+	}
+
 	fn set_streaming_sound(
 		&self,
 		path: &Path,
 	) -> anyhow::Result<StreamingSoundData, FromFileError> {
-		match StreamingSoundData::from_file(path, StreamingSoundSettings::default()) {
+		match StreamingSoundData::from_file(
+			path,
+			StreamingSoundSettings::new().track(&self.preview_track),
+		) {
 			Ok(sound) => Ok(sound),
 			Err(err) => Err(err),
 		}
@@ -204,5 +225,12 @@ pub fn get_playback_state(
 		}
 	} else {
 		None
+	}
+}
+
+#[tauri::command]
+pub fn set_master_volume(mut audio_engine: tauri::State<Arc<Mutex<AudioEngine>>>, volume: f64) {
+	if let Ok(mut engine) = audio_engine.borrow_mut().lock() {
+		let _ = engine.set_master_volume(volume);
 	}
 }
