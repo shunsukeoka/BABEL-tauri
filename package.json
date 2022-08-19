@@ -51,7 +51,7 @@
         "react-router-dom": "^6.3.0",
         "react-window": "^1.8.7",
         "tailwindcss": "^3.1.8",
-        "zustand": "^4.0.0"
+        "zustand": "^4.1.0"
     },
     "devDependencies": {
         "@babel/core": "^7.18.10",
