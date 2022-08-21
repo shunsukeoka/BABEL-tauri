@@ -15,7 +15,7 @@ export const RootDirectoryList = ({ icon, title, list, handleAddClick, ...props 
         <header className="mb-2 flex w-full items-center justify-between">
             <section className="flex items-center justify-start text-lg">
                 <span className="mr-2 h-4">{icon}</span>
-                <h3 className="font-roboto font-light tracking-wider">{title}</h3>
+                <h3 className="select-none font-roboto font-light tracking-wider">{title}</h3>
             </section>
 
             {handleAddClick && (

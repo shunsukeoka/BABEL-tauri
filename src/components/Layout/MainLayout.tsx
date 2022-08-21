@@ -17,7 +17,7 @@ const GlobalMenuItem = ({ icon, name, active, ...props }: GlobalMenuItemProps) =
         {...props}
     >
         <span className="mr-2 h-4">{icon}</span>
-        <h3 className="font-roboto font-light leading-none">{name}</h3>
+        <h3 className="select-none font-roboto font-light leading-none">{name}</h3>
     </div>
 )
 
@@ -36,7 +36,7 @@ const GlobalMenu = () => (
 
 const GlobalHeader = () => (
     <header className="flex h-[64px] w-full items-center justify-center">
-        <h2 className="absolute left-8 font-melete-light text-lg leading-none">BABEL</h2>
+        <h2 className="absolute left-8 select-none font-melete-light text-lg leading-none">BABEL</h2>
         <GlobalMenu />
         <div className="absolute right-8 cursor-pointer text-xl hover:opacity-80">
             <MdOutlineSettings />

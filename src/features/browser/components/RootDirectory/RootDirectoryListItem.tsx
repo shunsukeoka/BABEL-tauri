@@ -21,7 +21,7 @@ export const RootDirectoryListItem = ({ name, path }: RootDirectoryListItemProps
 
     return (
         <div
-            className="group relative box-border flex w-full cursor-pointer items-center justify-start pr-4"
+            className="group relative box-border flex w-full cursor-pointer select-none items-center justify-start pr-4"
             data-path={path}
         >
             {/* TODO: plan - use this library  react-smooth-dnd */}

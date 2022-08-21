@@ -28,7 +28,7 @@ export const FileItem = ({ info }: FileItemProps) => {
 
     return (
         <div
-            className="flex cursor-pointer items-center justify-between overflow-hidden px-2 py-4 text-sm hover:opacity-60 not-first-child:border-t-[1px] not-first-child:border-solid not-first-child:border-t-[#efefef]"
+            className="flex cursor-pointer select-none items-center justify-between overflow-hidden px-2 py-4 text-sm hover:opacity-60 not-first-child:border-t-[1px] not-first-child:border-solid not-first-child:border-t-[#efefef]"
             onDoubleClick={handleDoubleClick}
         >
             <p className="overflow-hidden text-ellipsis whitespace-nowrap">{info?.file_name}</p>
