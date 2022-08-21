@@ -6,8 +6,10 @@ use std::fs;
 use std::fs::Metadata;
 use std::path::Path;
 use std::path::PathBuf;
+use std::sync::Arc;
+use std::sync::Mutex;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, PartialOrd)]
 pub struct AudioProperties {
 	pub channels: Option<u8>,
 	pub bit_depth: Option<u8>,
@@ -15,7 +17,7 @@ pub struct AudioProperties {
 	pub duration: f64,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, PartialOrd)]
 pub struct FileInfo {
 	pub file_path: PathBuf,
 	pub file_name: String,
@@ -131,18 +133,33 @@ impl FileInfoSerializer {
 }
 
 pub fn read_directory(path: &String) -> Vec<FileInfo> {
-	let mut file_info_vec = vec![];
+	let mut handles = vec![];
+	let file_info_vec = Arc::new(Mutex::new(vec![]));
 
 	if let Ok(entries) = fs::read_dir(path) {
 		for entry in entries.flatten() {
-			let _ = FileInfoSerializer::new(&entry.path()).map(|serializer| {
-				let file_info = serializer.serialize();
-				file_info_vec.push(file_info);
-			});
+			let file_info_vec = Arc::clone(&file_info_vec);
+
+			handles.push(std::thread::spawn(move || {
+				let _ = FileInfoSerializer::new(&entry.path()).map(|serializer| {
+					let file_info = serializer.serialize();
+					file_info_vec.lock().unwrap().push(file_info);
+				});
+			}));
 		}
 	}
 
-	file_info_vec
+	handles
+		.into_iter()
+		.for_each(|handle| handle.join().unwrap_or(()));
+
+	let mut file_list = file_info_vec.lock().map_or(vec![], |list| list.to_vec());
+
+	// TODO: file_name以外にもソート指定を可能にする。
+	// TODO: 降順にも対応する。file_list.sort_by(|a, b| b.file_name.cmp(&a.file_name));
+	file_list.sort_by(|a, b| a.file_name.cmp(&b.file_name));
+
+	file_list
 }
 
 pub fn read_file(path: &String) -> Option<FileInfo> {
