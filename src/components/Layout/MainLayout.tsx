@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { MdOutlineApps, MdOutlineAutoGraph, MdPlayCircleOutline, MdOutlineSettings } from 'react-icons/md'
-import { MasterVolume, PlaybackControl } from '@/features/audio'
+import { MasterVolumeMemo, PlaybackControl } from '@/features/audio'
+import { memo } from 'react'
 
 interface GlobalMenuItemProps {
     icon?: React.ReactNode
@@ -26,11 +27,13 @@ GlobalMenuItem.defaultProps = {
     active: false,
 }
 
+const GlobalMenuItemMemo = memo(GlobalMenuItem)
+
 const GlobalMenu = () => (
     <div className="flex items-center justify-start [&>div]:mx-5">
-        <GlobalMenuItem active name="Browse" icon={<MdPlayCircleOutline />} />
-        <GlobalMenuItem name="Projects" icon={<MdOutlineApps />} />
-        <GlobalMenuItem name="Graph" icon={<MdOutlineAutoGraph />} />
+        <GlobalMenuItemMemo active name="Browse" icon={<MdPlayCircleOutline />} />
+        <GlobalMenuItemMemo name="Projects" icon={<MdOutlineApps />} />
+        <GlobalMenuItemMemo name="Graph" icon={<MdOutlineAutoGraph />} />
     </div>
 )
 
@@ -48,7 +51,7 @@ const GlobalFooter = () => (
     <footer className="relative flex h-[104px] w-full items-center justify-center">
         <PlaybackControl />
         <div className="absolute right-10">
-            <MasterVolume variant="default" size="large" />
+            <MasterVolumeMemo variant="default" size="large" />
         </div>
     </footer>
 )

@@ -1,5 +1,6 @@
 import { IoMdRepeat } from 'react-icons/io'
 import clsx from 'clsx'
+import { memo } from 'react'
 
 const sizes = {
     default: 'text-base',
@@ -42,3 +43,5 @@ export const RepeatButton: React.FC<RepeatButtonProps> = ({
         <IoMdRepeat />
     </div>
 )
+
+export const RepeatButtonMemo = memo(RepeatButton)

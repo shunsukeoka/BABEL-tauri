@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react'
 import { AudioTauriCommand } from '../../api'
 import { usePlaybackStore } from '../../stores'
-import { NextPrevButton } from './NextPrevButton'
-import { PlayButton } from './PlayButton'
-import { RepeatButton } from './RepeatButton'
-import { SeekBar } from './SeekBar'
+import { NextPrevButtonMemo } from './NextPrevButton'
+import { PlayButtonMemo } from './PlayButton'
+import { RepeatButtonMemo } from './RepeatButton'
+import { SeekBarMemo } from './SeekBar'
 
 const command = new AudioTauriCommand()
 
@@ -36,20 +36,30 @@ export const PlaybackControl: React.FC<PlaybackControlProps> = () => {
             <div className="mx-auto my-[0] max-w-[480px]">
                 <div className="relative mb-4 flex items-center justify-center">
                     <div>
-                        <NextPrevButton reverse size="large" variant="default" />
+                        <NextPrevButtonMemo reverse size="large" variant="default" />
                     </div>
                     <div className="mx-4">
-                        <PlayButton isPlaying={isPlaying} size="large" variant="default" onClick={handlePlayButton} />
+                        <PlayButtonMemo
+                            isPlaying={isPlaying}
+                            size="large"
+                            variant="default"
+                            onClick={handlePlayButton}
+                        />
                     </div>
                     <div>
-                        <NextPrevButton size="large" variant="default" />
+                        <NextPrevButtonMemo size="large" variant="default" />
                     </div>
                     <div className="absolute right-1">
-                        <RepeatButton isRepeat={isRepeat} size="large" variant="primary" onClick={handleRepeatButton} />
+                        <RepeatButtonMemo
+                            isRepeat={isRepeat}
+                            size="large"
+                            variant="primary"
+                            onClick={handleRepeatButton}
+                        />
                     </div>
                 </div>
                 <div>
-                    <SeekBar variant="primary" size="large" />
+                    <SeekBarMemo variant="primary" size="large" />
                 </div>
             </div>
         </div>

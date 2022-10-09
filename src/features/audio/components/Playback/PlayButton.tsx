@@ -1,5 +1,6 @@
 // import styled from 'styled-components'
 import clsx from 'clsx'
+import { memo } from 'react'
 import { IoMdPlay, IoMdPause } from 'react-icons/io'
 
 const sizes = {
@@ -43,3 +44,5 @@ export const PlayButton: React.FC<PlayButtonProps> = ({
         {isPlaying ? <IoMdPause /> : <IoMdPlay />}
     </div>
 )
+
+export const PlayButtonMemo = memo(PlayButton)

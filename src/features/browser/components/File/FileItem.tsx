@@ -1,5 +1,5 @@
 import { IFileInfo } from '@/types'
-import { useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import { AudioTauriCommand, usePlaybackStore } from '@/features/audio'
 import { timeToDisplayMS } from '@/utils/time'
 import { FileTauriCommand } from '../../api'
@@ -36,3 +36,5 @@ export const FileItem = ({ info }: FileItemProps) => {
         </div>
     )
 }
+
+export const FileItemMemo = memo(FileItem)

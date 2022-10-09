@@ -1,5 +1,6 @@
 // import styled from 'styled-components'
 import clsx from 'clsx'
+import { memo } from 'react'
 import { IoMdSkipForward, IoMdSkipBackward } from 'react-icons/io'
 
 const sizes = {
@@ -43,3 +44,5 @@ export const NextPrevButton: React.FC<NextPrevButtonProps> = ({
         {reverse ? <IoMdSkipBackward /> : <IoMdSkipForward />}
     </div>
 )
+
+export const NextPrevButtonMemo = memo(NextPrevButton)

@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import { MdDragIndicator, MdMoreVert } from 'react-icons/md'
 import { FileTauriCommand } from '../../api'
 import { useFile } from '../../hooks/useFile'
@@ -52,3 +52,5 @@ RootDirectoryListItem.defaultProps = {
     name: 'Name',
     path: '',
 }
+
+export const RootDirectoryListItemMemo = memo(RootDirectoryListItem)

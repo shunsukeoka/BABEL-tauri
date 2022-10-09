@@ -1,7 +1,7 @@
 import React from 'react'
 import { MdAdd } from 'react-icons/md'
 import { IFileInfo } from '@/types'
-import { RootDirectoryListItem } from './RootDirectoryListItem'
+import { RootDirectoryListItemMemo } from './RootDirectoryListItem'
 
 interface RootDirectoryListProps {
     icon?: React.ReactNode
@@ -29,7 +29,7 @@ export const RootDirectoryList = ({ icon, title, list, handleAddClick, ...props 
             {list &&
                 list.map((item) => (
                     <li className="not-first-child:mt-2">
-                        <RootDirectoryListItem key={item.file_path} name={item.file_name} path={item.file_path} />
+                        <RootDirectoryListItemMemo key={item.file_path} name={item.file_name} path={item.file_path} />
                     </li>
                 ))}
         </ul>

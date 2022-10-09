@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { IoMdVolumeHigh, IoMdVolumeLow, IoMdVolumeOff } from 'react-icons/io'
 import { AudioTauriCommand } from '../../api'
 
@@ -96,3 +96,5 @@ export const MasterVolume = ({ variant, size }: MasterVolumeProps) => {
         </div>
     )
 }
+
+export const MasterVolumeMemo = memo(MasterVolume)

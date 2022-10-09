@@ -1,7 +1,7 @@
 import { useAnimationFrame } from '@/hooks/useAnimationFrame'
 import { timeToDisplayMS } from '@/utils/time'
 import clsx from 'clsx'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { AudioTauriCommand } from '../../api'
 import { usePlaybackStore } from '../../stores'
 import { PLAYBACK_STATE } from '../../types'
@@ -151,3 +151,5 @@ export const SeekBar: React.FC<SeekBarProps> = ({ size, variant }: SeekBarProps)
         </div>
     )
 }
+
+export const SeekBarMemo = memo(SeekBar)

@@ -1,5 +1,5 @@
 import { IFileInfo } from '@/types'
-import { FileItem } from './FileItem'
+import { FileItemMemo } from './FileItem'
 
 export interface IFileListActions {}
 
@@ -8,7 +8,7 @@ export interface FileListProps {
 }
 
 export const FileList = ({ list }: FileListProps) => (
-    <>{list && list.map((item) => <FileItem key={item.file_path} info={item} />)}</>
+    <>{list && list.map((item) => <FileItemMemo key={item.file_path} info={item} />)}</>
 )
 
 FileList.defaultProps = {
