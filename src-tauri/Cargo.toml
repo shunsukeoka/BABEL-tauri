@@ -24,7 +24,7 @@ chrono = "0.4.22"
 mime_guess = "2.0.4"
 crossbeam-channel = "0.5.6"
 kira = "0.7.1"
-lofty = "0.8.1"
+lofty = "0.9.0"
 
 [features]
 # by default Tauri runs in production mode
