@@ -101,7 +101,7 @@ impl FileInfoSerializer {
 
 	pub fn create_audio_properties(&self) -> Option<AudioProperties> {
 		Probe::open(&self.path).map_or(None, |tagged_file| {
-			tagged_file.read(true).map_or(None, |tag| {
+			tagged_file.read().map_or(None, |tag| {
 				let properties = tag.properties();
 
 				Some(AudioProperties {
