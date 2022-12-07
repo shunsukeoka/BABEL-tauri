@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { IoMdVolumeHigh, IoMdVolumeLow, IoMdVolumeOff } from 'react-icons/io'
-import { AudioTauriCommand } from '../../api'
 
 const variants = {
     default: `
@@ -36,14 +35,12 @@ export type MasterVolumeProps = {
 const MIN_VOLUME_VALUE = 0.0
 const MAX_VOLUME_VALUE = 1.0
 
-const command = new AudioTauriCommand()
-
 export const MasterVolume = ({ variant, size }: MasterVolumeProps) => {
     const [volume, setVolume] = useState<number>(1.0)
 
     const handleChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value)
-        await command.setMasterVolume(value)
+        // TODO: volume change command
         setVolume(value)
     }, [])
 
@@ -59,7 +56,6 @@ export const MasterVolume = ({ variant, size }: MasterVolumeProps) => {
     useEffect(() => {
         const initialVolume = 0.5
         setVolume(initialVolume)
-        command.setMasterVolume(initialVolume)
     }, [])
 
     const displayIcon = useMemo(() => {

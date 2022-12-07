@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { MdOutlineApps, MdOutlineAutoGraph, MdPlayCircleOutline, MdOutlineSettings } from 'react-icons/md'
-import { MasterVolumeMemo, PlaybackControl } from '@/features/audio'
+import { MasterVolumeMemo } from '@/features/audio'
 import { memo } from 'react'
 
 interface GlobalMenuItemProps {
@@ -49,7 +49,6 @@ const GlobalHeader = () => (
 
 const GlobalFooter = () => (
     <footer className="relative flex h-[104px] w-full items-center justify-center">
-        <PlaybackControl />
         <div className="absolute right-10">
             <MasterVolumeMemo variant="default" size="large" />
         </div>

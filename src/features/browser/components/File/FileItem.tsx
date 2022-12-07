@@ -1,30 +1,22 @@
 import { IFileInfo } from '@/types'
 import { memo, useCallback } from 'react'
-import { AudioTauriCommand, usePlaybackStore } from '@/features/audio'
 import { timeToDisplayMS } from '@/utils/time'
-import { FileTauriCommand } from '../../api'
-import { useFile } from '../../hooks/useFile'
+// import { FileTauriCommand } from '../../api'
+// import { useFile } from '../../hooks/useFile'
 
 export interface FileItemProps {
     info: IFileInfo
 }
 
 export const FileItem = ({ info }: FileItemProps) => {
-    const { updateCurrentSound, updatePlayingState } = usePlaybackStore((state) => state)
-    const { getFiles } = useFile(new FileTauriCommand())
+    // const { getFiles } = useFile(new FileTauriCommand())
 
     const handleDoubleClick = useCallback(() => {
-        if (info.audio_properties) {
-            const command = new AudioTauriCommand()
-            command.playSoundFile(info?.file_path)
-
-            updateCurrentSound(info)
-
-            updatePlayingState(true)
-        } else if (info.is_dir) {
-            getFiles(info.file_path)
-        }
-    }, [getFiles, info, updateCurrentSound, updatePlayingState])
+        // if (info.audio_properties) {
+        // } else if (info.is_dir) {
+        //     getFiles(info.file_path)
+        // }
+    }, [])
 
     return (
         <div
