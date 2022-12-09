@@ -12,13 +12,4 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />
 export const Default = Template.bind({})
 Default.args = {
     label: 'Button',
-    size: 'default',
-    variant: 'default',
-}
-
-export const Primary = Template.bind({})
-Primary.args = {
-    label: 'Button',
-    size: 'default',
-    variant: 'primary',
 }

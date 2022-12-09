@@ -7,7 +7,6 @@ extends:
     - plugin:react-hooks/recommended
     - airbnb
     - airbnb-typescript
-    - plugin:tailwindcss/recommended
     - prettier
     - plugin:storybook/recommended
 parser: '@typescript-eslint/parser'
@@ -20,13 +19,11 @@ plugins:
     - react
     - react-hooks
     - '@typescript-eslint'
-    - tailwindcss
     - jest
     - jest-dom
     - testing-library
 ignorePatterns:
     - vite.config.*
-    - tailwind.config.*
     - postcss.config.*
     - plopfile.js
     - generators/*/*.js
@@ -58,6 +55,7 @@ rules:
         import/extensions: ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
         'no-restricted-imports': ['error', { patterns: ['@/features/*/*'] }],
         no-param-reassign: off,
+        'react/no-unknown-property': ['error', { 'ignore': ['css'] }],
     }
 settings:
     {
