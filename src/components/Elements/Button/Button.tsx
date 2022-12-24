@@ -1,53 +1,41 @@
-import { css } from '@emotion/react'
-import React from 'react'
+import type * as Stitches from '@stitches/react'
+import { styled } from '@/styles'
 
-const sizes = {
-    default: 'py-1 px-sm text-base',
-}
-
-const variants = {
-    default: `
-        bg-white
-        text-black
-    `,
-    primary: `
-        bg-primary
-    `,
-}
-
-export type ButtonVariant = keyof typeof variants
-export type ButtonSize = keyof typeof sizes
-
-interface ButtonProps {
-    label: string
-    onClick?: () => void
-}
-
-const style = css({
+const StyledButton = styled('button', {
+    variants: {
+        color: {
+            primary: { backgroundColor: '$primaryMid' },
+            secondary: { backgroundColor: '$secondaryMid' },
+        },
+        size: {
+            small: { fontSize: '10px' },
+            medium: { fontSize: '14px' },
+            large: { fontSize: '18px' },
+        },
+    },
     display: 'inline-block',
+    padding: '0.6em 1em',
+    fontFamily: '$main',
+    color: '$text',
     cursor: 'pointer',
-    borderRadius: '8px',
     border: 'none',
-    fontFamily: 'Roboto',
-    ':hover': {
+    borderRadius: '4px',
+    opacity: 1,
+    transition: '.4s opacity ease',
+    backfaceVisibility: 'hidden',
+    '&:hover': {
         opacity: 0.8,
     },
 })
 
-/**
- * Component
- */
-export const Button: React.FC<ButtonProps> = ({ label, onClick }: ButtonProps) => (
-    <button
-        type="button"
-        // className={clsx(
-        //     'inline-block cursor-pointer rounded border-0 font-roboto hover:opacity-80',
-        //     sizes[size || 'default'],
-        //     variants[variant || 'default'],
-        // )}
-        css={style}
-        onClick={onClick}
-    >
+interface ButtonProps {
+    label: string
+    variants: Stitches.VariantProps<typeof StyledButton>
+    onClick?: () => void
+}
+
+export const Button = ({ label, variants, onClick }: ButtonProps) => (
+    <StyledButton color={variants.color} size={variants.size} onClick={onClick}>
         {label}
-    </button>
+    </StyledButton>
 )

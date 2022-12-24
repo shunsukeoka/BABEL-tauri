@@ -8,10 +8,6 @@ export default defineConfig({
         react({
             exclude: /\.stories\.(t|j)sx?$/,
             include: '**/*.tsx',
-            jsxImportSource: '@emotion/react',
-            babel: {
-                plugins: ['@emotion/babel-plugin'],
-            },
         }),
     ],
     resolve: {
