@@ -1,33 +1,31 @@
-import styled from '@emotion/styled'
-import clsx from 'clsx'
+import { styled } from '@/styles'
 
 export interface TagProps {
     label?: string
-    textColor?: string
-    backgroundColor?: string
+    color: string
 }
 
-const StyledTag = styled.div<TagProps>`
-    background-color: ${(props) => props.backgroundColor};
+const StyledTag = styled('div', {
+    display: 'inline-block',
+    borderRadius: '8px',
+    padding: '0 0.6em',
+    textAlign: 'center',
+    '&:not(:first-child)': {
+        marginLeft: '$2',
+    },
+    '&>p': {
+        fontSize: '10px',
+        whiteSpace: 'nowrap',
+        color: '$text',
+    },
+})
 
-    & > p {
-        color: ${(props) => props.textColor};
-    }
-`
-
-export const Tag: React.FC<TagProps> = ({ label, textColor, backgroundColor, ...props }: TagProps) => (
-    <StyledTag
-        className={clsx('inline-block rounded-2xl px-3 py-1 text-center not-first-child:ml-2')}
-        textColor={textColor}
-        backgroundColor={backgroundColor}
-        {...props}
-    >
-        <p className={clsx('whitespace-nowrap text-xs')}>{label}</p>
+export const Tag: React.FC<TagProps> = ({ label, color }: TagProps) => (
+    <StyledTag style={{ backgroundColor: color }}>
+        <p>{label}</p>
     </StyledTag>
 )
 
 Tag.defaultProps = {
     label: 'Label',
-    textColor: '#fff',
-    backgroundColor: '#000',
 }

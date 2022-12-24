@@ -8,13 +8,5 @@ export default {
 } as ComponentMeta<typeof MasterVolume>
 
 export const Default: ComponentStoryObj<typeof MasterVolume> = {
-    args: { variant: 'default', size: 'default' },
-}
-
-export const Primary: ComponentStoryObj<typeof MasterVolume> = {
-    args: { variant: 'primary', size: 'default' },
-}
-
-export const Large: ComponentStoryObj<typeof MasterVolume> = {
-    args: { variant: 'default', size: 'large' },
+    args: {},
 }

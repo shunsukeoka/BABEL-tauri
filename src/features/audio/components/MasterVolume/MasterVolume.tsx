@@ -1,62 +1,45 @@
-import clsx from 'clsx'
+import { Slider } from '@/components/Elements/Slider'
+import { styled } from '@/styles'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { IoMdVolumeHigh, IoMdVolumeLow, IoMdVolumeOff } from 'react-icons/io'
 
-const variants = {
-    default: `
-        text-white
-        slider-knob:bg-white
-    `,
-    primary: `
-        text-primary
-        slider-knob:bg-primary
-    `,
-}
+// export type MasterVolumeProps = {}
 
-const sizes = {
-    default: `
-        slider-knob:w-2
-        slider-knob:h-2
-    `,
-    large: `
-        slider-knob:w-3
-        slider-knob:h-3
-    `,
-}
+const StyledMasterVolume = styled('div', {
+    display: 'flex',
+    alignItems: 'center',
 
-export type MasterVolumeVariant = keyof typeof variants
-export type MasterVolumeSize = keyof typeof sizes
+    '& > .slider': {
+        width: '120px',
+    },
 
-export type MasterVolumeProps = {
-    variant?: MasterVolumeVariant
-    size?: MasterVolumeSize
-}
+    '& > .icon': {
+        display: 'flex',
+        alignItems: 'center',
+        marginRight: '$3',
+        userSelect: 'none',
+    },
+})
 
 const MIN_VOLUME_VALUE = 0.0
 const MAX_VOLUME_VALUE = 1.0
 
-export const MasterVolume = ({ variant, size }: MasterVolumeProps) => {
+export const MasterVolume = () => {
     const [volume, setVolume] = useState<number>(1.0)
 
-    const handleChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.target.value)
+    const onChangeVolume = useCallback(async (value: number[]) => {
         // TODO: volume change command
-        setVolume(value)
+        setVolume(value[0])
     }, [])
-
-    const progressColor = useMemo(
-        () => ({
-            background: `linear-gradient(to right, var(--color-primary) ${volume * 100.0}%, var(--color-text) ${
-                volume * 100.0
-            }%)`,
-        }),
-        [volume],
-    )
 
     useEffect(() => {
         const initialVolume = 0.5
         setVolume(initialVolume)
     }, [])
+
+    useEffect(() => {
+        console.log(volume)
+    }, [volume])
 
     const displayIcon = useMemo(() => {
         if (volume >= 0.5) {
@@ -71,25 +54,19 @@ export const MasterVolume = ({ variant, size }: MasterVolumeProps) => {
     }, [volume])
 
     return (
-        <div className="flex items-center justify-center">
-            <span className={clsx('select-none text-xl', sizes[size || 'default'], variants[variant || 'default'])}>
-                {displayIcon}
-            </span>
-            <input
-                type="range"
-                className={clsx(
-                    'ml-2 h-[1px] w-[120px] cursor-pointer appearance-none rounded focus:outline-none active:outline-none slider-knob:cursor-pointer slider-knob:appearance-none slider-knob:rounded-full slider-knob:border-none',
-                    variants[variant || 'default'],
-                    sizes[size || 'default'],
-                )}
-                style={progressColor}
+        <StyledMasterVolume>
+            <span className="icon">{displayIcon}</span>
+
+            <Slider
+                className="slider"
                 min={MIN_VOLUME_VALUE}
                 max={MAX_VOLUME_VALUE}
                 step={0.001}
-                value={volume}
-                onChange={handleChange}
+                value={[volume]}
+                defaultValue={[volume]}
+                onValueChange={onChangeVolume}
             />
-        </div>
+        </StyledMasterVolume>
     )
 }
 
