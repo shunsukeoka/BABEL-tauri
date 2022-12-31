@@ -3,11 +3,15 @@
 	windows_subsystem = "windows"
 )]
 
+mod api;
 mod file;
 mod helper;
 
-fn main() -> anyhow::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+	let router = api::mount();
 	let builder = tauri::Builder::default()
+		.plugin(rspc::integrations::tauri::plugin(router, || api::Ctx {}))
 		.invoke_handler(tauri::generate_handler![
 			file::add_directory,
 			file::get_directory_info

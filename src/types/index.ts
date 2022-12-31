@@ -1,3 +1,5 @@
+export * from './rspc/bindings'
+
 export interface AudioProperties {
     channels: number
     bit_depth: number
