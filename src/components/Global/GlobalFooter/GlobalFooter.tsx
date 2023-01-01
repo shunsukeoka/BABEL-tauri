@@ -1,15 +1,11 @@
 import { MasterVolumeMemo } from '@/features/audio'
-import { appInformationService } from '@/features/misc'
+import { useAppInfo } from '@/features/misc'
 import { styled } from '@/styles'
-import { useQuery } from '@tanstack/react-query'
 
 const StyledGlobalFooter = styled('footer', {})
 
 const GlobalFooter = () => {
-    const { data, isLoading } = useQuery({
-        queryKey: ['app-version'],
-        queryFn: () => appInformationService.getAppVersion(),
-    })
+    const { appVersion } = useAppInfo()
 
     return (
         <StyledGlobalFooter>
@@ -17,7 +13,7 @@ const GlobalFooter = () => {
                 <MasterVolumeMemo />
             </div>
 
-            <small>App version - {isLoading ? '' : data}</small>
+            <small>App version - {appVersion.isLoading ? '' : appVersion.data}</small>
         </StyledGlobalFooter>
     )
 }

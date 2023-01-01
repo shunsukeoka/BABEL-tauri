@@ -1,14 +1,11 @@
-import 'reflect-metadata'
-import { container, inject, injectable } from 'tsyringe'
+import { inject, injectable } from 'tsyringe'
 import type { IAppInformationRepository } from '../repositories'
-import { TauriAppInformationRepository } from '../repositories'
-
-const INJECTION_TOKEN = Symbol('IAppInformationRepository')
+import { DI_TOKEN } from '../types'
 
 @injectable()
 class AppInformationService {
     constructor(
-        @inject(INJECTION_TOKEN)
+        @inject(DI_TOKEN.IAppInformationRepository)
         private readonly repository: IAppInformationRepository,
     ) {}
 
@@ -17,8 +14,4 @@ class AppInformationService {
     }
 }
 
-container.register(INJECTION_TOKEN, {
-    useClass: TauriAppInformationRepository,
-})
-
-export const appInformationService = container.resolve(AppInformationService)
+export { AppInformationService }
