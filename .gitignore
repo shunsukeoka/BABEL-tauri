@@ -12,7 +12,7 @@ dist
 dist-ssr
 storybook-static
 coverage
-src-tauri/target
+**/target
 src-tauri/WixTools
 *.local
 
@@ -26,3 +26,8 @@ src-tauri/WixTools
 *.njsproj
 *.sln
 *.sw?
+
+# prisma
+*.db
+*.db-journal
+src-tauri/src/db.rs

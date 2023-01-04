@@ -1,13 +1,13 @@
 import React from 'react'
 import { MdAdd } from 'react-icons/md'
-import { IFileInfo } from '@/types'
 import { styled } from '@/styles'
 import { RootDirectoryListItemMemo } from '../RootDirectoryListItem'
+import { RootDirectoryEntity } from '../../entities/root-directory-entity'
 
 interface RootDirectoryListProps {
     icon?: React.ReactNode
     title?: string
-    list?: IFileInfo[]
+    list?: RootDirectoryEntity[]
     handleAddClick?: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
@@ -65,7 +65,7 @@ export const RootDirectoryList = ({ icon, title, list, handleAddClick }: RootDir
             {list &&
                 list.map((item) => (
                     <li>
-                        <RootDirectoryListItemMemo key={item.file_path} name={item.file_name} path={item.file_path} />
+                        <RootDirectoryListItemMemo key={item.id} name={item.name} path={item.path} />
                     </li>
                 ))}
         </ul>
