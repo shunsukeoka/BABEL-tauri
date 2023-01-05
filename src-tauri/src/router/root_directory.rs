@@ -15,8 +15,8 @@ pub(crate) fn mount() -> RouterBuilder {
 			})
 		})
 		.query("find", |t| {
-			t(|ctx: Ctx, input: i32| async move {
-				let id = input;
+			t(|ctx: Ctx, arg: i32| async move {
+				let id = arg;
 				Ok(ctx
 					.db_client
 					.root_directory()
@@ -26,8 +26,8 @@ pub(crate) fn mount() -> RouterBuilder {
 			})
 		})
 		.mutation("create", |t| {
-			t(|ctx: Ctx, input: String| async move {
-				let path = input;
+			t(|ctx: Ctx, arg: String| async move {
+				let path = arg;
 				Ok(ctx
 					.db_client
 					.root_directory()

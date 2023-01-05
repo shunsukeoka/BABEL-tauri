@@ -10,7 +10,7 @@ generator client {
 
 model RootDirectory {
     id        Int      @id @default(autoincrement())
-    path      String
+    path      String   @unique
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

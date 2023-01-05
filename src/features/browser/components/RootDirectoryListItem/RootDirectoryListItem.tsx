@@ -1,6 +1,6 @@
 import { styled } from '@/styles'
 import { memo, useCallback } from 'react'
-import { MdDragIndicator, MdMoreVert } from 'react-icons/md'
+import { MdMoreVert } from 'react-icons/md'
 import { FileTauriCommand } from '../../api'
 import { useFile } from '../../hooks/useFile'
 
@@ -20,13 +20,6 @@ const StyledRootDirectoryListItem = styled('div', {
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingRight: '$4',
-
-    '& > .dragger': {
-        display: 'flex',
-        alignItems: 'center',
-        visibility: 'hidden',
-        cursor: 'grab',
-    },
 
     '& > p': {
         marginLeft: '$2',
@@ -63,11 +56,6 @@ export const RootDirectoryListItem = ({ name, path }: RootDirectoryListItemProps
 
     return (
         <StyledRootDirectoryListItem data-path={path}>
-            {/* TODO: plan - use this library  react-smooth-dnd */}
-            <span className="dragger">
-                <MdDragIndicator />
-            </span>
-
             <p onClick={handleItemClick} role="presentation">
                 {name}
             </p>
