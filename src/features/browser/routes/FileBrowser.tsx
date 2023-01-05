@@ -30,17 +30,17 @@ const StyledFileBrowser = styled('div', {
 })
 
 export const FileBrowser = () => {
-    const { rootDirectory, rootDirectoryFindMutation, addRootDirectoryMutation } = useRootDirectory()
+    const { rootDirectory, rootDirectoryFindMutation, rootDirectoryAddMutation } = useRootDirectory()
     const files = useFileStore((state) => state.list)
 
     const onClickAddRootDirectoryButton = useCallback(async () => {
         const path = (await dialog.open({ directory: true })) as string
-        const directory = await addRootDirectoryMutation.mutateAsync(path)
+        const directory = await rootDirectoryAddMutation.mutateAsync(path)
         console.log(directory)
 
         const found = await rootDirectoryFindMutation.mutateAsync(directory.id)
         console.log(found)
-    }, [addRootDirectoryMutation, rootDirectoryFindMutation])
+    }, [rootDirectoryAddMutation, rootDirectoryFindMutation])
 
     return (
         <StyledFileBrowser className="">

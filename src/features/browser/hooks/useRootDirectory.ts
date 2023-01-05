@@ -13,9 +13,9 @@ export const useRootDirectory = () => {
         container.resolve<RootDirectoryService>(DI_TOKEN.RootDirectoryService).find(id),
     )
 
-    const addRootDirectoryMutation = useMutation((path: string) =>
+    const rootDirectoryAddMutation = useMutation((path: string) =>
         container.resolve<RootDirectoryService>(DI_TOKEN.RootDirectoryService).create(path),
     )
 
-    return { rootDirectory, rootDirectoryFindMutation, addRootDirectoryMutation }
+    return { rootDirectory, rootDirectoryFindMutation, rootDirectoryAddMutation }
 }
