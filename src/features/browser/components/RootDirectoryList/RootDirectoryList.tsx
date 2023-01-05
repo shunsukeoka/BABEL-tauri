@@ -1,15 +1,11 @@
-import React from 'react'
-import { MdAdd } from 'react-icons/md'
+import { useCallback } from 'react'
+import { MdAdd, MdOutlineFolder } from 'react-icons/md'
 import { styled } from '@/styles'
+import { dialog } from '@tauri-apps/api'
 import { RootDirectoryListItemMemo } from '../RootDirectoryListItem'
-import { RootDirectoryEntity } from '../../entities/root-directory-entity'
+import { useRootDirectory } from '../../hooks/useRootDirectory'
 
-interface RootDirectoryListProps {
-    icon?: React.ReactNode
-    title?: string
-    list?: RootDirectoryEntity[]
-    handleAddClick?: (event: React.MouseEvent<HTMLInputElement>) => void
-}
+// interface RootDirectoryListProps {}
 
 const StyledRootDirectoryList = styled('div', {
     '& > header': {
@@ -36,6 +32,8 @@ const StyledRootDirectoryList = styled('div', {
         },
 
         '& > p': {
+            display: 'flex',
+            alignItems: 'center',
             cursor: 'pointer',
         },
     },
@@ -46,33 +44,41 @@ const StyledRootDirectoryList = styled('div', {
     },
 })
 
-export const RootDirectoryList = ({ icon, title, list, handleAddClick }: RootDirectoryListProps) => (
-    <StyledRootDirectoryList>
-        <header>
-            <section>
-                <span>{icon}</span>
-                <h3>{title}</h3>
-            </section>
+export const RootDirectoryList = () => {
+    const { rootDirectory, rootDirectoryFindMutation, rootDirectoryAddMutation } = useRootDirectory()
 
-            {handleAddClick && (
-                <p onClick={handleAddClick} role="presentation">
+    const onClickAddButton = useCallback(async () => {
+        const path = (await dialog.open({ directory: true })) as string
+        const directory = await rootDirectoryAddMutation.mutateAsync(path)
+        console.log(directory)
+
+        const found = await rootDirectoryFindMutation.mutateAsync(directory.id)
+        console.log(found)
+    }, [rootDirectoryAddMutation, rootDirectoryFindMutation])
+
+    return (
+        <StyledRootDirectoryList>
+            <header>
+                <section>
+                    <span>
+                        <MdOutlineFolder />
+                    </span>
+                    <h3>LOCAL</h3>
+                </section>
+
+                <p onClick={onClickAddButton} role="presentation">
                     <MdAdd />
                 </p>
-            )}
-        </header>
+            </header>
 
-        <ul>
-            {list &&
-                list.map((item) => (
-                    <li>
-                        <RootDirectoryListItemMemo key={item.id} name={item.name} path={item.path} />
-                    </li>
-                ))}
-        </ul>
-    </StyledRootDirectoryList>
-)
-
-RootDirectoryList.defaultProps = {
-    title: 'Title',
-    list: [],
+            <ul>
+                {rootDirectory.data &&
+                    rootDirectory.data.map((item) => (
+                        <li key={item.id}>
+                            <RootDirectoryListItemMemo name={item.name} path={item.path} />
+                        </li>
+                    ))}
+            </ul>
+        </StyledRootDirectoryList>
+    )
 }
