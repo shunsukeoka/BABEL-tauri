@@ -20,6 +20,8 @@
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
         "generate": "plop",
+        "prisma:migrate": "cd src-tauri/database & cargo prisma migrate dev",
+        "prisma:run": "cd src-tauri/database & cargo prisma db push",
         "prepare": "husky install",
         "lint-staged": "lint-staged",
         "commitlint": "commitlint",
