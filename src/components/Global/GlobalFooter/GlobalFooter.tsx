@@ -13,7 +13,7 @@ const GlobalFooter = () => {
                 <MasterVolumeMemo />
             </div>
 
-            <small>App version - {appVersion.isLoading ? '' : appVersion.data}</small>
+            <small>App version - {appVersion.data}</small>
         </StyledGlobalFooter>
     )
 }

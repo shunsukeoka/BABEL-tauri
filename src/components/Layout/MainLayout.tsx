@@ -1,4 +1,5 @@
 import { styled } from '@/styles'
+import React from 'react'
 import { GlobalHeader, GlobalFooter } from '../Global'
 
 interface MainLayoutProps {
@@ -18,6 +19,8 @@ export const MainLayout = ({ children }: MainLayoutProps) => (
 
         <StyledMainLayout>{children}</StyledMainLayout>
 
-        <GlobalFooter />
+        <React.Suspense fallback={<small>is loading...</small>}>
+            <GlobalFooter />
+        </React.Suspense>
     </div>
 )
