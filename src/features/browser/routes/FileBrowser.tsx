@@ -1,6 +1,5 @@
 import { styled } from '@/styles'
-import React from 'react'
-import { RootDirectoryList, FileList } from '../components'
+import { FileList, RootDirectoryList } from '../components'
 import { useFileStore } from '../stores'
 
 const StyledFileBrowser = styled('div', {
@@ -32,9 +31,7 @@ export const FileBrowser = () => {
     return (
         <StyledFileBrowser>
             <section className="directory-list">
-                <React.Suspense fallback={<div>is loading...</div>}>
-                    <RootDirectoryList />
-                </React.Suspense>
+                <RootDirectoryList />
             </section>
 
             <section className="file-list">

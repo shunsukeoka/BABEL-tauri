@@ -19,8 +19,6 @@ export const MainLayout = ({ children }: MainLayoutProps) => (
 
         <StyledMainLayout>{children}</StyledMainLayout>
 
-        <React.Suspense fallback={<small>is loading...</small>}>
-            <GlobalFooter />
-        </React.Suspense>
+        <GlobalFooter />
     </div>
 )

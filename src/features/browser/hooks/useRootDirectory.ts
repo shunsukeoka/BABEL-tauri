@@ -1,21 +1,36 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { container } from '../di'
 import { RootDirectoryEntity } from '../entities/root-directory-entity'
 import { RootDirectoryService } from '../services'
 import { DI_TOKEN } from '../types'
 
+const QueryKey = Symbol.for('rootDirectory')
+
 export const useRootDirectory = () => {
-    const rootDirectory = useQuery<RootDirectoryEntity[]>(['rootDirectory'], () =>
+    const queryClient = useQueryClient()
+
+    const query = useQuery<RootDirectoryEntity[]>([QueryKey], () =>
         container.resolve<RootDirectoryService>(DI_TOKEN.RootDirectoryService).findAll(),
     )
 
-    const rootDirectoryFindMutation = useMutation((id: number) =>
+    const find = useMutation((id: number) =>
         container.resolve<RootDirectoryService>(DI_TOKEN.RootDirectoryService).find(id),
     )
 
-    const rootDirectoryAddMutation = useMutation((path: string) =>
-        container.resolve<RootDirectoryService>(DI_TOKEN.RootDirectoryService).create(path),
+    const add = useMutation(
+        (path: string) => container.resolve<RootDirectoryService>(DI_TOKEN.RootDirectoryService).create(path),
+        {
+            onSuccess: (response: RootDirectoryEntity) => {
+                if (query.data) queryClient.setQueryData<RootDirectoryEntity[]>([QueryKey], [...query.data, response])
+            },
+        },
     )
 
-    return { rootDirectory, rootDirectoryFindMutation, rootDirectoryAddMutation }
+    return {
+        rootDirectory: {
+            query,
+            find,
+            add,
+        },
+    }
 }

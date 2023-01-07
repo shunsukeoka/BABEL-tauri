@@ -2,8 +2,10 @@ import { useCallback } from 'react'
 import { MdAdd, MdOutlineFolder } from 'react-icons/md'
 import { styled } from '@/styles'
 import { dialog } from '@tauri-apps/api'
-import { RootDirectoryListItemMemo } from '../RootDirectoryListItem'
 import { useRootDirectory } from '../../hooks/useRootDirectory'
+import { RootDirectoryListItemMemo } from '../RootDirectoryListItem'
+
+// ==========================================================================================
 
 // interface RootDirectoryListProps {}
 
@@ -37,24 +39,23 @@ const StyledRootDirectoryList = styled('div', {
             cursor: 'pointer',
         },
     },
-    '& > ul': {
-        '& > li:not(:first-child)': {
-            marginTop: '$2',
-        },
+    '& > li:not(:first-child)': {
+        marginTop: '$2',
     },
 })
 
 export const RootDirectoryList = () => {
-    const { rootDirectory, rootDirectoryFindMutation, rootDirectoryAddMutation } = useRootDirectory()
+    const { rootDirectory } = useRootDirectory()
 
     const onClickAddButton = useCallback(async () => {
         const path = (await dialog.open({ directory: true })) as string
-        const directory = await rootDirectoryAddMutation.mutateAsync(path)
+
+        const directory = await rootDirectory.add.mutateAsync(path)
         console.log(directory)
 
-        const found = await rootDirectoryFindMutation.mutateAsync(directory.id)
+        const found = await rootDirectory.find.mutateAsync(directory.id)
         console.log(found)
-    }, [rootDirectoryAddMutation, rootDirectoryFindMutation])
+    }, [rootDirectory.add, rootDirectory.find])
 
     return (
         <StyledRootDirectoryList>
@@ -71,14 +72,17 @@ export const RootDirectoryList = () => {
                 </p>
             </header>
 
-            <ul>
-                {rootDirectory.data &&
-                    rootDirectory.data.map((item) => (
+            {rootDirectory.query.data && (
+                <ul>
+                    {rootDirectory.query.data.map((item) => (
                         <li key={item.id}>
                             <RootDirectoryListItemMemo name={item.name} path={item.path} />
                         </li>
                     ))}
-            </ul>
+                </ul>
+            )}
+            {rootDirectory.query.isLoading && <div>is loading...</div>}
+            {rootDirectory.query.isError && <div>error!</div>}
         </StyledRootDirectoryList>
     )
 }
