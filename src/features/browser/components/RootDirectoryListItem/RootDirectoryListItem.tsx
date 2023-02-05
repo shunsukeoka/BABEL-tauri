@@ -1,8 +1,6 @@
 import { styled } from '@/styles'
 import { memo, useCallback } from 'react'
 import { MdMoreVert } from 'react-icons/md'
-import { FileTauriCommand } from '../../api'
-import { useFile } from '../../hooks/useFile'
 
 interface RootDirectoryListItemProps {
     name?: string
@@ -44,11 +42,10 @@ const StyledRootDirectoryListItem = styled('div', {
 })
 
 export const RootDirectoryListItem = ({ name, path }: RootDirectoryListItemProps) => {
-    const { getFiles } = useFile(new FileTauriCommand())
 
     const handleItemClick = useCallback(() => {
-        if (path) getFiles(path)
-    }, [getFiles, path])
+        // TODO: implement get files
+    }, [])
 
     const handleSubMenu = useCallback(() => {
         // TODO: implement sub menu feature

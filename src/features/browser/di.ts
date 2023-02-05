@@ -1,8 +1,8 @@
 import 'reflect-metadata'
 import { container } from 'tsyringe'
-import { TauriRootDirectoryRepository } from './repositories'
-import { RootDirectoryService } from './services'
-import { DI_TOKEN } from './types'
+import { TauriRootDirectoryRepository } from '@/core/repositories'
+import { RootDirectoryService } from '@/core/services'
+import { DI_TOKEN } from '@/core/types'
 
 container.register(DI_TOKEN.IRootDirectoryRepository, {
     useClass: TauriRootDirectoryRepository,

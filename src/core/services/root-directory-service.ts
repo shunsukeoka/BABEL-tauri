@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe'
-import { RootDirectoryEntity } from '../entities/root-directory-entity'
+import { RootDirectoryEntity } from '../entities'
 import type { IRootDirectoryRepository } from '../repositories'
 import { DI_TOKEN } from '../types'
 
@@ -12,7 +12,7 @@ class RootDirectoryService {
 
     public async findAll(): Promise<RootDirectoryEntity[]> {
         const directoryList = await this.repository.findAll()
-        return directoryList.map((directory) => new RootDirectoryEntity({ ...directory }))
+        return directoryList.map((directory) => RootDirectoryEntity.create(directory))
     }
 
     public async find(id: number): Promise<RootDirectoryEntity> {
@@ -20,12 +20,12 @@ class RootDirectoryService {
 
         if (directory === null) throw new Error('ディレクトリが見つかりませんでした。')
 
-        return new RootDirectoryEntity({ ...directory })
+        return RootDirectoryEntity.create(directory)
     }
 
     public async create(path: string): Promise<RootDirectoryEntity> {
         const directory = await this.repository.create(path)
-        return new RootDirectoryEntity({ ...directory })
+        return RootDirectoryEntity.create(directory)
     }
 }
 

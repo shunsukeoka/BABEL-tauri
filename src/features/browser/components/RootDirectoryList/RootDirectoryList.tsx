@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { MdAdd, MdOutlineFolder } from 'react-icons/md'
 import { styled } from '@/styles'
 import { dialog } from '@tauri-apps/api'
-import { useRootDirectory } from '../../hooks/useRootDirectory'
+import { useRootDirectory } from '../../hooks'
 import { RootDirectoryListItemMemo } from '../RootDirectoryListItem'
 
 // ==========================================================================================
@@ -76,7 +76,7 @@ export const RootDirectoryList = () => {
                 <ul>
                     {rootDirectory.query.data.map((item) => (
                         <li key={item.id}>
-                            <RootDirectoryListItemMemo name={item.name} path={item.path} />
+                            <RootDirectoryListItemMemo name={item.path.name} path={item.path.value} />
                         </li>
                     ))}
                 </ul>

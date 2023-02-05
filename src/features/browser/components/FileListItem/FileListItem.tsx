@@ -1,13 +1,8 @@
-import { IFileInfo } from '@/types'
 import { memo, useCallback } from 'react'
-import { timeToDisplayMS } from '@/utils/time'
+// import { timeToDisplayMS } from '@/core/utils/time'
 import { styled } from '@/styles'
-// import { FileTauriCommand } from '../../api'
-// import { useFile } from '../../hooks/useFile'
 
-export interface FileListItemProps {
-    info: IFileInfo
-}
+// export interface FileListItemProps {}
 
 const StyledFileListItem = styled('div', {
     display: 'flex',
@@ -34,20 +29,15 @@ const StyledFileListItem = styled('div', {
     },
 })
 
-export const FileListItem = ({ info }: FileListItemProps) => {
-    // const { getFiles } = useFile(new FileTauriCommand())
-
+export const FileListItem = () => {
     const handleDoubleClick = useCallback(() => {
-        // if (info.audio_properties) {
-        // } else if (info.is_dir) {
-        //     getFiles(info.file_path)
-        // }
+
     }, [])
 
     return (
         <StyledFileListItem onDoubleClick={handleDoubleClick}>
-            <p>{info?.file_name}</p>
-            <p>{info?.audio_properties ? timeToDisplayMS(info.audio_properties.duration) : ''}</p>
+            {/* <p>{info?.file_name}</p>
+            <p>{info?.audio_properties ? timeToDisplayMS(info.audio_properties.duration) : ''}</p> */}
         </StyledFileListItem>
     )
 }

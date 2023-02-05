@@ -1,6 +1,5 @@
 import { styled } from '@/styles'
 import { FileList, RootDirectoryList } from '../components'
-import { useFileStore } from '../stores'
 
 const StyledFileBrowser = styled('div', {
     display: 'flex',
@@ -25,18 +24,14 @@ const StyledFileBrowser = styled('div', {
     },
 })
 
-export const FileBrowser = () => {
-    const files = useFileStore((state) => state.list)
-
-    return (
+export const FileBrowser = () => (
         <StyledFileBrowser>
             <section className="directory-list">
                 <RootDirectoryList />
             </section>
 
             <section className="file-list">
-                <FileList list={files} />
+                <FileList />
             </section>
         </StyledFileBrowser>
     )
-}

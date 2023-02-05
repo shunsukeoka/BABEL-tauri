@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { RootDirectoryEntity } from '@/core/entities/root-directory-entity'
+import { RootDirectoryService } from '@/core/services'
+import { DI_TOKEN } from '@/core/types'
 import { container } from '../di'
-import { RootDirectoryEntity } from '../entities/root-directory-entity'
-import { RootDirectoryService } from '../services'
-import { DI_TOKEN } from '../types'
 
 const QueryKey = Symbol.for('rootDirectory')
 
