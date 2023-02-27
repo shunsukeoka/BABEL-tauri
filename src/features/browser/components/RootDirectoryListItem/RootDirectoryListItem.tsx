@@ -42,7 +42,6 @@ const StyledRootDirectoryListItem = styled('div', {
 })
 
 export const RootDirectoryListItem = ({ name, path }: RootDirectoryListItemProps) => {
-
     const handleItemClick = useCallback(() => {
         // TODO: implement get files
     }, [])

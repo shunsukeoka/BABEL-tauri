@@ -30,9 +30,7 @@ const StyledFileListItem = styled('div', {
 })
 
 export const FileListItem = () => {
-    const handleDoubleClick = useCallback(() => {
-
-    }, [])
+    const handleDoubleClick = useCallback(() => {}, [])
 
     return (
         <StyledFileListItem onDoubleClick={handleDoubleClick}>

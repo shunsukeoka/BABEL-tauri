@@ -1,12 +1,10 @@
-import { Immutable } from "@/core/utils/decorators"
+import { Immutable } from '@/core/utils/decorators'
 
 @Immutable
 export abstract class ValueObject<T> {
-    protected constructor(
-        readonly value: T
-    ) {
+    protected constructor(readonly value: T) {
         if (!this.isValid()) {
-        throw new Error()
+            throw new Error()
         }
     }
 

@@ -25,13 +25,13 @@ const StyledFileBrowser = styled('div', {
 })
 
 export const FileBrowser = () => (
-        <StyledFileBrowser>
-            <section className="directory-list">
-                <RootDirectoryList />
-            </section>
+    <StyledFileBrowser>
+        <section className="directory-list">
+            <RootDirectoryList />
+        </section>
 
-            <section className="file-list">
-                <FileList />
-            </section>
-        </StyledFileBrowser>
-    )
+        <section className="file-list">
+            <FileList />
+        </section>
+    </StyledFileBrowser>
+)
