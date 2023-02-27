@@ -15,13 +15,13 @@ class RootDirectoryEntity {
         try {
             return new RootDirectoryEntity(params)
         } catch (error) {
-            throw new Error();
+            throw new Error()
         }
     }
 
     public equals(other: RootDirectoryEntity): boolean {
-        if (this === other) return true;
-        return this.id === other.id;
+        if (this === other) return true
+        return this.id === other.id
     }
 
     readonly id: number
@@ -32,6 +32,5 @@ class RootDirectoryEntity {
 
     updatedAt: string
 }
-
 
 export { RootDirectoryEntity }

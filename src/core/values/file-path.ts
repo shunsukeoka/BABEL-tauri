@@ -1,4 +1,4 @@
-import { ValueObject } from "./base";
+import { ValueObject } from './base'
 
 export class FilePath extends ValueObject<string> {
     constructor(readonly value: string) {
@@ -13,7 +13,7 @@ export class FilePath extends ValueObject<string> {
         try {
             return new FilePath(value)
         } catch (error) {
-            throw new Error();
+            throw new Error()
         }
     }
 
