@@ -25,7 +25,7 @@ mime_guess = "2.0.4"
 crossbeam-channel = "0.5.7"
 kira = "0.7.1"
 lofty = "0.11.0"
-tokio = { version = "1.25.0", features = ["full"] }
+tokio = { version = "1.26.0", features = ["full"] }
 rspc = { version = "0.1.2", features = ["tauri"] }
 prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust.git", tag = "0.6.4", features = [
     "rspc",
