@@ -1013,6 +1013,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "dotenv"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f"
+
+[[package]]
 name = "dtoa"
 version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3242,21 +3248,22 @@ checksum = "925383efa346730478fb4838dbe9137d2a47675ad789c546d150a6e1dd4ab31c"
 
 [[package]]
 name = "prisma-client-rust"
-version = "0.6.5"
-source = "git+https://github.com/Brendonovich/prisma-client-rust.git?tag=0.6.5#3db4094ae70aa0aa7047da005d14c0a3ff48ec51"
+version = "0.6.7"
+source = "git+https://github.com/Brendonovich/prisma-client-rust.git?tag=0.6.7#f71ad9122537c4ed29bf496a4a643947a5fe9aef"
 dependencies = [
  "base64 0.13.1",
  "bigdecimal",
  "chrono",
- "convert_case 0.6.0",
  "diagnostics",
  "dml",
  "dmmf",
+ "dotenv",
  "futures",
  "include_dir",
  "indexmap",
  "migration-core",
  "paste",
+ "prisma-client-rust-macros",
  "prisma-models",
  "psl",
  "query-connector",
@@ -3266,12 +3273,25 @@ dependencies = [
  "serde",
  "serde-value",
  "serde_json",
+ "specta",
  "tempdir",
  "thiserror",
  "tokio",
  "tracing",
  "user-facing-errors",
  "uuid 1.2.2",
+]
+
+[[package]]
+name = "prisma-client-rust-macros"
+version = "0.6.7"
+source = "git+https://github.com/Brendonovich/prisma-client-rust.git?tag=0.6.7#f71ad9122537c4ed29bf496a4a643947a5fe9aef"
+dependencies = [
+ "convert_case 0.6.0",
+ "proc-macro2",
+ "quote",
+ "specta",
+ "syn",
 ]
 
 [[package]]
@@ -4277,9 +4297,9 @@ dependencies = [
 
 [[package]]
 name = "specta"
-version = "1.0.0"
+version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a27c41db2eeac1d45f34554de1f2a4f33c0ff357abdeb87a85c4398cbc29917"
+checksum = "4be6d92bb3d2a34fd5da2463089b44e67d6e83eedff074a82ba0b3e830dbff7c"
 dependencies = [
  "chrono",
  "document-features",
